@@ -434,7 +434,55 @@
     "minLength": "This field must be at least {min} characters long.",
     "maxLength": "This field must be at most {max} characters long.",
     "passwordStrength": "Password must be at least 8 characters, including an uppercase letter, a lowercase letter, a number, and a special character.",
-    "passwordsMustMatch": "Passwords must match."
+    "passwordsMustMatch": "Passwords must match.",
+    "emailRequired": "Email is required",
+    "emailInvalid": "Invalid email format",
+    "passwordRequired": "Password is required",
+    "passwordMinLogin": "Password must be at least 6 characters",
+    "passwordMin": "Password must be at least 8 characters",
+    "passwordStrong": "Password must contain at least one uppercase letter, one lowercase letter, and one number",
+    "nameRequired": "Name is required",
+    "nameMin": "Name must be at least 2 characters",
+    "nameMax": "Name cannot exceed 50 characters",
+    "confirmPasswordRequired": "Please confirm your password",
+    "passwordMatch": "Passwords do not match",
+    "codeRequired": "Code is required",
+    "codeLength": "Code must be 6 characters",
+    "phoneRequired": "Phone is required",
+    "phoneMin": "Invalid phone number",
+    "subjectRequired": "Please select a subject",
+    "messageRequired": "Message is required",
+    "messageMin": "Message must be at least 10 characters",
+
+
+        "dateRequired": "Date is required",
+    "dateFuture": "Date must be in the future",
+    "timeRequired": "Time is required",
+    "timeInvalid": "Invalid time format (HH:MM)",
+    "noteRequired": "Note is required",
+    "noteMin": "Note must be at least 10 characters",
+    "noteMax": "Note cannot exceed 500 characters"
+
+
+
+   
+  },
+
+  "appointment": {
+    "title": "Book an appointment",
+    "subtitle": "Choose the date and time that suits you",
+    "date": "Appointment date",
+    "time": "Time",
+    "note": "Reason for appointment",
+    "notePlaceholder": "E.g., Web project consultation, information request...",
+    "availableHours": "Available hours",
+    "weekdays": "Mon - Fri",
+    "saturday": "Saturday",
+    "sunday": "Sunday",
+    "closed": "Closed",
+    "cancel": "Cancel",
+    "submit": "Confirm appointment",
+    "loading": "Sending..."
   },
   "services": {
     "hero": {

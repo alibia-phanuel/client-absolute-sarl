@@ -402,40 +402,7 @@ export default function Footer() {
               </div>
             </div>
 
-            {/* Newsletter */}
-            <div>
-              <h4 className="font-semibold mb-2 text-sm sm:text-base">
-                {t("newsletter.title")}
-              </h4>
-              <p className="text-xs text-muted-foreground mb-4">
-                {t("newsletter.subtitle")}
-              </p>
 
-              <form onSubmit={handleNewsletterSubmit} className="space-y-3">
-                <div className="flex gap-2">
-                  <Input
-                    type="email"
-                    placeholder={t("newsletter.placeholder")}
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                    className="h-10 text-sm"
-                  />
-                  <Button
-                    type="submit"
-                    size="sm"
-                    className="h-10 px-4"
-                    disabled={isSubscribing}
-                  >
-                    {isSubscribing ? (
-                      <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                    ) : (
-                      <Send className="w-4 h-4" />
-                    )}
-                  </Button>
-                </div>
-              </form>
-            </div>
 
             {/* Moyens de Paiement */}
             <div>
@@ -477,9 +444,9 @@ export default function Footer() {
       <div className="container mx-auto px-4 py-6 sm:py-8">
         <div className="flex flex-col sm:flex-row justify-between items-center gap-4 text-xs sm:text-sm text-muted-foreground">
           {/* Copyright */}
-          <div className="flex flex-wrap items-center justify-center gap-1">
+          {/* <div className="flex flex-wrap items-center justify-center gap-1">
             <span>{t("copyright", { year: new Date().getFullYear() })}</span>
-          </div>
+          </div> */}
 
           {/* Liens Légaux */}
           <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6">

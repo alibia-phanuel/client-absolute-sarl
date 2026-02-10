@@ -41,6 +41,7 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
+import AppointmentModal from "@/components/AppointmentModal";
 // ========================================
 // TYPES
 // ========================================
@@ -310,7 +311,7 @@ const WhyUsFeatureCard = ({
 // ========================================
 export default function HomePage() {
   const t = useTranslations("HomePage");
-
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const services: ServiceCard[] = [
     {
       icon: Plane,
@@ -751,9 +752,9 @@ export default function HomePage() {
                 size="lg"
                 variant="outline"
                 className="h-12 sm:h-14 px-8 sm:px-10 text-sm sm:text-base w-full sm:w-auto"
-                asChild
+                onClick={() => setIsModalOpen(true)}
               >
-                <Link href="#contact">{t("cta.secondary")}</Link>
+                {t("cta.secondary")}
               </Button>
               <Button
                 size="lg"
@@ -910,6 +911,10 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+      <AppointmentModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
     </div>
   );
 }

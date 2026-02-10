@@ -29,34 +29,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { sendResetOtp, resetPassword } from "@/lib/auth.api";
 
-/* ===========================
-   SCHEMAS
-=========================== */
-
-const emailSchema = z.object({
-  email: z.string().email("Email invalide"),
-});
-
-const resetPasswordSchema = z
-  .object({
-    otp: z.string().length(6, "Le code doit contenir 6 chiffres"),
-    newPassword: z
-      .string()
-      .min(8, "Le mot de passe doit contenir au moins 8 caractères")
-      .regex(
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/,
-        "Le mot de passe doit contenir au moins une majuscule, une minuscule et un chiffre",
-      ),
-    confirmPassword: z.string(),
-  })
-  .refine((data) => data.newPassword === data.confirmPassword, {
-    message: "Les mots de passe ne correspondent pas",
-    path: ["confirmPassword"],
-  });
-
-type EmailFormData = z.infer<typeof emailSchema>;
-type ResetPasswordFormData = z.infer<typeof resetPasswordSchema>;
-
 type Step = "email" | "reset" | "success";
 
 /* ===========================
@@ -65,6 +37,7 @@ type Step = "email" | "reset" | "success";
 
 export default function ForgotPasswordForm() {
   const t = useTranslations();
+  const V = useTranslations("validation");
   const router = useRouter();
 
   const [step, setStep] = useState<Step>("email");
@@ -73,6 +46,32 @@ export default function ForgotPasswordForm() {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isResending, setIsResending] = useState(false);
+
+  /* ===========================
+     SCHEMAS ZOD LOCAUX
+  =========================== */
+
+  const emailSchema = z.object({
+    email: z.string().min(1, V("emailRequired")).email(V("emailInvalid")),
+  });
+
+  const resetPasswordSchema = z
+    .object({
+      otp: z.string().length(6, V("codeLength")),
+      newPassword: z
+        .string()
+        .min(1, V("passwordRequired"))
+        .min(8, V("passwordMin"))
+        .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/, V("passwordStrong")),
+      confirmPassword: z.string().min(1, V("confirmPasswordRequired")),
+    })
+    .refine((data) => data.newPassword === data.confirmPassword, {
+      message: V("passwordMatch"),
+      path: ["confirmPassword"],
+    });
+
+  type EmailFormData = z.infer<typeof emailSchema>;
+  type ResetPasswordFormData = z.infer<typeof resetPasswordSchema>;
 
   const emailForm = useForm<EmailFormData>({
     resolver: zodResolver(emailSchema),
@@ -100,9 +99,8 @@ export default function ForgotPasswordForm() {
       setEmail(data.email);
       setStep("reset");
     } catch (error: unknown) {
-      // ← CHANGEMENT 1/3
       const err = error instanceof Error ? error : new Error(String(error));
-      toast.error(t(err.message)); // ← on utilise err.message
+      toast.error(t(err.message));
     } finally {
       setIsLoading(false);
     }
@@ -124,9 +122,8 @@ export default function ForgotPasswordForm() {
         router.push("/login");
       }, 3000);
     } catch (error: unknown) {
-      // ← CHANGEMENT 2/3
       const err = error instanceof Error ? error : new Error(String(error));
-      toast.error(t(err.message)); // ← on utilise err.message
+      toast.error(t(err.message));
     } finally {
       setIsLoading(false);
     }
@@ -138,9 +135,8 @@ export default function ForgotPasswordForm() {
       const result = await sendResetOtp({ email });
       toast.success(t(result.messageKey));
     } catch (error: unknown) {
-      // ← CHANGEMENT 3/3
       const err = error instanceof Error ? error : new Error(String(error));
-      toast.error(t(err.message)); // ← on utilise err.message
+      toast.error(t(err.message));
     } finally {
       setIsResending(false);
     }
@@ -292,7 +288,6 @@ export default function ForgotPasswordForm() {
                                       "",
                                     );
                                     if (val.length === 0 && i > 0) {
-                                      // backspace sur champ vide → précédent
                                       const newOtp =
                                         otpValue.slice(0, i) +
                                         otpValue.slice(i + 1);

@@ -8,6 +8,7 @@ import Image from "next/image";
 import { Link, useRouter } from "@/i18n/routing";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
+import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -19,7 +20,6 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
-import { registerSchema, type RegisterFormData } from "@/lib/validations/auth";
 import { register, sendVerifyOtp } from "@/lib/auth.api";
 import { useAuthStore } from "@/store/authStore";
 
@@ -27,12 +27,41 @@ export default function RegisterForm() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [acceptedTerms, setAcceptedTerms] = useState(false); // ✅ État pour les conditions
+  const [acceptedTerms, setAcceptedTerms] = useState(false);
 
   const t = useTranslations();
-
   const tAuth = useTranslations("auth");
+  const V = useTranslations("validation");
   const router = useRouter();
+
+  // ✅ Validation Zod locale
+  const registerSchema = z
+    .object({
+      name: z
+        .string()
+        .min(1, V("nameRequired"))
+        .min(2, V("nameMin"))
+        .max(50, V("nameMax")),
+      email: z
+        .string()
+        .min(1, V("emailRequired"))
+        .email(V("emailInvalid")),
+      password: z
+        .string()
+        .min(1, V("passwordRequired"))
+        .min(8, V("passwordMin"))
+        .regex(
+          /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/,
+          V("passwordStrong"),
+        ),
+      confirmPassword: z.string().min(1, V("confirmPasswordRequired")),
+    })
+    .refine((data) => data.password === data.confirmPassword, {
+      message: V("passwordMatch"),
+      path: ["confirmPassword"],
+    });
+
+  type RegisterFormData = z.infer<typeof registerSchema>;
 
   const form = useForm<RegisterFormData>({
     resolver: zodResolver(registerSchema),
@@ -95,7 +124,6 @@ export default function RegisterForm() {
       className="w-full max-w-md mx-auto"
     >
       <div className="bg-card border-2 border-border/50 rounded-2xl shadow-2xl p-8">
-        {/* Logo */}
         <motion.div
           initial={{ scale: 0.8, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
@@ -113,7 +141,6 @@ export default function RegisterForm() {
           </div>
         </motion.div>
 
-        {/* Titre */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -128,10 +155,8 @@ export default function RegisterForm() {
           </p>
         </motion.div>
 
-        {/* Formulaire */}
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
-            {/* Nom */}
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
@@ -163,7 +188,6 @@ export default function RegisterForm() {
               />
             </motion.div>
 
-            {/* Email */}
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
@@ -195,7 +219,6 @@ export default function RegisterForm() {
               />
             </motion.div>
 
-            {/* Mot de passe */}
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
@@ -238,7 +261,6 @@ export default function RegisterForm() {
               />
             </motion.div>
 
-            {/* Confirmer le mot de passe */}
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
@@ -283,7 +305,6 @@ export default function RegisterForm() {
               />
             </motion.div>
 
-            {/* Conditions d'utilisation */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -313,7 +334,6 @@ export default function RegisterForm() {
               </label>
             </motion.div>
 
-            {/* Bouton d'inscription */}
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
@@ -321,7 +341,7 @@ export default function RegisterForm() {
             >
               <Button
                 type="submit"
-                disabled={isLoading || !acceptedTerms} // ✅ Désactivé si conditions non acceptées
+                disabled={isLoading || !acceptedTerms}
                 className="w-full h-12 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold text-base relative overflow-hidden group disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {isLoading ? (
@@ -347,7 +367,6 @@ export default function RegisterForm() {
           </form>
         </Form>
 
-        {/* Séparateur */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -364,7 +383,6 @@ export default function RegisterForm() {
           </div>
         </motion.div>
 
-        {/* Se connecter */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}

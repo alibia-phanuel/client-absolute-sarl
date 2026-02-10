@@ -36,21 +36,37 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-
-// Schema de validation
-const contactSchema = z.object({
-  name: z.string().min(2, "Le nom doit contenir au moins 2 caractères"),
-  email: z.string().email("Email invalide"),
-  phone: z.string().min(9, "Numéro de téléphone invalide"),
-  subject: z.string().min(1, "Veuillez sélectionner un sujet"),
-  message: z.string().min(10, "Le message doit contenir au moins 10 caractères"),
-});
-
-type ContactFormData = z.infer<typeof contactSchema>;
+import AppointmentModal from "@/components/AppointmentModal";
 
 export default function ContactPage() {
   const t = useTranslations("contact");
+  const V = useTranslations("validation");
   const [isLoading, setIsLoading] = useState(false);
+const [isModalOpen, setIsModalOpen] = useState(false);
+  // ✅ Validation Zod locale
+  const contactSchema = z.object({
+    name: z
+      .string()
+      .min(1, V("nameRequired"))
+      .min(2, V("nameMin")),
+    email: z
+      .string()
+      .min(1, V("emailRequired"))
+      .email(V("emailInvalid")),
+    phone: z
+      .string()
+      .min(1, V("phoneRequired"))
+      .min(9, V("phoneMin")),
+    subject: z
+      .string()
+      .min(1, V("subjectRequired")),
+    message: z
+      .string()
+      .min(1, V("messageRequired"))
+      .min(10, V("messageMin")),
+  });
+
+  type ContactFormData = z.infer<typeof contactSchema>;
 
   const form = useForm<ContactFormData>({
     resolver: zodResolver(contactSchema),
@@ -65,18 +81,54 @@ export default function ContactPage() {
 
   const onSubmit = async (data: ContactFormData) => {
     setIsLoading(true);
+    
+    // ✅ LOG des données validées prêtes pour l'API
+    console.log("📦 Données validées pour l'API:", {
+      name: data.name,
+      email: data.email,
+      phone: data.phone,
+      subject: data.subject,
+      message: data.message,
+      timestamp: new Date().toISOString(),
+      locale: navigator.language,
+    });
+
+    // ✅ Payload formaté pour l'API
+    const apiPayload = {
+      name: data.name.trim(),
+      email: data.email.toLowerCase().trim(),
+      phone: data.phone.trim(),
+      subject: data.subject,
+      message: data.message.trim(),
+      metadata: {
+        userAgent: navigator.userAgent,
+        referrer: document.referrer || "direct",
+        timestamp: new Date().toISOString(),
+      }
+    };
+
+    console.log("🚀 Payload API complet:", JSON.stringify(apiPayload, null, 2));
+
     try {
       const response = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+        body: JSON.stringify(apiPayload),
       });
 
-      if (!response.ok) throw new Error("Erreur lors de l'envoi");
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error("❌ Erreur API:", errorData);
+        throw new Error(errorData.message || "Erreur lors de l'envoi");
+      }
+
+      const result = await response.json();
+      console.log("✅ Réponse API:", result);
 
       toast.success(t("form.success"));
       form.reset();
     } catch (error) {
+      console.error("❌ Erreur lors de l'envoi:", error);
       toast.error(t("form.error"));
     } finally {
       setIsLoading(false);
@@ -142,10 +194,14 @@ export default function ContactPage() {
                     <MapPin className="h-6 w-6 text-primary" />
                   </div>
                   <div>
-                    <h3 className="font-semibold mb-1">{t("info.address.title")}</h3>
+                    <h3 className="font-semibold mb-1">
+                      {t("info.address.title")}
+                    </h3>
                     <p className="text-muted-foreground text-sm leading-relaxed">
-                      {t("info.address.line1")}<br />
-                      {t("info.address.line2")}<br />
+                      {t("info.address.line1")}
+                      <br />
+                      {t("info.address.line2")}
+                      <br />
                       {t("info.address.line3")}
                     </p>
                   </div>
@@ -160,16 +216,18 @@ export default function ContactPage() {
                     <Mail className="h-6 w-6 text-primary" />
                   </div>
                   <div className="space-y-2">
-                    <h3 className="font-semibold mb-1">{t("info.email.title")}</h3>
+                    <h3 className="font-semibold mb-1">
+                      {t("info.email.title")}
+                    </h3>
                     <div className="space-y-1">
-                      <a 
-                        href="mailto:servicesclients@absolutesarl.com" 
+                      <a
+                        href="mailto:servicesclients@absolutesarl.com"
                         className="block text-sm text-muted-foreground hover:text-primary transition-colors"
                       >
                         servicesclients@absolutesarl.com
                       </a>
-                      <a 
-                        href="mailto:jordan.ntouko@absolutesarl.com" 
+                      <a
+                        href="mailto:jordan.ntouko@absolutesarl.com"
                         className="block text-sm text-muted-foreground hover:text-primary transition-colors"
                       >
                         jordan.ntouko@absolutesarl.com
@@ -187,22 +245,30 @@ export default function ContactPage() {
                     <Phone className="h-6 w-6 text-primary" />
                   </div>
                   <div className="space-y-2">
-                    <h3 className="font-semibold mb-1">{t("info.phone.title")}</h3>
+                    <h3 className="font-semibold mb-1">
+                      {t("info.phone.title")}
+                    </h3>
                     <div className="space-y-1">
-                      <a 
-                        href="tel:+237699992818" 
+                      <a
+                        href="tel:+237699992818"
                         className="block text-sm text-muted-foreground hover:text-primary transition-colors"
                       >
-                        📞 +237 699 99 28 18 <span className="text-xs">({t("info.phone.primary")})</span>
+                        📞 +237 699 99 28 18{" "}
+                        <span className="text-xs">
+                          ({t("info.phone.primary")})
+                        </span>
                       </a>
-                      <a 
-                        href="tel:+237675157871" 
+                      <a
+                        href="tel:+237675157871"
                         className="block text-sm text-muted-foreground hover:text-primary transition-colors"
                       >
-                        📞 +237 675 15 78 71 <span className="text-xs">({t("info.phone.secondary")})</span>
+                        📞 +237 675 15 78 71{" "}
+                        <span className="text-xs">
+                          ({t("info.phone.secondary")})
+                        </span>
                       </a>
-                      <a 
-                        href="https://wa.me/237699992818" 
+                      <a
+                        href="https://wa.me/237699992818"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="block text-sm text-green-600 hover:text-green-700 transition-colors font-medium"
@@ -222,16 +288,28 @@ export default function ContactPage() {
                 </div>
                 <div className="space-y-2 text-sm">
                   <div className="flex justify-between items-center">
-                    <span className="text-muted-foreground">{t("info.hours.weekdays")}</span>
-                    <span className="font-medium text-foreground">08:00 - 17:00</span>
+                    <span className="text-muted-foreground">
+                      {t("info.hours.weekdays")}
+                    </span>
+                    <span className="font-medium text-foreground">
+                      08:00 - 17:00
+                    </span>
                   </div>
                   <div className="flex justify-between items-center">
-                    <span className="text-muted-foreground">{t("info.hours.saturday")}</span>
-                    <span className="font-medium text-foreground">08:00 - 15:00</span>
+                    <span className="text-muted-foreground">
+                      {t("info.hours.saturday")}
+                    </span>
+                    <span className="font-medium text-foreground">
+                      08:00 - 15:00
+                    </span>
                   </div>
                   <div className="flex justify-between items-center">
-                    <span className="text-muted-foreground">{t("info.hours.sunday")}</span>
-                    <span className="font-medium text-red-600">{t("info.hours.closed")}</span>
+                    <span className="text-muted-foreground">
+                      {t("info.hours.sunday")}
+                    </span>
+                    <span className="font-medium text-red-600">
+                      {t("info.hours.closed")}
+                    </span>
                   </div>
                 </div>
               </div>
@@ -246,11 +324,16 @@ export default function ContactPage() {
             >
               <div className="mb-6">
                 <h2 className="text-2xl font-bold mb-2">{t("form.title")}</h2>
-                <p className="text-sm text-muted-foreground">{t("form.subtitle")}</p>
+                <p className="text-sm text-muted-foreground">
+                  {t("form.subtitle")}
+                </p>
               </div>
-              
+
               <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
+                <form
+                  onSubmit={form.handleSubmit(onSubmit)}
+                  className="space-y-5"
+                >
                   {/* Name */}
                   <FormField
                     control={form.control}
@@ -329,24 +412,40 @@ export default function ContactPage() {
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>{t("form.subject")}</FormLabel>
-                        <Select 
-                          onValueChange={field.onChange} 
+                        <Select
+                          onValueChange={field.onChange}
                           defaultValue={field.value}
                           disabled={isLoading}
                         >
                           <FormControl>
                             <SelectTrigger className="h-12">
-                              <SelectValue placeholder={t("form.subjectPlaceholder")} />
+                              <SelectValue
+                                placeholder={t("form.subjectPlaceholder")}
+                              />
                             </SelectTrigger>
                           </FormControl>
                           <SelectContent>
-                            <SelectItem value="canada">{t("form.subjects.canada")}</SelectItem>
-                            <SelectItem value="belgium">{t("form.subjects.belgium")}</SelectItem>
-                            <SelectItem value="france">{t("form.subjects.france")}</SelectItem>
-                            <SelectItem value="digital">{t("form.subjects.digital")}</SelectItem>
-                            <SelectItem value="secretariat">{t("form.subjects.secretariat")}</SelectItem>
-                            <SelectItem value="commerce">{t("form.subjects.commerce")}</SelectItem>
-                            <SelectItem value="other">{t("form.subjects.other")}</SelectItem>
+                            <SelectItem value="canada">
+                              {t("form.subjects.canada")}
+                            </SelectItem>
+                            <SelectItem value="belgium">
+                              {t("form.subjects.belgium")}
+                            </SelectItem>
+                            <SelectItem value="france">
+                              {t("form.subjects.france")}
+                            </SelectItem>
+                            <SelectItem value="digital">
+                              {t("form.subjects.digital")}
+                            </SelectItem>
+                            <SelectItem value="secretariat">
+                              {t("form.subjects.secretariat")}
+                            </SelectItem>
+                            <SelectItem value="commerce">
+                              {t("form.subjects.commerce")}
+                            </SelectItem>
+                            <SelectItem value="other">
+                              {t("form.subjects.other")}
+                            </SelectItem>
                           </SelectContent>
                         </Select>
                         <FormMessage />
@@ -388,7 +487,9 @@ export default function ContactPage() {
                     ) : (
                       <>
                         <Send className="mr-2 h-5 w-5" />
-                        <span className="relative z-10">{t("form.submit")}</span>
+                        <span className="relative z-10">
+                          {t("form.submit")}
+                        </span>
                         <motion.div
                           className="absolute inset-0 bg-accent"
                           initial={{ x: "-100%" }}
@@ -426,18 +527,17 @@ export default function ContactPage() {
               {t("cta.subtitle")}
             </p>
             <div className="flex flex-wrap gap-4 justify-center">
-              <Button size="lg" className="h-12 px-8">
+              <Button
+                onClick={() => setIsModalOpen(true)}
+                size="lg"
+                className="h-12 px-8"
+              >
                 <Calendar className="mr-2 h-5 w-5" />
                 {t("cta.appointment")}
               </Button>
-              <Button 
-                size="lg" 
-                variant="outline" 
-                className="h-12 px-8"
-                asChild
-              >
-                <a 
-                  href="https://wa.me/237699992818" 
+              <Button size="lg" variant="outline" className="h-12 px-8" asChild>
+                <a
+                  href="https://wa.me/237699992818"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -448,6 +548,10 @@ export default function ContactPage() {
             </div>
           </motion.div>
         </div>
+        <AppointmentModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+        />
       </section>
     </div>
   );
