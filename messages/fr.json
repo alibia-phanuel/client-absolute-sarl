@@ -1,0 +1,708 @@
+{
+  "HomePage": {
+    "hero": {
+      "badge": "Vous servir, toujours mieux",
+      "title": "ABSOLUTE SARL",
+      "titleHighlight": "Votre Partenaire Stratégique",
+      "subtitle": "Spécialiste en immigration internationale, services digitaux et accompagnement administratif. Solutions personnalisées pour vos projets au Canada, en Belgique et en France.",
+      "ctaPrimary": "Diagnostic Gratuit",
+      "ctaSecondary": "Découvrir nos Services",
+      "ctaWhatsApp": "WhatsApp"
+    },
+    "stats": {
+      "experience": "Depuis 2025",
+      "services": "Services Complets",
+      "countries": "Pays Couverts",
+      "satisfaction": "Satisfaction Client"
+    },
+    "services": {
+      "badge": "Nos Expertises",
+      "title": "Solutions Complètes et Sur Mesure",
+      "subtitle": "De l'immigration à la transformation digitale, nous accompagnons vos projets avec professionnalisme et expertise",
+      "immigration": {
+        "title": "Immigration & Mobilité",
+        "description": "Accompagnement complet pour vos projets d'immigration au Canada, en Belgique et en France",
+        "features": [
+          "Résidence permanente",
+          "Visa d'études",
+          "Orientation personnalisée",
+          "Suivi complet du dossier"
+        ]
+      },
+      "digital": {
+        "title": "Marketing Digital",
+        "description": "Stratégies digitales pour développer votre présence en ligne et atteindre vos objectifs",
+        "features": [
+          "Community management",
+          "Publicités ciblées",
+          "Stratégie de contenu",
+          "Branding digital"
+        ]
+      },
+      "infography": {
+        "title": "Infographie & Design",
+        "description": "Création d'identités visuelles professionnelles pour valoriser votre image de marque",
+        "features": [
+          "Identité visuelle",
+          "Logos & chartes graphiques",
+          "Supports marketing",
+          "Design corporate"
+        ]
+      },
+      "secretariat": {
+        "title": "E-Secrétariat",
+        "description": "Assistance administrative à distance pour libérer votre temps et optimiser votre organisation",
+        "features": [
+          "Rédaction professionnelle",
+          "Gestion d'agenda",
+          "Traitement de documents",
+          "Support administratif"
+        ]
+      },
+      "commerce": {
+        "title": "Commerce Général",
+        "description": "Fourniture de produits et services professionnels de qualité",
+        "features": [
+          "Solutions B2B/B2C",
+          "Produits de qualité",
+          "Service après-vente",
+          "Livraison assurée"
+        ]
+      },
+      "consulting": {
+        "title": "Conseil & Accompagnement",
+        "description": "Expertise et conseils personnalisés pour vos projets professionnels",
+        "features": [
+          "Diagnostic gratuit",
+          "Conseillers dédiés",
+          "Suivi personnalisé",
+          "Accompagnement continu"
+        ]
+      },
+      "cta": "En savoir plus"
+    },
+    "process": {
+      "badge": "Notre Méthode",
+      "title": "Un Processus Simple et Transparent",
+      "subtitle": "De votre premier contact à la réalisation de votre projet, nous vous accompagnons à chaque étape",
+      "steps": {
+        "contact": {
+          "title": "Contact Initial",
+          "description": "Prenez contact via WhatsApp, téléphone ou notre formulaire"
+        },
+        "diagnostic": {
+          "title": "Diagnostic Gratuit",
+          "description": "Analyse approfondie de votre situation et de vos besoins"
+        },
+        "quote": {
+          "title": "Devis Personnalisé",
+          "description": "Proposition détaillée et transparente adaptée à votre budget"
+        },
+        "payment": {
+          "title": "Paiement Flexible",
+          "description": "Options de paiement sécurisées et possibilité d'échelonnement"
+        },
+        "execution": {
+          "title": "Exécution & Suivi",
+          "description": "Réalisation de votre projet avec un suivi régulier et transparent"
+        }
+      },
+      "step": "Étape"
+    },
+    "whyUs": {
+      "badge": "Pourquoi Nous Choisir",
+      "title": "Votre Succès, Notre Priorité",
+      "subtitle": "Des valeurs fortes et un engagement sans faille pour votre satisfaction",
+      "features": {
+        "professionalism": {
+          "title": "Professionnalisme",
+          "description": "Équipe qualifiée avec une expertise avérée dans chaque domaine"
+        },
+        "transparency": {
+          "title": "Transparence Totale",
+          "description": "Communication claire sur les délais, coûts et processus"
+        },
+        "confidentiality": {
+          "title": "Confidentialité",
+          "description": "Protection absolue de vos données et informations personnelles"
+        },
+        "support": {
+          "title": "Accompagnement Continu",
+          "description": "Disponibilité et suivi personnalisé tout au long de votre projet"
+        },
+        "personalized": {
+          "title": "Sur Mesure",
+          "description": "Solutions adaptées à vos besoins spécifiques et objectifs"
+        },
+        "reactivity": {
+          "title": "Réactivité",
+          "description": "Réponses rapides et service client disponible 6j/7"
+        },
+        "experience": {
+          "title": "Expertise Terrain",
+          "description": "Connaissance approfondie des processus et réglementations"
+        },
+        "results": {
+          "title": "Orientés Résultats",
+          "description": "Engagement à atteindre vos objectifs avec des solutions efficaces"
+        }
+      }
+    },
+    "destinations": {
+      "badge": "Nos Destinations",
+      "title": "Concrétisez Votre Projet d'Immigration",
+      "subtitle": "Expertise reconnue pour vos démarches au Canada, en Belgique et en France",
+      "canada": {
+        "title": "Canada",
+        "description": "Résidence permanente et études",
+        "programs": "Multiples programmes d'immigration",
+        "cta": "Explorer le Canada"
+      },
+      "belgium": {
+        "title": "Belgique",
+        "description": "Études supérieures et formation",
+        "programs": "Accès aux universités européennes",
+        "cta": "Explorer la Belgique"
+      },
+      "france": {
+        "title": "France",
+        "description": "Études et opportunités professionnelles",
+        "programs": "Formation et insertion professionnelle",
+        "cta": "Explorer la France"
+      }
+    },
+    "testimonials": {
+      "badge": "Témoignages",
+      "title": "Ils Nous Font Confiance",
+      "subtitle": "Découvrez les expériences de nos clients satisfaits",
+      "cta": "Voir tous les avis"
+    },
+    "cta": {
+      "title": "Prêt à Concrétiser Votre Projet ?",
+      "subtitle": "Bénéficiez d'un diagnostic gratuit et personnalisé. Notre équipe est prête à vous accompagner vers la réussite.",
+      "primary": "Demander un Diagnostic Gratuit",
+      "secondary": "Prendre Rendez-vous",
+      "whatsapp": "Discuter sur WhatsApp",
+      "trust": {
+        "freeQuote": "Devis gratuit",
+        "noCommitment": "Sans engagement",
+        "quickResponse": "Réponse sous 24h",
+        "payment": "Paiement flexible"
+      }
+    },
+    "contact": {
+      "title": "Contactez-Nous",
+      "subtitle": "Notre équipe est disponible pour répondre à toutes vos questions",
+      "address": {
+        "title": "Adresse",
+        "line1": "Cité des Palmiers",
+        "line2": "Immeuble Jaune - 2ᵉ étage - Bureau B09",
+        "line3": "Douala, Cameroun"
+      },
+      "hours": {
+        "title": "Horaires",
+        "weekdays": "Lundi - Vendredi : 08h00 - 17h00",
+        "saturday": "Samedi : 08h00 - 15h00",
+        "sunday": "Dimanche : Fermé"
+      },
+      "phone": {
+        "title": "Téléphone",
+        "primary": "+237 699 99 28 18",
+        "secondary": "+237 675 15 78 71"
+      },
+      "email": {
+        "title": "Email",
+        "support": "servicesclients@absolutesarl.com",
+        "director": "jordan.ntouko@absolutesarl.com"
+      }
+    },
+    "newsletter": {
+      "title": "Restez Informé",
+      "subtitle": "Recevez nos actualités, conseils et opportunités",
+      "placeholder": "Votre email",
+      "cta": "S'inscrire",
+      "privacy": "Vos données sont protégées. Pas de spam."
+    }
+  },
+  "nav": {
+    "home": "Accueil",
+    "services": "Services",
+    "blog": "Blog",
+    "contact": "Contact",
+    "messages": "Messages",
+    "login": "Se connecter",
+    "language": "Langue",
+    "appointment": "Prendre un rendez-vous",
+    "profile": "Mon profil",
+    "admin": "Administration",
+    "logout": "Se déconnecter"
+  },
+
+  "auth": {
+    "loginError": "Erreur lors de la connexion",
+    "authCheckError": "Erreur lors de la vérification de l'authentification",
+    "unauthorizedAccess": "Accès refusé. Cette interface est réservée aux clients.",
+    "login": {
+      "title": "Se connecter",
+      "subtitle": "Accédez à votre espace ABSOLUTE",
+      "email": "Adresse email",
+      "password": "Mot de passe",
+      "forgotPassword": "Mot de passe oublié ?",
+      "submit": "Se connecter",
+      "loading": "Connexion...",
+      "or": "Ou",
+      "noAccount": "Vous n'avez pas de compte ?",
+      "createAccount": "Créer un compte"
+    },
+    "register": {
+      "title": "Créer un compte",
+      "subtitle": "Rejoignez ABSOLUTE SARL",
+      "name": "Nom complet",
+      "email": "Adresse email",
+      "password": "Mot de passe",
+      "confirmPassword": "Confirmer le mot de passe",
+      "submit": "Créer mon compte",
+      "loading": "Création...",
+      "sendingOtp": "Envoi du code...",
+      "or": "Ou",
+      "hasAccount": "Vous avez déjà un compte ?",
+      "login": "Se connecter",
+      "terms": {
+        "start": "En créant un compte, vous acceptez nos",
+        "link": "Conditions d'utilisation",
+        "and": "et notre",
+        "privacy": "Politique de confidentialité"
+      }
+    },
+
+    "forgotPassword": {
+      "title": "Mot de passe oublié ?",
+      "subtitle": "Entrez votre email pour réinitialiser",
+      "email": "Adresse email",
+      "submit": "Envoyer le code de reinitialisation",
+      "loading": "Envoi...",
+      "backToLogin": "Retour à la connexion"
+    },
+    "resetPassword": {
+      "otpCode": "Code de vérification",
+      "didntReceive": "Vous n'avez pas reçu le code ?",
+      "resend": "Renvoyer le code",
+      "changeEmail": "Modifier l’e-mail",
+      "title": "Nouveau mot de passe",
+      "subtitle": "Créez un nouveau mot de passe sécurisé",
+      "password": "Nouveau mot de passe",
+      "confirmPassword": "Confirmer le mot de passe",
+      "submit": "Réinitialiser",
+      "loading": "Réinitialisation en cours...",
+      "successTitle": "Réinitialisation réussie",
+      "successMessage": "Votre mot de passe a été réinitialisé avec succès. Vous pouvez maintenant vous connecter avec votre nouveau mot de passe.",
+      "redirecting": "Redirection vers la page de connexion..."
+    },
+    "verifyEmail": {
+      "title": "Vérifiez votre email",
+      "subtitle": "Nous avons envoyé un code à",
+      "code": "Code de vérification",
+      "backToRegister": "Retour à l'inscription",
+      "submit": "Vérifier",
+      "loading": "Vérification...",
+      "resend": "Renvoyer le code",
+      "didntReceive": "Vous n'avez pas reçu le code ?",
+      "invalidLength": "Le code doit contenir 6 chiffres",
+      "success": "Compte vérifié avec succès !"
+    },
+    "noEmailToVerify": "Aucun email à vérifier. Veuillez vous inscrire d'abord.",
+    "verify": {
+      "title": "Vérifiez votre compte",
+      "subtitle": "Nous avons envoyé un code à 6 chiffres à",
+      "otp": "Code de vérification",
+      "submit": "Vérifier",
+      "loading": "Vérification en cours...",
+      "success": "Compte vérifié avec succès !",
+      "back": "Retour",
+      "noCode": "Vous n'avez pas reçu le code ?",
+      "resend": "Renvoyer le code",
+      "resendSoon": "Un nouveau code a été envoyé. Vérifiez votre boîte de réception.",
+      "invalidLength": "Le code doit contenir exactement 6 chiffres.",
+      "invalidOtp": "Code invalide. Veuillez vérifier et réessayer.",
+      "otpExpired": "Ce code a expiré. Veuillez en demander un nouveau."
+    },
+
+    "missingFields": "Veuillez remplir tous les champs requis.",
+    "unauthorized": {
+      "createAdmin": "Vous n'êtes pas autorisé à créer un compte administrateur."
+    },
+    "emailAlreadyExists": "Un compte avec cet email existe déjà. Essayez de vous connecter ou utilisez une autre adresse.",
+    "registerSuccess": "Inscription réussie ! Bienvenue sur la plateforme 👋",
+    "missingCredentials": "Veuillez renseigner tous les champs obligatoires.",
+    "invalidCredentials": "Email ou mot de passe incorrect.",
+    "loginSuccess": "Connexion réussie !",
+    "noActiveSession": "Aucune session active à déconnecter.",
+    "logoutSuccess": "Vous avez été déconnecté avec succès ✅",
+    "notAuthenticated": "Non authentifié",
+    "userNotFound": "Utilisateur non trouvé",
+    "invalidToken": "Token invalide ou expiré",
+    "emailRequired": "Le champ email est requis.",
+    "accountAlreadyVerified": "Votre compte est déjà vérifié.",
+    "otpAlreadySent": "Un OTP a déjà été envoyé. Veuillez attendre avant de demander un nouveau code.",
+    "otpSent": "Un OTP a été envoyé à votre email. Vérifiez votre boîte mail.",
+    "emailAndOtpRequired": "L'email et le code OTP sont requis pour vérifier le compte.",
+    "invalidOtp": "Le code OTP fourni est invalide.",
+    "otpExpired": "Le code OTP a expiré. Veuillez en demander un nouveau.",
+    "accountVerified": "Votre compte a été vérifié avec succès !",
+    "resetOtpSent": "Le code OTP de réinitialisation a été envoyé à votre email.",
+    "resetPasswordFieldsRequired": "Tous les champs (email, code OTP et nouveau mot de passe) sont requis.",
+    "invalidResetOtp": "Le code OTP fourni est invalide.",
+    "resetOtpExpired": "Le code OTP a expiré. Veuillez en demander un nouveau.",
+    "passwordResetSuccess": "Votre mot de passe a été réinitialisé avec succès."
+  },
+  "common": {
+    "internalError": "Une erreur interne est survenue. Veuillez réessayer plus tard."
+  },
+  "validation": {
+    "required": "Ce champ est requis.",
+    "email": "Veuillez entrer une adresse email valide.",
+    "minLength": "Ce champ doit contenir au moins {min} caractères.",
+    "maxLength": "Ce champ doit contenir au maximum {max} caractères.",
+    "passwordStrength": "Le mot de passe doit contenir au moins 8 caractères, incluant une majuscule, une minuscule, un chiffre et un caractère spécial.",
+    "passwordsMustMatch": "Les mots de passe doivent correspondre."
+  },
+  "services": {
+    "hero": {
+      "badge": "Vous servir, toujours mieux",
+      "title": "Nos Services",
+      "titleHighlight": "Professionnels",
+      "subtitle": "De l'immigration internationale aux services digitaux, découvrez notre gamme complète de solutions professionnelles adaptées à vos besoins.",
+      "ctaPrimary": "Demander un devis gratuit",
+      "ctaSecondary": "Prendre rendez-vous"
+    },
+    "stats": {
+      "clients": "Clients satisfaits",
+      "countries": "Pays d'expertise",
+      "satisfaction": "Taux de satisfaction",
+      "support": "Support disponible"
+    },
+    "portfolio": {
+      "title": "Portfolio de Services",
+      "subtitle": "Des solutions complètes et personnalisées pour accompagner votre réussite professionnelle et personnelle."
+    },
+    "tabs": {
+      "all": "Tous",
+      "immigration": "Immigration",
+      "digital": "Digital",
+      "others": "Autres"
+    },
+    "services": {
+      "canada": {
+        "title": "Immigration Canada",
+        "short": "Accompagnement complet pour vos démarches d'immigration au Canada (résidence permanente & Études).",
+        "long": "Analyse de profil, choix du programme, constitution du dossier, suivi jusqu'au dépôt.",
+        "price": "Sur devis",
+        "duration": "6 à 12 mois",
+        "advantages": [
+          "Gain de temps considérable",
+          "Expertise reconnue",
+          "Transparence totale",
+          "Accompagnement personnalisé"
+        ]
+      },
+      "belgium": {
+        "title": "Immigration Belgique",
+        "short": "Accompagnement complet pour vos démarches d'immigration en Belgique (Études).",
+        "long": "Analyse de profil, choix d'études, constitution du dossier, suivi jusqu'au dépôt.",
+        "price": "Sur devis",
+        "duration": "6 à 12 mois",
+        "advantages": [
+          "Expertise du système belge",
+          "Réseau universitaire étendu",
+          "Transparence",
+          "Support continu"
+        ]
+      },
+      "france": {
+        "title": "Immigration France",
+        "short": "Accompagnement complet pour vos démarches d'immigration en France (Études).",
+        "long": "Analyse de profil, choix d'études, constitution du dossier, suivi jusqu'au dépôt.",
+        "price": "Sur devis",
+        "duration": "6 à 12 mois",
+        "advantages": [
+          "Connaissance approfondie du système français",
+          "Expertise Campus France",
+          "Transparence totale",
+          "Suivi personnalisé"
+        ]
+      },
+      "digital": {
+        "title": "Services Digitaux",
+        "short": "Accompagnement complet à la création/optimisation de l'identité visuelle et gestion du référencement social.",
+        "long": "Community management, publicités Facebook/Google, branding & stratégie digitale, création de contenu.",
+        "price": "Sur devis",
+        "duration": "Selon besoins",
+        "advantages": [
+          "ROI mesurable",
+          "Stratégie personnalisée",
+          "Expertise multicanale",
+          "Reporting régulier"
+        ]
+      },
+      "infography": {
+        "title": "Infographie",
+        "short": "Création d'identité visuelle professionnelle et supports de communication.",
+        "long": "Logo, flyers, affiches, supports corporate, charte graphique complète.",
+        "price": "Sur devis",
+        "duration": "1 à 4 semaines",
+        "advantages": [
+          "Design sur mesure",
+          "Fichiers haute qualité",
+          "Révisions illimitées",
+          "Livraison rapide"
+        ]
+      },
+      "secretariat": {
+        "title": "E-secrétariat",
+        "short": "Assistance personnalisée dans les tâches administratives, avec rapidité et efficacité.",
+        "long": "Rédaction professionnelle, gestion d'agenda, saisie et traitement de documents, support administratif à distance.",
+        "price": "Sur devis",
+        "duration": "Base contractuelle",
+        "advantages": [
+          "Gain de productivité",
+          "Professionnalisme",
+          "Confidentialité absolue",
+          "Flexibilité horaire"
+        ]
+      },
+      "commerce": {
+        "title": "Commerce Général",
+        "short": "Mise à disposition d'articles de qualité de natures diverses.",
+        "long": "Commerce B2A / B2B - Solutions professionnelles sur mesure.",
+        "price": "Affiché",
+        "duration": "Immédiat",
+        "advantages": [
+          "Qualité garantie",
+          "SAV assuré",
+          "Prix compétitifs",
+          "Livraison disponible"
+        ]
+      }
+    },
+    "card": {
+      "keyAdvantages": "Avantages clés",
+      "learnMore": "En savoir plus"
+    },
+    "process": {
+      "title": "Comment ça marche ?",
+      "subtitle": "Un processus simple et transparent en 5 étapes",
+      "step": "Étape",
+      "steps": {
+        "contact": {
+          "title": "Contact",
+          "description": "Prenez contact avec nous"
+        },
+        "diagnostic": {
+          "title": "Diagnostic",
+          "description": "Analyse de vos besoins"
+        },
+        "quote": {
+          "title": "Devis",
+          "description": "Proposition personnalisée"
+        },
+        "payment": {
+          "title": "Paiement",
+          "description": "Règlement sécurisé"
+        },
+        "execution": {
+          "title": "Exécution",
+          "description": "Réalisation & suivi"
+        }
+      }
+    },
+    "whyUs": {
+      "title": "Pourquoi nous choisir ?",
+      "subtitle": "Notre différence : un accompagnement personnalisé et une expertise reconnue",
+      "features": {
+        "transparency": {
+          "title": "Transparence",
+          "description": "Communication claire à chaque étape"
+        },
+        "personalized": {
+          "title": "Personnalisé",
+          "description": "Solutions adaptées à vos besoins"
+        },
+        "expertise": {
+          "title": "Expertise",
+          "description": "Équipe qualifiée et expérimentée"
+        },
+        "reactivity": {
+          "title": "Réactivité",
+          "description": "Support disponible 24/7"
+        }
+      }
+    },
+    "cta": {
+      "title": "Prêt à démarrer votre projet ?",
+      "subtitle": "Contactez-nous dès aujourd'hui pour un diagnostic gratuit et découvrez comment nous pouvons vous accompagner vers le succès.",
+      "primary": "Obtenir un devis gratuit",
+      "secondary": "Consulter notre FAQ",
+      "trust": {
+        "freeQuote": "Devis gratuit",
+        "noCommitment": "Sans engagement",
+        "quickResponse": "Réponse sous 24h"
+      }
+    }
+  },
+  "contact": {
+    "hero": {
+      "title": "Contactez-nous",
+      "subtitle": "Notre équipe est à votre écoute pour concrétiser vos projets",
+      "slogan": "Vous servir, toujours mieux"
+    },
+    "info": {
+      "title": "Nos coordonnées",
+      "description": "N'hésitez pas à nous contacter pour toute question ou demande d'information. Nous vous répondrons dans les plus brefs délais.",
+      "address": {
+        "title": "Adresse",
+        "line1": "Cité des Palmiers, près du Collège Dauphine",
+        "line2": "Immeuble Jaune – 2ᵉ étage – Bureau B09",
+        "line3": "Douala – Cameroun"
+      },
+      "email": {
+        "title": "Emails"
+      },
+      "phone": {
+        "title": "Téléphones",
+        "primary": "Principal",
+        "secondary": "Secondaire"
+      },
+      "hours": {
+        "title": "Horaires d'ouverture",
+        "weekdays": "Lundi - Vendredi",
+        "saturday": "Samedi",
+        "sunday": "Dimanche",
+        "closed": "Fermé"
+      }
+    },
+    "form": {
+      "title": "Envoyez-nous un message",
+      "subtitle": "Remplissez ce formulaire et nous vous recontacterons rapidement",
+      "name": "Nom complet",
+      "namePlaceholder": "Votre nom complet",
+      "email": "Email",
+      "emailPlaceholder": "votre@email.com",
+      "phone": "Téléphone",
+      "phonePlaceholder": "+237 6XX XX XX XX",
+      "subject": "Sujet de votre demande",
+      "subjectPlaceholder": "Sélectionnez un sujet",
+      "subjects": {
+        "canada": "Immigration Canada",
+        "belgium": "Immigration Belgique",
+        "france": "Immigration France",
+        "digital": "Services digitaux & Infographie",
+        "secretariat": "E-secrétariat",
+        "commerce": "Commerce général",
+        "other": "Autre demande"
+      },
+      "message": "Votre message",
+      "messagePlaceholder": "Décrivez-nous votre projet ou votre demande en détail...",
+      "submit": "Envoyer le message",
+      "sending": "Envoi en cours...",
+      "success": "Message envoyé avec succès ! Nous vous répondrons très bientôt.",
+      "error": "Erreur lors de l'envoi. Veuillez réessayer ou nous contacter directement.",
+      "privacy": "Vos données sont protégées et ne seront jamais partagées avec des tiers."
+    },
+    "cta": {
+      "title": "Prêt à démarrer votre projet ?",
+      "subtitle": "Prenez rendez-vous avec un conseiller ou contactez-nous sur WhatsApp",
+      "appointment": "Prendre rendez-vous",
+      "whatsapp": "WhatsApp Business"
+    }
+  },
+  "Footer": {
+    "company": {
+      "title": "ABSOLUTE SARL",
+      "slogan": "Vous servir, toujours mieux",
+      "description": "Spécialiste en immigration internationale, services digitaux et accompagnement administratif. Solutions personnalisées pour vos projets au Canada, en Belgique et en France.",
+      "rccm": "RCCM : CM-DLA-01-2025-B13-00701"
+    },
+    "services": {
+      "title": "Nos Services",
+      "immigration": "Immigration Canada",
+      "belgium": "Immigration Belgique",
+      "france": "Immigration France",
+      "digital": "Marketing Digital",
+      "infography": "Infographie",
+      "secretariat": "E-Secrétariat",
+      "commerce": "Commerce Général"
+    },
+    "quickLinks": {
+      "title": "Liens Rapides",
+      "about": "À Propos",
+      "services": "Nos Services",
+      "process": "Notre Processus",
+      "contact": "Contact",
+      "faq": "FAQ",
+      "blog": "Blog",
+      "careers": "Carrières",
+      "partners": "Partenaires"
+    },
+    "legal": {
+      "title": "Informations Légales",
+      "privacy": "Politique de Confidentialité",
+      "terms": "Conditions Générales",
+      "cookies": "Politique des Cookies",
+      "legal": "Mentions Légales"
+    },
+    "contact": {
+      "title": "Contactez-Nous",
+      "address": "Cité des Palmiers, Immeuble Jaune - 2ᵉ étage - Bureau B09, Douala, Cameroun",
+      "phone": "+237 699 99 28 18",
+      "phoneSecondary": "+237 675 15 78 71",
+      "email": "servicesclients@absolutesarl.com",
+      "hours": "Lun-Ven : 08h-17h | Sam : 08h-15h"
+    },
+    "mobileApp": {
+      "title": "Télécharger l'Application",
+      "description": "Gérez vos projets d'immigration en toute simplicité",
+      "ios": "App Store",
+      "android": "Google Play",
+      "comingSoon": "Bientôt disponible"
+    },
+    "social": {
+      "title": "Suivez-Nous",
+      "facebook": "Facebook",
+      "linkedin": "LinkedIn",
+      "instagram": "Instagram",
+      "twitter": "Twitter",
+      "youtube": "YouTube"
+    },
+    "newsletter": {
+      "title": "Newsletter",
+      "subtitle": "Restez informé de nos actualités et opportunités",
+      "placeholder": "Votre email",
+      "button": "S'abonner",
+      "success": "Inscription réussie !",
+      "error": "Une erreur est survenue"
+    },
+    "payment": {
+      "title": "Moyens de Paiement",
+      "bankTransfer": "Virement bancaire",
+      "cash": "Espèces",
+      "mobileMoney": "Mobile Money",
+      "secure": "Paiements sécurisés"
+    },
+    "copyright": "© {{year}} ABSOLUTE SARL. Tous droits réservés.",
+    "madeWith": "Développé avec",
+    "by": "par"
+  },
+  "blog": {
+    "hero": {
+      "title": "Blog ABSOLUTE SARL",
+      "subtitle": "Conseils, actualités et guides pour réussir vos projets d'immigration et votre transformation digitale"
+    },
+    "filters": {
+      "search": "Rechercher un article...",
+      "allCategories": "Toutes les catégories",
+      "results": "article(s) trouvé(s)"
+    },
+    "readMore": "Lire la suite",
+    "noResults": "Aucun article trouvé pour votre recherche"
+  }
+}

@@ -1,8 +1,10 @@
 "use client";
-
+import { useTranslations } from "next-intl";
+ 
 import { motion } from "framer-motion";
 
 export default function ServerInProgress() {
+    const t = useTranslations("HomePage");
   return (
     <div className="flex min-h-screen items-center justify-center bg-zinc-50 px-6 dark:bg-black">
       <motion.div
@@ -23,7 +25,7 @@ export default function ServerInProgress() {
         />
 
         <h1 className="text-2xl font-semibold text-zinc-900 dark:text-zinc-100">
-          Backend en cours de développement
+          <h1>{t("title")}</h1>;
         </h1>
 
         <p className="text-base leading-7 text-zinc-600 dark:text-zinc-400">
