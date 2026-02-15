@@ -2,86 +2,45 @@ import { createNavigation } from "next-intl/navigation";
 import { defineRouting } from "next-intl/routing";
 
 export const routing = defineRouting({
-  // A list of all locales that are supported
   locales: ["en", "fr"],
-  // Used when no locale matches
   defaultLocale: "en",
+
   pathnames: {
     // Pages publiques
     "/": "/",
-    // Pages d'authentification
-    "/login": {
-      en: "/login",
-      fr: "/connexion",
-      es: "/iniciar-sesion",
-    },
-    "/register": {
-      en: "/register",
-      fr: "/inscription",
-      es: "/registro",
-    },
-    "/forgot-password": {
-      en: "/forgot-password",
-      fr: "/mot-de-passe-oublie",
-      es: "/olvide-contrasena",
-    },
-    "/verify-account": {
-      en: "/verify-email",
-      fr: "/verifier-email",
-      es: "/verificar-email",
-    },
 
+    // Auth
+    "/login": { en: "/login", fr: "/connexion" },
+    "/register": { en: "/register", fr: "/inscription" },
+    "/forgot-password": { en: "/forgot-password", fr: "/mot-de-passe-oublie" },
+    "/verify-account": { en: "/verify-email", fr: "/verifier-email" },
     // Pages principales
-    "/services": {
-      en: "/services",
-      fr: "/services",
-      es: "/servicios",
-    },
-    "/blog": {
-      en: "/blog",
-      fr: "/blog",
-      es: "/blog",
-    },
-    "/contact": {
-      en: "/contact",
-      fr: "/contactez-nous",
-      es: "/contacto",
-    },
-    "/about": {
-      en: "/about",
-      fr: "/a-propos",
-      es: "/acerca-de",
-    },
-    "/terms": {
-      en: "/terms",
-      fr: "/conditions",
-      es: "/terminos",
-    },
-    "/privacy": {
-      en: "/privacy",
-      fr: "/confidentialite",
-      es: "/privacidad",
-    },
-
-    // ← Ajoute ceci :
-    "/blog/[id]": {
-      en: "/blog/[id]",
-      fr: "/blog/[id]",
-    },
-    "/admin": {
-      en: "/admin",
-      fr: "/admin",
-      // ou "/admin" en fr aussi si pas de traduction
-    },
-    "/profile": {
-      en: "/profile",
-      fr: "/profile", // ou "/profil" si tu veux traduire le chemin
-    },
+    "/services": { en: "/services", fr: "/services" },
+    "/blog": { en: "/blog", fr: "/blog" },
+    "/blog/[id]": { en: "/blog/[id]", fr: "/blog/[id]" },
+    "/contact": { en: "/contact", fr: "/contactez-nous" },
+    "/about": { en: "/about", fr: "/a-propos" },
+    "/terms": { en: "/terms", fr: "/conditions" },
+    "/privacy": { en: "/privacy", fr: "/confidentialite" },
+    "/faq": { en: "/faq-custumer", fr: "/faq-client" },
+    // Admin / Utilisateurs
+    "/admin": { en: "/admin", fr: "/admin" },
+    "/rendezvous": { en: "/Appointments", fr: "/rendezvous" },
+    "/sms": { en: "/messages-custumer", fr: "/messages-client" },
+    "/devisclient": { en: "/devisclient", fr: "/devis-client" },
+    // MenuSections personnalisé
+    "/ia-pdf-document": { en: "/ia-pdf-document", fr: "/documents-pdf-ia" },
+    "/blogs": { en: "/blogs", fr: "/blogs" },
+    "/messages": { en: "/messages", fr: "/messages" },
+    "/devis": { en: "/devis-admin", fr: "/devis-admin" },
+    "/rendez-vous": { en: "/rendez-vous", fr: "/rendez-vous" },
+    "/utilisateurs": { en: "/users", fr: "/utilisateurs" },
   },
 });
 
-// Lightweight wrappers around Next.js' navigation APIs
-// that will consider the routing configuration
-export type Locale = (typeof routing.locales)[number];  // → "en" | "fr"
+// Types
+export type Locale = (typeof routing.locales)[number];
+
+// Navigation helpers
 export const { Link, redirect, usePathname, useRouter } =
   createNavigation(routing);

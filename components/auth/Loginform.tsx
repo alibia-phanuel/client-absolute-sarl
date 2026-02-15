@@ -6,7 +6,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { motion } from "framer-motion";
 import { Eye, EyeOff, Mail, Lock, Loader2 } from "lucide-react";
 import Image from "next/image";
-import { Link, useRouter } from "@/i18n/routing";
+import { Link, useRouter as useI18nRouter } from "@/i18n/routing";
+import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -22,9 +23,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { login, isAuth } from "@/lib/auth.api";
 import { useAuthStore } from "@/store/authStore";
-import { loginSchema } from "@/lib/validations/auth";
-
-type LoginFormData = z.infer<typeof loginSchema>;
+import { useGuestOnly } from "@/hooks/useRouteGuard";
 
 export default function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
@@ -33,11 +32,26 @@ export default function LoginForm() {
   const t = useTranslations();
   const tAuth = useTranslations("auth");
   const V = useTranslations("validation");
-  const router = useRouter();
+  const router = useRouter(); // Native Next.js router (for redirects with locale already included)
+  const i18nRouter = useI18nRouter(); // next-intl router (for normal navigation)
+
+  // Rediriger si déjà connecté et vérifié
+  useGuestOnly();
+
+  // Récupérer le paramètre redirect de l'URL
+  const searchParams =
+    typeof window !== "undefined"
+      ? new URLSearchParams(window.location.search)
+      : null;
+  const redirectPath = searchParams?.get("redirect") || null;
+
   const loginSchema = z.object({
-    email: z.string().email(V("email")).min(1, V("required")),
-    password: z.string().min(1, V("required")),
+    email: z.string().email(V("emailInvalid")).min(1, V("emailRequired")),
+    password: z.string().min(1, V("passwordRequired")),
   });
+
+  type LoginFormData = z.infer<typeof loginSchema>;
+
   const form = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -49,20 +63,20 @@ export default function LoginForm() {
   const onSubmit = async (data: LoginFormData) => {
     setIsLoading(true);
     try {
-      // ✅ Étape 1 : Connexion
+      // Étape 1 : Connexion
       const result = await login({
         email: data.email,
         password: data.password,
       });
 
-      // ✅ Stocker le token
+      // Stocker le token
       useAuthStore.getState().setToken(result.token);
 
-      // ✅ Étape 2 : Récupérer les données utilisateur
+      // Étape 2 : Récupérer les données utilisateur
       const authResult = await isAuth();
 
-      // ✅ Stocker les données utilisateur
-      useAuthStore.getState().setUser({
+      // Stocker les données utilisateur
+      useAuthStore.getState().setAuth(result.token, {
         id: authResult.user.id,
         name: authResult.user.name,
         email: authResult.user.email,
@@ -78,21 +92,30 @@ export default function LoginForm() {
 
       toast.success(t(result.messageKey));
 
-      // ✅ Redirection conditionnelle
+      // Attendre que le store persiste et que les cookies soient écrits
+      await new Promise((resolve) => setTimeout(resolve, 300));
+
+      // Redirection conditionnelle
       if (!authResult.user.isAccountVerified) {
+        // Utilisateur non vérifié -> page de vérification
         useAuthStore
           .getState()
           .setPendingVerificationEmail(authResult.user.email);
-        router.push("/verify-account");
+        i18nRouter.push("/verify-account");
+      } else if (redirectPath) {
+        // Si un paramètre redirect existe, utiliser window.location
+        // car le path contient déjà la locale complète (/fr/admin, /en/admin, etc.)
+        // et évite le double ajout de locale par next-intl
+        window.location.href = redirectPath;
       } else if (
         authResult.user.role === "ADMIN" ||
         authResult.user.role === "EMPLOYE"
       ) {
-        router.push({
-          pathname: "/admin",
-        });
+        // Admin/Employé vérifié -> dashboard admin (i18n router ajoute la locale)
+        i18nRouter.push("/admin");
       } else {
-        router.push("/");
+        // Client vérifié -> page d'accueil (i18n router ajoute la locale)
+        i18nRouter.push("/");
       }
     } catch (error: unknown) {
       const err =
@@ -104,8 +127,7 @@ export default function LoginForm() {
                 : "Une erreur inconnue est survenue",
             );
 
-      toast.error(t(err.message || "Une erreur est survenue"));
-      return;
+      toast.error(t(err.message || "auth.loginError"));
     } finally {
       setIsLoading(false);
     }

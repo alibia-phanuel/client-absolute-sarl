@@ -12,7 +12,6 @@ import {
   Phone,
   MapPin,
   Clock,
-  Send,
   Heart,
   Smartphone,
   ChevronRight,
@@ -22,12 +21,11 @@ import {
   Shield,
   LucideIcon,
 } from "lucide-react";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { useState } from "react";
+import { Link } from "@/i18n/routing";
 
 // ========================================
 // TYPES
@@ -43,8 +41,6 @@ interface FooterLink {
   label: string;
   href: string;
 }
-
-
 
 // ========================================
 // MAIN COMPONENT
@@ -143,14 +139,10 @@ export default function Footer() {
   // ========================================
   return (
     <footer className="relative bg-gradient-to-b from-muted/30 via-muted/50 to-muted border-t border-border">
-      {/* ========================================
-          SECTION PRINCIPALE
-          ======================================== */}
+      {/* SECTION PRINCIPALE */}
       <div className="container mx-auto px-4 py-12 sm:py-16 lg:py-20">
         <div className="grid gap-8 sm:gap-12 lg:gap-16 grid-cols-1 sm:grid-cols-2 lg:grid-cols-12">
-          {/* ========================================
-              COLONNE 1 : À PROPOS + APP MOBILE
-              ======================================== */}
+          {/* COLONNE 1 : À PROPOS + APP MOBILE */}
           <div className="lg:col-span-4 space-y-6">
             {/* Logo et Description */}
             <div>
@@ -197,7 +189,6 @@ export default function Footer() {
                   whileTap={{ scale: 0.95 }}
                   className="flex items-center gap-3 px-4 py-2.5 bg-card border-2 border-border rounded-xl hover:border-primary/50 transition-all group relative overflow-hidden"
                 >
-                  {/* Badge "Bientôt" */}
                   <Badge
                     variant="secondary"
                     className="absolute -top-1 -right-1 text-[10px] px-2 py-0.5"
@@ -205,7 +196,6 @@ export default function Footer() {
                     {t("mobileApp.comingSoon")}
                   </Badge>
 
-                  {/* Icône Apple */}
                   <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-slate-800 to-slate-900 flex items-center justify-center flex-shrink-0">
                     <svg
                       className="w-5 h-5 text-white"
@@ -233,7 +223,6 @@ export default function Footer() {
                   whileTap={{ scale: 0.95 }}
                   className="flex items-center gap-3 px-4 py-2.5 bg-card border-2 border-border rounded-xl hover:border-primary/50 transition-all group relative overflow-hidden"
                 >
-                  {/* Badge "Bientôt" */}
                   <Badge
                     variant="secondary"
                     className="absolute -top-1 -right-1 text-[10px] px-2 py-0.5"
@@ -241,7 +230,6 @@ export default function Footer() {
                     {t("mobileApp.comingSoon")}
                   </Badge>
 
-                  {/* Icône Google Play */}
                   <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-green-500 to-blue-500 flex items-center justify-center flex-shrink-0">
                     <svg
                       className="w-5 h-5 text-white"
@@ -288,9 +276,7 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* ========================================
-              COLONNE 2 : NOS SERVICES
-              ======================================== */}
+          {/* COLONNE 2 : NOS SERVICES */}
           <div className="lg:col-span-2">
             <h4 className="font-semibold mb-4 sm:mb-6 text-sm sm:text-base">
               {t("services.title")}
@@ -305,7 +291,7 @@ export default function Footer() {
                   transition={{ delay: index * 0.05 }}
                 >
                   <Link
-                    href={link.href}
+                    href={link.href as any} // ← correction TypeScript ici
                     className="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-2 group"
                   >
                     <ChevronRight className="w-3 h-3 opacity-0 -ml-5 group-hover:opacity-100 group-hover:ml-0 transition-all" />
@@ -316,9 +302,7 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* ========================================
-              COLONNE 3 : LIENS RAPIDES
-              ======================================== */}
+          {/* COLONNE 3 : LIENS RAPIDES */}
           <div className="lg:col-span-2">
             <h4 className="font-semibold mb-4 sm:mb-6 text-sm sm:text-base">
               {t("quickLinks.title")}
@@ -333,7 +317,7 @@ export default function Footer() {
                   transition={{ delay: index * 0.05 }}
                 >
                   <Link
-                    href={link.href}
+                    href={link.href as any} // ← correction TypeScript ici
                     className="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-2 group"
                   >
                     <ChevronRight className="w-3 h-3 opacity-0 -ml-5 group-hover:opacity-100 group-hover:ml-0 transition-all" />
@@ -344,9 +328,7 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* ========================================
-              COLONNE 4 : CONTACT + NEWSLETTER
-              ======================================== */}
+          {/* COLONNE 4 : CONTACT + NEWSLETTER */}
           <div className="lg:col-span-4 space-y-6">
             {/* Contact */}
             <div>
@@ -354,7 +336,6 @@ export default function Footer() {
                 {t("contact.title")}
               </h4>
               <div className="space-y-3">
-                {/* Adresse */}
                 <div className="flex items-start gap-3 text-sm">
                   <MapPin className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
                   <span className="text-muted-foreground">
@@ -362,7 +343,6 @@ export default function Footer() {
                   </span>
                 </div>
 
-                {/* Téléphone */}
                 <div className="flex items-center gap-3 text-sm">
                   <Phone className="w-4 h-4 text-primary flex-shrink-0" />
                   <div className="flex flex-col gap-1">
@@ -381,7 +361,6 @@ export default function Footer() {
                   </div>
                 </div>
 
-                {/* Email */}
                 <div className="flex items-center gap-3 text-sm">
                   <Mail className="w-4 h-4 text-primary flex-shrink-0" />
                   <a
@@ -392,7 +371,6 @@ export default function Footer() {
                   </a>
                 </div>
 
-                {/* Horaires */}
                 <div className="flex items-center gap-3 text-sm">
                   <Clock className="w-4 h-4 text-primary flex-shrink-0" />
                   <span className="text-muted-foreground">
@@ -401,8 +379,6 @@ export default function Footer() {
                 </div>
               </div>
             </div>
-
-
 
             {/* Moyens de Paiement */}
             <div>
@@ -433,27 +409,17 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* ========================================
-          SÉPARATEUR
-          ======================================== */}
       <Separator className="container mx-auto" />
 
-      {/* ========================================
-          SECTION COPYRIGHT
-          ======================================== */}
+      {/* SECTION COPYRIGHT */}
       <div className="container mx-auto px-4 py-6 sm:py-8">
         <div className="flex flex-col sm:flex-row justify-between items-center gap-4 text-xs sm:text-sm text-muted-foreground">
-          {/* Copyright */}
-          {/* <div className="flex flex-wrap items-center justify-center gap-1">
-            <span>{t("copyright", { year: new Date().getFullYear() })}</span>
-          </div> */}
-
           {/* Liens Légaux */}
           <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6">
             {legalLinks.map((link, index) => (
               <Link
                 key={index}
-                href={link.href}
+                href={link.href as any} // ← correction TypeScript ici aussi
                 className="hover:text-primary transition-colors"
               >
                 {link.label}
@@ -465,14 +431,12 @@ export default function Footer() {
           <div className="flex items-center gap-1.5">
             <span>{t("madeWith")}</span>
             <Heart className="w-3 h-3 text-red-500 fill-red-500 animate-pulse" />
-            <span>{t("by")} ABSOLUTE SARL</span>
+            <span>{t("by")} IKOUMA LABS</span>
           </div>
         </div>
       </div>
 
-      {/* ========================================
-          ÉLÉMENTS DÉCORATIFS
-          ======================================== */}
+      {/* ÉLÉMENTS DÉCORATIFS */}
       <div className="absolute bottom-0 left-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -z-10" />
       <div className="absolute top-0 right-0 w-96 h-96 bg-primary/3 rounded-full blur-3xl -z-10" />
     </footer>

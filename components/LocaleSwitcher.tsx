@@ -1,28 +1,26 @@
 "use client";
 
-import { routing } from "@/i18n/routing";
+
 import { Globe } from "lucide-react";
 import { useLocale } from "next-intl";
 import LocaleSwitcherSelect from "./LocaleSwitcherSelect";
 import { motion } from "framer-motion";
 
-// Mapping des drapeaux par locale
 const localeFlags: Record<string, string> = {
-  en: "🇬🇧", // Anglais
-  fr: "🇫🇷", // Français
-  es: "🇪🇸", // Espagnol
-  de: "🇩🇪", // Allemand
-  it: "🇮🇹", // Italien
-  pt: "🇵🇹", // Portugais
-  ar: "🇸🇦", // Arabe
-  zh: "🇨🇳", // Chinois
-  ja: "🇯🇵", // Japonais
-  ko: "🇰🇷", // Coréen
-  ru: "🇷🇺", // Russe
-  nl: "🇳🇱", // Néerlandais
+  en: "GB",
+  fr: "FR",
+  es: "ES",
+  de: "DE",
+  it: "IT",
+  pt: "PT",
+  ar: "SA",
+  zh: "CN",
+  ja: "JP",
+  ko: "KR",
+  ru: "RU",
+  nl: "NL",
 };
 
-// Noms complets des langues
 export const localeNames: Record<string, string> = {
   en: "English",
   fr: "Français",
@@ -54,18 +52,13 @@ export default function LocaleSwitcher() {
       >
         <Globe className="h-4 w-4 text-muted-foreground group-hover:text-primary transition-colors" />
       </motion.div>
+
       <LocaleSwitcherSelect
         defaultValue={locale}
         label="Select a locale"
-        localeFlags={localeFlags} // TypeScript ne peut pas inférer correctement le type ici, on force à `any`
+        localeFlags={localeFlags}
         localeNames={localeNames}
-      >
-        {routing.locales.map((cur) => (
-          <option key={cur} value={cur}>
-            {localeFlags[cur] || ""} {localeNames[cur] || cur.toUpperCase()}
-          </option>
-        ))}
-      </LocaleSwitcherSelect>
+      />
     </motion.div>
   );
 }

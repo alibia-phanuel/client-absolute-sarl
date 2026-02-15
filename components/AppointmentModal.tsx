@@ -1,13 +1,26 @@
+/**
+ * 📅 Modal de Prise de Rendez-vous (Espace Client)
+ * 
+ * Modal amélioré pour créer un rendez-vous avec :
+ * - Sélection de date (future uniquement)
+ * - Sélection d'heure
+ * - Choix du sujet (liste déroulante)
+ * - Validation complète
+ * - Intégration API
+ * - Gestion des erreurs
+ */
+
 "use client";
 
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { motion, AnimatePresence } from "framer-motion";
-import { Calendar, Clock, MessageSquare, Loader2, X } from "lucide-react";
+import { motion } from "framer-motion";
+import { Calendar, Clock, Loader2, X } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { z } from "zod";
+
 import {
   Dialog,
   DialogContent,
@@ -25,22 +38,45 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+
+import { createRendezVous } from "@/lib/Rendezvous.api";
+
+// ============================================================================
+// 📋 Props du Composant
+// ============================================================================
 
 interface AppointmentModalProps {
   isOpen: boolean;
   onClose: () => void;
+  onSuccess?: () => void; // Callback optionnel après succès
 }
+
+// ============================================================================
+// 🎨 Composant Principal
+// ============================================================================
 
 export default function AppointmentModal({
   isOpen,
   onClose,
+  onSuccess,
 }: AppointmentModalProps) {
   const t = useTranslations();
   const V = useTranslations("validation");
+  const C = useTranslations("contact");
+
   const [isLoading, setIsLoading] = useState(false);
 
-  // ✅ Validation Zod locale
+  // ============================================================================
+  // 📝 Validation avec Zod
+  // ============================================================================
+
   const appointmentSchema = z.object({
     date: z
       .string()
@@ -53,20 +89,20 @@ export default function AppointmentModal({
         },
         {
           message: V("dateFuture"),
-        },
+        }
       ),
     time: z
       .string()
       .min(1, V("timeRequired"))
       .regex(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/, V("timeInvalid")),
-    note: z
-      .string()
-      .min(1, V("noteRequired"))
-      .min(10, V("noteMin"))
-      .max(500, V("noteMax")),
+    note: z.string().min(1, V("noteRequired")),
   });
 
   type AppointmentFormData = z.infer<typeof appointmentSchema>;
+
+  // ============================================================================
+  // 🎯 Initialisation du Formulaire
+  // ============================================================================
 
   const form = useForm<AppointmentFormData>({
     resolver: zodResolver(appointmentSchema),
@@ -77,59 +113,49 @@ export default function AppointmentModal({
     },
   });
 
+  // ============================================================================
+  // 💾 Soumission du Formulaire
+  // ============================================================================
+
   const onSubmit = async (data: AppointmentFormData) => {
     setIsLoading(true);
 
-    // ✅ Combiner date et heure en ISO 8601
-    const dateTimeISO = new Date(`${data.date}T${data.time}:00`).toISOString();
-
-    // ✅ Payload pour l'API
-    const apiPayload = {
-      date: dateTimeISO,
-      note: data.note.trim(),
-    };
-
-    // ✅ LOG des données validées
-    console.log("📦 Données validées pour l'API Rendez-vous:", {
-      dateOriginal: data.date,
-      timeOriginal: data.time,
-      dateTimeISO: dateTimeISO,
-      note: data.note,
-      timestamp: new Date().toISOString(),
-    });
-
-    console.log(
-      "🚀 Payload API Rendez-vous:",
-      JSON.stringify(apiPayload, null, 2),
-    );
-
     try {
-      const response = await fetch("/api/rendezvous", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          // ✅ Ajouter le token si nécessaire
-          // "Authorization": `Bearer ${yourToken}`,
-        },
-        body: JSON.stringify(apiPayload),
+      // ====== ÉTAPE 1 : Combiner date et heure en ISO 8601 ======
+      const dateTimeISO = new Date(
+        `${data.date}T${data.time}:00`
+      ).toISOString();
+
+      // ====== ÉTAPE 2 : Préparer le payload pour l'API ======
+      const apiPayload = {
+        date: dateTimeISO,
+        note: data.note.trim(),
+      };
+
+      console.log("📦 Données du rendez-vous:", {
+        dateOriginal: data.date,
+        timeOriginal: data.time,
+        dateTimeISO: dateTimeISO,
+        note: data.note,
       });
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        console.error("❌ Erreur API Rendez-vous:", errorData);
-        throw new Error(
-          errorData.message || "Erreur lors de la création du rendez-vous",
-        );
-      }
+      // ====== ÉTAPE 3 : Appel à l'API ======
+      const result = await createRendezVous(apiPayload);
 
-      const result = await response.json();
-      console.log("✅ Réponse API Rendez-vous:", result);
+      console.log("✅ Rendez-vous créé:", result);
 
-      toast.success(t(result.messageKey || "Rendez-vous créé avec succès"));
+      // ====== ÉTAPE 4 : Succès ======
+      toast.success(t(result.messageKey));
       form.reset();
       onClose();
-    } catch (error) {
-      console.error("❌ Erreur lors de la création du rendez-vous:", error);
+      
+      // Appeler le callback de succès si fourni
+      if (onSuccess) {
+        onSuccess();
+      }
+    } catch (error: unknown) {
+      // ====== ÉTAPE 5 : Gestion des erreurs ======
+      console.error("❌ Erreur création rendez-vous:", error);
       const err = error instanceof Error ? error : new Error(String(error));
       toast.error(t(err.message));
     } finally {
@@ -137,8 +163,21 @@ export default function AppointmentModal({
     }
   };
 
+  // ============================================================================
+  // 🚪 Fermeture du Modal
+  // ============================================================================
+
+  const handleClose = () => {
+    form.reset();
+    onClose();
+  };
+
+  // ============================================================================
+  // 🎨 Rendu du Composant
+  // ============================================================================
+
   return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
+    <Dialog open={isOpen} onOpenChange={handleClose}>
       <DialogContent className="sm:max-w-[500px] p-0 overflow-hidden">
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
@@ -146,11 +185,12 @@ export default function AppointmentModal({
           exit={{ opacity: 0, scale: 0.95 }}
           transition={{ duration: 0.2 }}
         >
-          {/* Header avec gradient */}
+          {/* ====== Header avec Gradient ====== */}
           <div className="relative bg-gradient-to-r from-primary to-primary/80 p-6 text-primary-foreground">
             <button
-              onClick={onClose}
+              onClick={handleClose}
               className="absolute top-4 right-4 p-1 rounded-full hover:bg-white/20 transition-colors"
+              disabled={isLoading}
             >
               <X className="h-5 w-5" />
             </button>
@@ -165,14 +205,14 @@ export default function AppointmentModal({
             </DialogHeader>
           </div>
 
-          {/* Formulaire */}
+          {/* ====== Formulaire ====== */}
           <div className="p-6">
             <Form {...form}>
               <form
                 onSubmit={form.handleSubmit(onSubmit)}
                 className="space-y-5"
               >
-                {/* Date */}
+                {/* ====== Date ====== */}
                 <FormField
                   control={form.control}
                   name="date"
@@ -198,7 +238,7 @@ export default function AppointmentModal({
                   )}
                 />
 
-                {/* Heure */}
+                {/* ====== Heure ====== */}
                 <FormField
                   control={form.control}
                   name="time"
@@ -223,7 +263,7 @@ export default function AppointmentModal({
                   )}
                 />
 
-                {/* Note */}
+                {/* ====== Sujet / Note (Select) ====== */}
                 <FormField
                   control={form.control}
                   name="note"
@@ -232,29 +272,48 @@ export default function AppointmentModal({
                       <FormLabel className="text-sm font-semibold">
                         {t("appointment.note")}
                       </FormLabel>
-                      <FormControl>
-                        <div className="relative">
-                          <MessageSquare className="absolute left-3 top-3 h-5 w-5 text-muted-foreground" />
-                          <Textarea
-                            {...field}
-                            placeholder={t("appointment.notePlaceholder")}
-                            className="pl-10 min-h-32 resize-none border-2 border-border/50 focus:border-primary transition-colors"
-                            disabled={isLoading}
-                            maxLength={500}
-                          />
-                        </div>
-                      </FormControl>
-                      <div className="flex justify-between items-center">
-                        <FormMessage className="text-xs" />
-                        <span className="text-xs text-muted-foreground">
-                          {field.value.length}/500
-                        </span>
-                      </div>
+                      <Select
+                        onValueChange={field.onChange}
+                        value={field.value}
+                        disabled={isLoading}
+                      >
+                        <FormControl>
+                          <SelectTrigger className="h-12 border-2 border-border/50 focus:border-primary transition-colors">
+                            <SelectValue
+                              placeholder={t("appointment.notePlaceholder")}
+                            />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          <SelectItem value="Immigration Canada">
+                            {C("form.subjects.canada")}
+                          </SelectItem>
+                          <SelectItem value="Immigration Belgique">
+                            {C("form.subjects.belgium")}
+                          </SelectItem>
+                          <SelectItem value="Immigration France">
+                            {C("form.subjects.france")}
+                          </SelectItem>
+                          <SelectItem value="Services digitaux & Infographie">
+                            {C("form.subjects.digital")}
+                          </SelectItem>
+                          <SelectItem value="E-secrétariat">
+                            {C("form.subjects.secretariat")}
+                          </SelectItem>
+                          <SelectItem value="Commerce général">
+                            {C("form.subjects.commerce")}
+                          </SelectItem>
+                          <SelectItem value="Autre demande">
+                            {C("form.subjects.other")}
+                          </SelectItem>
+                        </SelectContent>
+                      </Select>
+                      <FormMessage className="text-xs" />
                     </FormItem>
                   )}
                 />
 
-                {/* Horaires disponibles */}
+                {/* ====== Horaires Disponibles ====== */}
                 <div className="p-4 bg-muted/50 rounded-lg border border-border">
                   <p className="text-sm font-semibold mb-2 flex items-center gap-2">
                     <Clock className="h-4 w-4 text-primary" />
@@ -269,12 +328,12 @@ export default function AppointmentModal({
                   </div>
                 </div>
 
-                {/* Boutons */}
+                {/* ====== Boutons d'Action ====== */}
                 <div className="flex gap-3 pt-2">
                   <Button
                     type="button"
                     variant="outline"
-                    onClick={onClose}
+                    onClick={handleClose}
                     disabled={isLoading}
                     className="flex-1 h-12"
                   >

@@ -27,11 +27,11 @@ import {
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
+import AppointmentModal from "@/components/AppointmentModal";
 import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -132,7 +132,7 @@ const ServiceCard = ({
           </CardDescription>
         </CardHeader>
 
-        <CardContent className="relative z-10 space-y-4">
+        <CardContent className="relative z-10 space-y-4 pb-6">
           {/* Key details */}
           <div className="grid grid-cols-2 gap-3">
             <div className="flex items-center gap-2 text-sm">
@@ -161,13 +161,6 @@ const ServiceCard = ({
             </ul>
           </div>
         </CardContent>
-
-        <CardFooter className="relative z-10">
-          <Button className="w-full group/btn" size="lg">
-            {t("card.learnMore")}
-            <ArrowRight className="ml-2 w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
-          </Button>
-        </CardFooter>
 
         {/* Hover effect beam */}
         <motion.div
@@ -291,7 +284,7 @@ const WhyUsFeatureCard = ({
 export default function ServicesPage() {
   const t = useTranslations("services");
   const [selectedCategory, setSelectedCategory] = useState("all");
-
+ const [isModalOpen, setIsModalOpen] = useState(false);
   // Services data
   const services: Service[] = [
     {
@@ -516,6 +509,7 @@ export default function ServicesPage() {
                 size="lg"
                 variant="outline"
                 className="h-12 px-8 text-base"
+                onClick={() => setIsModalOpen(true)}
               >
                 {t("hero.ctaSecondary")}
               </Button>
@@ -769,6 +763,10 @@ export default function ServicesPage() {
           </motion.div>
         </div>
       </section>
+      <AppointmentModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
     </div>
   );
 }

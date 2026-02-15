@@ -1,10 +1,10 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, User, LogOut } from "lucide-react";
+import { Menu, X, User, LogOut, Calendar, MessageSquare, FileText } from "lucide-react";
 import Image from "next/image";
-import { Link, routing, useRouter } from "@/i18n/routing";
+import { Link, routing, useRouter as useI18nRouter } from "@/i18n/routing";
 import { useTranslations } from "next-intl";
 import LocaleSwitcher from "./LocaleSwitcher";
 import { Button } from "@/components/ui/button";
@@ -24,6 +24,7 @@ const navItems = [
   { key: "home", href: "/" as const },
   { key: "services", href: "/services" as const },
   { key: "blog", href: "/blog" as const },
+  { key: "faq", href: "/faq" as const },
   { key: "contact", href: "/contact" as const },
 ] satisfies Array<{ key: string; href: keyof (typeof routing)["pathnames"] }>;
 
@@ -31,30 +32,23 @@ export default function NavBar() {
   const [isOpen, setIsOpen] = useState(false);
   const t = useTranslations("nav");
   const tAuth = useTranslations("auth");
-  const router = useRouter();
+  const i18nRouter = useI18nRouter();
 
-  // ✅ Récupérer l'état d'authentification
+  // Récupérer l'état d'authentification
   const { user, isAuthenticated, logout } = useAuthStore();
 
   const toggleMenu = () => setIsOpen(!isOpen);
 
-  // ✅ Vérifier le rôle au montage du composant
-  useEffect(() => {
-    if (user && (user.role === "ADMIN" || user.role === "EMPLOYE")) {
-      logout();
-      toast.error(tAuth("unauthorizedAccess"));
-      router.push("/login");
-    }
-  }, [user, logout, router, tAuth]);
-
-  // ✅ Fonction de déconnexion
-  const handleLogout = () => {
+  // Fonction de déconnexion
+  const handleLogout = async () => {
     logout();
     toast.success(tAuth("logoutSuccess"));
-    router.push("/");
+    // Attendre la synchronisation des cookies
+    await new Promise((resolve) => setTimeout(resolve, 300));
+    i18nRouter.push("/");
   };
 
-  // ✅ Obtenir les initiales pour l'avatar
+  // Obtenir les initiales pour l'avatar
   const getInitials = (name: string) => {
     return name
       .split(" ")
@@ -84,7 +78,7 @@ export default function NavBar() {
                 whileHover={{ scale: 1.05, rotate: 2 }}
                 whileTap={{ scale: 0.95 }}
                 transition={{ type: "spring", stiffness: 400, damping: 17 }}
-                className="relative h-10 w-32"
+                className="relative h-20 w-72"
               >
                 <Image
                   src="/logo.png"
@@ -129,7 +123,7 @@ export default function NavBar() {
           >
             <LocaleSwitcher />
 
-            {/* ✅ Affichage conditionnel : Login ou User Menu */}
+            {/* Affichage conditionnel : Login ou User Menu */}
             {isAuthenticated() && user ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
@@ -158,15 +152,61 @@ export default function NavBar() {
                     </div>
                   </DropdownMenuLabel>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem asChild>
-                    <Link
-                      href="/profile"
-                      className="flex items-center cursor-pointer"
-                    >
-                      <User className="mr-2 h-4 w-4" />
-                      <span>{t("profile")}</span>
-                    </Link>
-                  </DropdownMenuItem>
+
+                  {/* Lien Admin pour ADMIN/EMPLOYE */}
+                  {(user.role === "ADMIN" || user.role === "EMPLOYE") && (
+                    <>
+                      <DropdownMenuItem asChild>
+                        <Link
+                          href="/admin"
+                          className="flex items-center cursor-pointer"
+                        >
+                          <User className="mr-2 h-4 w-4" />
+                          <span>{t("admin")}</span>
+                        </Link>
+                      </DropdownMenuItem>
+                      <DropdownMenuSeparator />
+                    </>
+                  )}
+                  {/* Appointments */}
+                  {user.role === "CLIENT" && (
+                    <DropdownMenuItem asChild>
+                      <Link
+                        href="/rendezvous"
+                        className="flex items-center cursor-pointer"
+                      >
+                        <Calendar className="mr-2 h-4 w-4" />
+                        <span>{t("Appointments")}</span>
+                      </Link>
+                    </DropdownMenuItem>
+                  )}
+
+                  {/* Messages */}
+                  {user.role === "CLIENT" && (
+                    <DropdownMenuItem asChild>
+                      <Link
+                        href="/sms"
+                        className="flex items-center cursor-pointer"
+                      >
+                        <MessageSquare className="mr-2 h-4 w-4" />
+                        <span>{t("sms")}</span>
+                      </Link>
+                    </DropdownMenuItem>
+                  )}
+
+                  {/* Quotes */}
+                  {user.role === "CLIENT" && (
+                    <DropdownMenuItem asChild>
+                      <Link
+                        href="/devisclient"
+                        className="flex items-center cursor-pointer"
+                      >
+                        <FileText className="mr-2 h-4 w-4" />
+                        <span>{t("devis")}</span>
+                      </Link>
+                    </DropdownMenuItem>
+                  )}
+
                   <DropdownMenuSeparator />
                   <DropdownMenuItem
                     onClick={handleLogout}
@@ -276,7 +316,7 @@ export default function NavBar() {
                     <LocaleSwitcher />
                   </div>
 
-                  {/* ✅ Mobile : Login ou User Info */}
+                  {/* Mobile : Login ou User Info */}
                   {isAuthenticated() && user ? (
                     <div className="space-y-3">
                       <div className="flex items-center gap-3 p-3 bg-muted rounded-lg">
@@ -296,14 +336,29 @@ export default function NavBar() {
                         </div>
                       </div>
 
-                      <Link
-                        href={"/profile" as `/profile`}
-                        onClick={() => setIsOpen(false)}
-                        className="flex items-center gap-2 px-4 py-2 text-sm text-foreground/80 hover:text-primary hover:bg-muted rounded-md transition-all"
-                      >
-                        <User className="h-4 w-4" />
-                        <span>{t("profile")}</span>
-                      </Link>
+                      {/* Lien Admin pour ADMIN/EMPLOYE */}
+                      {(user.role === "ADMIN" || user.role === "EMPLOYE") && (
+                        <Link
+                          href="/admin"
+                          onClick={() => setIsOpen(false)}
+                          className="flex items-center gap-2 px-4 py-2 text-sm text-foreground/80 hover:text-primary hover:bg-muted rounded-md transition-all"
+                        >
+                          <User className="h-4 w-4" />
+                          <span>{t("admin")}</span>
+                        </Link>
+                      )}
+
+                      {/* Lien Admin pour ADMIN/EMPLOYE */}
+                      {user.role === "CLIENT" && (
+                        <Link
+                          href="/rendezvous"
+                          onClick={() => setIsOpen(false)}
+                          className="flex items-center gap-2 px-4 py-2 text-sm text-foreground/80 hover:text-primary hover:bg-muted rounded-md transition-all"
+                        >
+                          <User className="h-4 w-4" />
+                          <span>{t("Appointments")}</span>
+                        </Link>
+                      )}
 
                       <Button
                         onClick={() => {

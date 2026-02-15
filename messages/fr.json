@@ -195,8 +195,8 @@
       "subtitle": "Notre équipe est disponible pour répondre à toutes vos questions",
       "address": {
         "title": "Adresse",
-        "line1": "Cité des Palmiers",
-        "line2": "Immeuble Jaune - 2ᵉ étage - Bureau B09",
+        "line1": "Cité des Palmiers Immeuble Jaune ",
+        "line2": " 2ᵉ étage - Bureau B09",
         "line3": "Douala, Cameroun"
       },
       "hours": {
@@ -228,6 +228,7 @@
     "home": "Accueil",
     "services": "Services",
     "blog": "Blog",
+    "faq": "Faq",
     "contact": "Contact",
     "messages": "Messages",
     "login": "Se connecter",
@@ -235,10 +236,32 @@
     "appointment": "Prendre un rendez-vous",
     "profile": "Mon profil",
     "admin": "Administration",
-    "logout": "Se déconnecter"
+    "logout": "Se déconnecter",
+    "Appointments": "Rendez-vous",
+     "sms": "Messages",
+     "devis": "devis"
   },
 
   "auth": {
+    "verifyAccount": {
+      "title": "Vérifiez votre compte",
+      "subtitle": "Entrez le code de vérification envoyé à votre adresse email",
+      "otpCode": "Code de vérification",
+      "submit": "Vérifier mon compte",
+      "loading": "Vérification...",
+      "didntReceive": "Vous n'avez pas reçu le code ?",
+      "resend": "Renvoyer le code",
+      "resending": "Envoi en cours...",
+      "backToLogin": "Retour à la connexion",
+      "successTitle": "Compte vérifié !",
+      "successMessage": "Votre compte a été vérifié avec succès.",
+      "redirecting": "Redirection en cours...",
+      "noEmail": "Aucune adresse email trouvée"
+    },
+
+    "validation": {
+      "codeLength": "Le code doit contenir 6 chiffres"
+    },
     "loginError": "Erreur lors de la connexion",
     "authCheckError": "Erreur lors de la vérification de l'authentification",
     "unauthorizedAccess": "Accès refusé. Cette interface est réservée aux clients.",
@@ -377,6 +400,7 @@
     "confirmPasswordRequired": "Veuillez confirmer votre mot de passe",
     "passwordMatch": "Les mots de passe ne correspondent pas",
     "codeRequired": "Le code est requis",
+    "codeLength": "Le code doit contenir 6 chiffres",
     "phoneRequired": "Le téléphone est requis",
     "phoneMin": "Numéro de téléphone invalide",
     "subjectRequired": "Veuillez sélectionner un sujet",
@@ -388,11 +412,17 @@
     "timeInvalid": "Format d'heure invalide (HH:MM)",
     "noteRequired": "La note est requise",
     "noteMin": "La note doit contenir au moins 10 caractères",
-    "noteMax": "La note ne peut pas dépasser 500 caractères"
-    
+    "noteMax": "La note ne peut pas dépasser 500 caractères",
+    "titleRequired": "Le titre est requis",
+    "titleMin": "Le titre doit contenir au moins 3 caractères",
+    "titleMax": "Le titre ne peut pas dépasser 200 caractères",
+    "contentRequired": "Le contenu est requis",
+    "contentMin": "Le contenu doit contenir au moins 50 caractères",
+    "invalidData": "Données invalides",
+    "roleRequired": "Le rôle est requis"
   },
-   "appointment": {
- "title": "Prendre rendez-vous",
+  "appointment": {
+    "title": "Prendre rendez-vous",
     "subtitle": "Choisissez la date et l'heure qui vous conviennent",
     "date": "Date du rendez-vous",
     "time": "Heure",
@@ -745,5 +775,501 @@
     },
     "readMore": "Lire la suite",
     "noResults": "Aucun article trouvé pour votre recherche"
+  },
+  "faq": {
+    "hero": {
+      "badge": "Centre d'aide",
+      "title": "Questions Fréquentes",
+      "subtitle": "Trouvez rapidement des réponses à vos questions sur nos services d'immigration, marketing digital, et accompagnement professionnel."
+    },
+    "filters": {
+      "search": "Rechercher une question...",
+      "questionSingular": "question",
+      "questionPlural": "questions"
+    },
+    "categories": {
+      "all": "Toutes les questions",
+      "immigration": "Immigration",
+      "services": "Services",
+      "general": "Général"
+    },
+    "categoriesSection": {
+      "title": "Parcourir par catégorie",
+      "subtitle": "Filtrez les questions selon vos besoins"
+    },
+    "stats": {
+      "questions": "Questions",
+      "availability": "Disponibilité",
+      "experts": "Experts",
+      "satisfaction": "Satisfaction"
+    },
+    "noResults": {
+      "title": "Aucun résultat",
+      "subtitle": "Essayez de modifier votre recherche ou contactez-nous directement",
+      "cta": "Nous contacter"
+    },
+    "cta": {
+      "title": "Vous n'avez pas trouvé votre réponse ?",
+      "subtitle": "Notre équipe est là pour vous aider. Contactez-nous et obtenez une réponse personnalisée à vos questions.",
+      "primary": "Nous contacter",
+      "secondary": "Demander un devis gratuit",
+      "features": {
+        "fast": {
+          "title": "Réponse rapide",
+          "description": "Sous 2h en semaine"
+        },
+        "expert": {
+          "title": "Expertise garantie",
+          "description": "Conseillers spécialisés"
+        },
+        "free": {
+          "title": "Sans engagement",
+          "description": "Consultation gratuite"
+        }
+      }
+    },
+    "questions": [
+      {
+        "id": 1,
+        "question": "Quels services propose ABSOLUTE SARL ?",
+        "answer": "ABSOLUTE SARL propose une gamme complète de services professionnels :\n\n• Immigration (Canada, Belgique, France)\n• Marketing digital et stratégie de communication\n• Infographie et identité visuelle\n• E-secrétariat et assistance administrative\n• Commerce général\n\nNous sommes votre partenaire multiservices pour vos projets professionnels et personnels.",
+        "category": "general",
+        "tags": ["Services", "Présentation"]
+      },
+      {
+        "id": 2,
+        "question": "Aidez-vous pour l'immigration au Canada ?",
+        "answer": "Oui, absolument ! Nous accompagnons nos clients dans leurs démarches d'immigration au Canada pour :\n\n• La résidence permanente (tous programmes)\n• Les visas d'études\n• L'orientation professionnelle et académique\n• La constitution complète du dossier\n• Le suivi jusqu'au dépôt et après\n\nNotre équipe spécialisée vous guide à chaque étape du processus.",
+        "category": "immigration",
+        "tags": ["Canada", "Résidence permanente", "Études"]
+      },
+      {
+        "id": 3,
+        "question": "Aidez-vous pour l'immigration en Belgique ?",
+        "answer": "Oui, nous sommes spécialisés dans l'accompagnement pour les études en Belgique :\n\n• Choix des universités et programmes\n• Dossier d'admission complet\n• Préparation du visa étudiant\n• Assistance administrative complète\n• Suivi personnalisé jusqu'à votre départ\n\nNous vous aidons à réaliser votre projet d'études en Europe en toute sérénité.",
+        "category": "immigration",
+        "tags": ["Belgique", "Europe", "Études"]
+      },
+      {
+        "id": 4,
+        "question": "Proposez-vous des services pour la France ?",
+        "answer": "Oui, nous accompagnons les étudiants pour leur projet d'études en France :\n\n• Orientation académique personnalisée\n• Choix d'établissements et programmes\n• Constitution du dossier Campus France\n• Préparation du visa étudiant\n• Accompagnement jusqu'à l'obtention du visa\n\nNotre expertise vous assure un dossier solide et professionnel.",
+        "category": "immigration",
+        "tags": ["France", "Campus France", "Études"]
+      },
+      {
+        "id": 5,
+        "question": "Est-ce que vous garantissez l'obtention du visa ?",
+        "answer": "Non, nous ne pouvons pas garantir l'obtention du visa car la décision finale appartient aux autorités consulaires et d'immigration.\n\nCependant, nous mettons tout en œuvre pour maximiser vos chances de succès :\n\n• Analyse approfondie de votre profil\n• Constitution d'un dossier complet et conforme\n• Préparation optimale aux entretiens\n• Suivi rigoureux de toutes les étapes\n• Expertise basée sur notre expérience terrain\n\nNotre engagement : un accompagnement professionnel et transparent.",
+        "category": "immigration",
+        "tags": ["Visa", "Garantie", "Accompagnement"]
+      },
+      {
+        "id": 6,
+        "question": "Où êtes-vous situés physiquement ?",
+        "answer": "Notre siège est situé à Douala, Cameroun :\n\n📍 Adresse : Cité des Palmiers, près du Collège Dauphine\nImmeuble Jaune - 2ème étage - Bureau B09\nDouala - Cameroun\n\n📞 Téléphones :\n• Principal : +237 699 99 28 18\n• Secondaire : +237 675 15 78 71\n\n🕒 Horaires :\n• Lundi - Vendredi : 08h00 - 17h00\n• Samedi : 08h00 - 15h00\n\nNous vous accueillons avec plaisir pour discuter de vos projets !",
+        "category": "general",
+        "tags": ["Localisation", "Contact", "Horaires"]
+      },
+      {
+        "id": 7,
+        "question": "Travaillez-vous entièrement à distance ?",
+        "answer": "Oui, nous proposons un accompagnement 100% en ligne pour tous nos services !\n\n✅ Avantages du travail à distance :\n• Consultations par visioconférence\n• Envoi sécurisé de documents\n• Suivi en temps réel de votre dossier\n• Communication constante (email, WhatsApp, téléphone)\n• Flexibilité et gain de temps\n\nQue vous soyez au Cameroun, en Afrique ou ailleurs dans le monde, nous vous accompagnons efficacement.",
+        "category": "general",
+        "tags": ["En ligne", "Distance", "Digital"]
+      },
+      {
+        "id": 8,
+        "question": "Quels sont vos délais de traitement ?",
+        "answer": "Les délais varient selon le type de service :\n\n⏱️ Services digitaux & Infographie : 1 à 7 jours\n⏱️ E-secrétariat : Immédiat à 3 jours\n⏱️ Immigration (Canada, Belgique, France) : 6 à 12 mois\n⏱️ Commerce général : Selon disponibilité\n\nNous vous fournissons un calendrier précis dès le début de notre collaboration. Notre priorité : respecter les délais tout en maintenant la qualité.",
+        "category": "services",
+        "tags": ["Délais", "Timing", "Planning"]
+      },
+      {
+        "id": 9,
+        "question": "Peut-on payer en plusieurs tranches ?",
+        "answer": "Oui, nous proposons des facilités de paiement pour la plupart de nos services !\n\n💳 Options de paiement échelonné :\n• Paiement en 2, 3 ou 4 tranches selon le service\n• Calendrier de paiement personnalisé\n• Conditions transparentes et claires\n\n💰 Moyens de paiement acceptés :\n• Virement bancaire\n• Mobile Money (MTN, Orange)\n• Espèces (au bureau)\n\nContactez-nous pour établir un plan de paiement adapté à votre budget.",
+        "category": "general",
+        "tags": ["Paiement", "Facilités", "Tarifs"]
+      },
+      {
+        "id": 10,
+        "question": "Avez-vous des conseillers dédiés par service ?",
+        "answer": "Oui, chaque domaine est géré par des experts dédiés :\n\n👨‍💼 Immigration Canada : Dilane Kamto\n👨‍💼 Immigration Europe : Mike Tchabet\n👩‍💼 Services Digital : Adeline Ntouko\n👨‍💼 Direction Générale : Jordan Ntouko\n\nChaque conseiller possède une expertise approfondie dans son domaine et vous accompagne personnellement tout au long de votre projet.",
+        "category": "general",
+        "tags": ["Équipe", "Conseillers", "Expertise"]
+      },
+      {
+        "id": 11,
+        "question": "Proposez-vous des devis gratuits ?",
+        "answer": "Oui, tous nos devis sont gratuits et sans engagement !\n\n📋 Notre processus :\n1. Contact initial (téléphone, email, WhatsApp)\n2. Diagnostic gratuit de vos besoins\n3. Devis détaillé et personnalisé\n4. Présentation des options et modalités\n5. Aucune obligation de votre part\n\nNous croyons en la transparence totale. Vous connaissez le prix exact avant de vous engager.",
+        "category": "services",
+        "tags": ["Devis", "Gratuit", "Tarification"]
+      },
+      {
+        "id": 12,
+        "question": "Quels sont les prérequis pour l'immigration Canada ?",
+        "answer": "Les documents de base pour démarrer votre dossier Canada :\n\n📄 Documents essentiels :\n• Passeport valide\n• CV détaillé\n• Diplômes et relevés de notes\n• Attestations d'emploi\n• Pièces d'identité\n• Photos d'identité récentes\n\nD'autres documents spécifiques peuvent être requis selon votre profil et le programme choisi. Nous vous guidons pour constituer un dossier complet.",
+        "category": "immigration",
+        "tags": ["Canada", "Documents", "Prérequis"]
+      },
+      {
+        "id": 13,
+        "question": "Offrez-vous des services de marketing digital ?",
+        "answer": "Oui, nous proposons une gamme complète de services digitaux :\n\n🎯 Marketing Digital :\n• Community management professionnel\n• Publicités Facebook Ads & Google Ads\n• Stratégie de communication digitale\n• Création de contenu engageant\n• Gestion de vos réseaux sociaux\n\n🎨 Infographie :\n• Création d'identité visuelle\n• Design de logos professionnels\n• Flyers, affiches, brochures\n• Supports corporate\n\nBoostez votre présence en ligne avec notre expertise !",
+        "category": "services",
+        "tags": ["Marketing", "Digital", "Réseaux sociaux"]
+      },
+      {
+        "id": 14,
+        "question": "Qu'est-ce que le service de E-secrétariat ?",
+        "answer": "Notre service de E-secrétariat vous libère des tâches administratives :\n\n📝 Prestations incluses :\n• Rédaction professionnelle (lettres, rapports)\n• Gestion d'agenda et de rendez-vous\n• Saisie et mise en forme de documents\n• Support administratif complet\n• Assistance à distance flexible\n\nIdéal pour les entrepreneurs, PME et professionnels qui souhaitent se concentrer sur leur cœur de métier.",
+        "category": "services",
+        "tags": ["Secrétariat", "Administration", "Assistance"]
+      },
+      {
+        "id": 15,
+        "question": "Quelle est votre politique d'annulation ?",
+        "answer": "Notre politique d'annulation est claire et équitable :\n\n✅ Annulation possible avant le démarrage effectif du service\n✅ Conditions spécifiques selon le type de service\n✅ Remboursement partiel ou total selon l'avancement\n✅ Transparence totale sur les modalités\n\nNous discutons de ces conditions dès la signature du contrat pour éviter toute confusion.",
+        "category": "general",
+        "tags": ["Annulation", "Remboursement", "Politique"]
+      },
+      {
+        "id": 16,
+        "question": "Offrez-vous des garanties sur vos services ?",
+        "answer": "Oui, nous nous engageons sur plusieurs garanties :\n\n🛡️ Nos garanties :\n• Qualité de service professionnelle\n• Confidentialité absolue de vos données\n• Accompagnement continu et suivi régulier\n• Transparence sur les processus et tarifs\n• Disponibilité et réactivité de notre équipe\n\nVotre satisfaction est notre priorité absolue.",
+        "category": "services",
+        "tags": ["Garantie", "Qualité", "Engagement"]
+      },
+      {
+        "id": 17,
+        "question": "Comment se déroule le processus de commande ?",
+        "answer": "Notre processus est simple et structuré en 5 étapes :\n\n1️⃣ CONTACT : Prise de contact par téléphone, email ou WhatsApp\n2️⃣ DIAGNOSTIC : Analyse gratuite de vos besoins et de votre profil\n3️⃣ DEVIS : Proposition détaillée et personnalisée\n4️⃣ PAIEMENT : Signature du contrat et versement selon modalités\n5️⃣ EXÉCUTION : Démarrage et suivi du projet jusqu'à sa finalisation\n\nNous vous accompagnons à chaque étape avec transparence.",
+        "category": "general",
+        "tags": ["Processus", "Commande", "Étapes"]
+      },
+      {
+        "id": 18,
+        "question": "Quel est votre public cible ?",
+        "answer": "Nous accompagnons une clientèle diversifiée :\n\n👥 Profils clients :\n• Étudiants (18-30 ans)\n• Travailleurs qualifiés\n• Entrepreneurs et chefs d'entreprise\n• PME et startups\n• Particuliers\n• Diaspora africaine\n\n🌍 Zones géographiques :\n• Cameroun et Afrique francophone\n• Canada et Europe (principalement Belgique et France)",
+        "category": "general",
+        "tags": ["Public", "Clientèle", "Cible"]
+      },
+      {
+        "id": 19,
+        "question": "Proposez-vous des formations en ligne ?",
+        "answer": "C'est un projet en cours de développement !\n\n🎓 Formations prévues prochainement :\n• Préparation aux démarches d'immigration\n• Marketing digital pour entrepreneurs\n• Gestion administrative efficace\n• Ateliers thématiques et webinaires\n\nInscrivez-vous à notre newsletter pour être informé du lancement de nos formations.",
+        "category": "services",
+        "tags": ["Formation", "Apprentissage", "Webinaire"]
+      },
+      {
+        "id": 20,
+        "question": "Comment vous différenciez-vous de la concurrence ?",
+        "answer": "ABSOLUTE SARL se distingue par plusieurs éléments clés :\n\n⭐ Notre différenciation :\n• Approche 100% personnalisée et humaine\n• Suivi réel et progressif des dossiers\n• Expertise terrain avérée et éprouvée\n• Multiservices intégrés (gain de temps)\n• Disponibilité permanente et réactivité\n• Transparence totale sur les processus\n• Équipe dédiée d'experts spécialisés\n\nNous ne sommes pas qu'un prestataire, nous sommes votre partenaire de confiance.",
+        "category": "general",
+        "tags": ["Différenciation", "Avantages", "Expertise"]
+      },
+      {
+        "id": 21,
+        "question": "Quels sont vos horaires d'ouverture ?",
+        "answer": "Nous sommes disponibles toute la semaine :\n\n🕒 Horaires d'ouverture :\n• Lundi - Vendredi : 08h00 - 17h00\n• Samedi : 08h00 - 15h00\n• Dimanche : Fermé\n\n📱 Disponibilité en ligne :\n• WhatsApp Business : Réponse sous 2h en semaine\n• Email : Réponse sous 24h\n• Urgences : Numéro d'astreinte disponible\n\nNous restons flexibles pour nous adapter à votre emploi du temps.",
+        "category": "general",
+        "tags": ["Horaires", "Disponibilité", "Contact"]
+      },
+      {
+        "id": 22,
+        "question": "Combien coûtent vos services ?",
+        "answer": "Nos tarifs sont établis sur mesure selon vos besoins :\n\n💰 Tarification :\n• Devis personnalisé gratuit\n• Prix transparents et compétitifs\n• Pas de frais cachés\n• Facilités de paiement disponibles\n\n📊 Exemples de gammes de prix :\n• Services digitaux : À partir de 50 000 FCFA\n• E-secrétariat : Sur base contractuelle\n• Immigration : Sur devis (projet long terme)\n\nContactez-nous pour obtenir une estimation précise adaptée à votre projet.",
+        "category": "services",
+        "tags": ["Prix", "Tarifs", "Coût"]
+      },
+      {
+        "id": 23,
+        "question": "Travaillez-vous avec des partenaires internationaux ?",
+        "answer": "Oui, nous développons activement notre réseau de partenaires :\n\n🤝 Partenariats en cours et à venir :\n• Universités et écoles au Canada, Belgique, France\n• Cabinets d'immigration internationaux\n• Agences de marketing digital\n• Plateformes de recrutement\n\n🎯 Objectif : Vous offrir les meilleures opportunités et un service complet de bout en bout.\n\nNotre réseau grandit constamment pour mieux vous servir.",
+        "category": "general",
+        "tags": ["Partenaires", "Réseau", "International"]
+      },
+      {
+        "id": 24,
+        "question": "Puis-je suivre l'avancement de mon dossier en temps réel ?",
+        "answer": "Absolument ! La transparence et le suivi sont nos priorités :\n\n📊 Suivi de dossier :\n• Points réguliers programmés\n• Mises à jour par email et WhatsApp\n• Accès à l'état d'avancement\n• Réponses rapides à vos questions\n• Plateforme client en développement\n\nVous n'êtes jamais laissé dans le flou. Nous vous tenons informé à chaque étape importante.",
+        "category": "services",
+        "tags": ["Suivi", "Transparence", "Dossier"]
+      },
+      {
+        "id": 25,
+        "question": "Comment puis-je vous contacter ?",
+        "answer": "Plusieurs moyens sont à votre disposition :\n\n📞 Téléphones :\n• +237 699 99 28 18 (Principal)\n• +237 675 15 78 71 (Secondaire)\n\n📧 Emails :\n• servicesclients@absolutesarl.com\n• jordan.ntouko@absolutesarl.com\n\n💬 WhatsApp Business : +237 699 99 28 18\n\n🌐 Réseaux sociaux :\n• Facebook : ABSOLUTE SARL\n• LinkedIn : ABSOLUTE SARL\n\nNous vous répondons rapidement sur tous les canaux !",
+        "category": "general",
+        "tags": ["Contact", "Communication", "Support"]
+      }
+    ]
+  },
+  "users": {
+    "title": "Gestion des Utilisateurs",
+    "description": "Gérez les utilisateurs, rôles et permissions",
+    "totalUsers": "Total Utilisateurs",
+    "verified": "Vérifié",
+    "notVerified": "Non vérifié",
+    "roles": {
+      "admin": "Administrateur",
+      "employe": "Employé",
+      "client": "Client"
+    },
+    "filters": "Filtres et Recherche",
+    "filtersDescription": "Filtrez et recherchez des utilisateurs",
+    "searchPlaceholder": "Rechercher par nom ou email...",
+    "allRoles": "Tous les rôles",
+    "refresh": "Actualiser",
+    "refreshed": "Liste actualisée avec succès",
+    "usersList": "Liste des Utilisateurs",
+    "noUsers": "Aucun utilisateur trouvé",
+    "name": "Nom",
+    "email": "Email",
+    "password": "Mot de passe",
+    "passwordHint": "Min. 8 caractères, 1 majuscule, 1 minuscule, 1 chiffre",
+    "role": "Rôle",
+    "status": "Statut",
+    "createdAt": "Créé le",
+    "updatedAt": "Modifié le",
+    "actions": "Actions",
+    "viewDetails": "Voir les détails",
+    "edit": "Modifier",
+    "delete": "Supprimer",
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "saving": "Enregistrement...",
+    "deleting": "Suppression...",
+    "creating": "Création...",
+    "addUser": "Ajouter un Utilisateur",
+    "addUserDescription": "Créez un nouveau compte utilisateur",
+    "createUser": "Créer l'utilisateur",
+    "editUser": "Modifier l'Utilisateur",
+    "editUserDescription": "Mettez à jour les informations de l'utilisateur",
+    "deleteUser": "Supprimer l'Utilisateur",
+    "deleteUserDescription": "Cette action est irréversible",
+    "deleteWarning": "Attention : Cette action supprimera définitivement cet utilisateur et toutes ses données associées.",
+    "confirmDelete": "Confirmer la suppression",
+    "userDetails": "Détails de l'Utilisateur",
+    "userDetailsDescription": "Informations complètes sur l'utilisateur",
+    "namePlaceholder": "Nom complet de l'utilisateur",
+    "selectRole": "Sélectionnez un rôle",
+    "listRetrievedSuccess": "Liste des utilisateurs récupérée avec succès",
+    "retrievedSuccess": "Utilisateur récupéré avec succès",
+    "updateSuccess": "Utilisateur mis à jour avec succès",
+    "deleteSuccess": "Utilisateur supprimé avec succès",
+    "userCreatedSuccess": "Utilisateur créé avec succès",
+    "notFound": "Utilisateur introuvable",
+    "invalidRole": "Le rôle fourni n'est pas valide",
+    "accessDenied": "Accès refusé",
+    "fetchError": "Erreur lors de la récupération des utilisateurs",
+    "updateError": "Erreur lors de la mise à jour de l'utilisateur",
+    "deleteError": "Erreur lors de la suppression de l'utilisateur"
+  },
+  "blog": {
+    "created": "Article créé avec succès",
+    "updated": "Article mis à jour avec succès",
+    "deleted": "Article supprimé avec succès",
+    "notFound": "Article introuvable",
+    "validation": {
+      "missingFields": "Tous les champs (titres et contenus FR/EN) sont requis"
+    },
+    "unauthorized": {
+      "notOwner": "Vous n'êtes pas autorisé à modifier cet article"
+    }
+  },
+  "blogs": {
+    "title": "Gestion des Blogs",
+    "description": "Gérez les articles de blog et leur contenu multilingue",
+    "totalBlogs": "Total Articles",
+    "myBlogs": "Mes Articles",
+    "withImages": "Avec Images",
+    "recent": "Récents (7j)",
+    "filters": "Filtres et Recherche",
+    "filtersDescription": "Recherchez et filtrez les articles",
+    "searchPlaceholder": "Rechercher par titre, contenu ou auteur...",
+    "refresh": "Actualiser",
+    "refreshed": "Liste actualisée avec succès",
+    "blogsList": "Liste des Articles",
+    "noBlogs": "Aucun article trouvé",
+    "image": "Image",
+    "titleFr": "Titre (Français)",
+    "titleEn": "Titre (English)",
+    "titleFrPlaceholder": "Entrez le titre en français...",
+    "titleEnPlaceholder": "Enter the title in English...",
+    "content": "Contenu",
+    "contentFr": "Contenu (Français)",
+    "contentEn": "Contenu (English)",
+    "contentFrPlaceholder": "Rédigez le contenu de l'article en français...",
+    "contentEnPlaceholder": "Write the article content in English...",
+    "author": "Auteur",
+    "metadata": "Métadonnées",
+    "createdAt": "Créé le",
+    "updatedAt": "Modifié le",
+    "actions": "Actions",
+    "viewDetails": "Voir les détails",
+    "edit": "Modifier",
+    "delete": "Supprimer",
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "saving": "Enregistrement...",
+    "deleting": "Suppression...",
+    "creating": "Création...",
+    "addBlog": "Ajouter un Article",
+    "addBlogDescription": "Créez un nouveau article de blog multilingue",
+    "createBlog": "Créer l'article",
+    "editBlog": "Modifier l'Article",
+    "editBlogDescription": "Mettez à jour le contenu de l'article",
+    "deleteBlog": "Supprimer l'Article",
+    "deleteBlogDescription": "Cette action est irréversible",
+    "deleteWarning": "Attention : Cette action supprimera définitivement cet article et son image associée.",
+    "confirmDelete": "Confirmer la suppression",
+    "imageWillBeDeleted": "L'image sera également supprimée de Cloudinary",
+    "blogDetails": "Détails de l'Article",
+    "blogDetailsDescription": "Informations complètes sur l'article",
+    "imageUpload": {
+      "optional": "optionnel",
+      "clickToUpload": "Cliquez pour uploader",
+      "orDragDrop": "ou glissez-déposez",
+      "maxSize": "max 5MB",
+      "tip": "L'image sera hébergée sur Cloudinary et optimisée automatiquement",
+      "uploading": "Upload en cours...",
+      "success": "Image uploadée avec succès",
+      "error": "Échec de l'upload de l'image",
+      "invalidType": "Type de fichier invalide. Utilisez PNG, JPG ou WEBP",
+      "tooLarge": "L'image est trop grande. Maximum 5MB",
+      "remove": "Supprimer l'image",
+      "removed": "Image supprimée"
+    },
+    "created": "Article créé avec succès",
+    "updated": "Article mis à jour avec succès",
+    "deleted": "Article supprimé avec succès",
+    "notFound": "Article introuvable",
+    "accessDenied": "Accès refusé",
+    "unauthorized": {
+      "notOwner": "Vous n'êtes pas autorisé à modifier cet article"
+    },
+    "validation": {
+      "missingFields": "Tous les champs (titres et contenus FR/EN) sont requis"
+    },
+    "fetchError": "Erreur lors de la récupération des articles",
+    "createError": "Erreur lors de la création de l'article",
+    "updateError": "Erreur lors de la mise à jour de l'article",
+    "deleteError": "Erreur lors de la suppression de l'article"
+  },
+"rendezvous": {
+    "title": "Gestion des Rendez-vous",
+    "description": "Gérez les demandes de rendez-vous des clients",
+    "totalRendezVous": "Total Rendez-vous",
+    "allStatuses": "Tous les statuts",
+    "filters": "Filtres",
+    "filtersDescription": "Filtrez les rendez-vous par statut",
+    "refresh": "Actualiser",
+    "refreshed": "Liste actualisée avec succès",
+    "rendezVousList": "Liste des Rendez-vous",
+    "noRendezVous": "Aucun rendez-vous trouvé",
+    "date": "Date",
+    "dateTime": "Date et heure",
+    "status": "Statut",
+    "note": "Note / Motif",
+    "noNote": "Aucune note",
+    "createdAt": "Créé le",
+    "updatedAt": "Modifié le",
+    "actions": "Actions",
+    
+    "statuses": {
+      "pending": "En attente",
+      "approved": "Approuvé",
+      "rejected": "Rejeté"
+    },
+    
+    "viewDetails": "Voir les détails",
+    "approve": "Approuver",
+    "approving": "Approbation...",
+    "reject": "Rejeter",
+    "rejecting": "Rejet...",
+    "delete": "Supprimer",
+    "deleting": "Suppression...",
+    "cancel": "Annuler",
+    
+    "details": "Détails du Rendez-vous",
+    "detailsDescription": "Informations complètes sur le rendez-vous",
+    
+    "deleteTitle": "Supprimer le Rendez-vous",
+    "deleteDescription": "Cette action est irréversible",
+    "deleteWarning": "Attention : Cette action supprimera définitivement ce rendez-vous.",
+    "confirmDelete": "Confirmer la suppression",
+    
+    "rejectTitle": "Rejeter le Rendez-vous",
+    "rejectDescription": "Vous pouvez ajouter une note expliquant le rejet",
+    "rejectNote": "Motif du rejet",
+    "rejectNotePlaceholder": "Ex: Date non disponible, veuillez choisir une autre date...",
+    "rejectNoteHint": "Cette note sera visible par le client",
+    "confirmReject": "Confirmer le rejet",
+    "optional": "optionnel",
+    
+    "page": "Page",
+    "of": "sur",
+    "previous": "Précédent",
+    "next": "Suivant",
+    
+    "createSuccess": "Rendez-vous créé avec succès",
+    "fetchSuccess": "Rendez-vous récupérés avec succès",
+    "approveSuccess": "Rendez-vous approuvé avec succès",
+    "rejectSuccess": "Rendez-vous rejeté avec succès",
+    "updateSuccess": "Rendez-vous mis à jour avec succès",
+    "deleteSuccess": "Rendez-vous supprimé avec succès",
+    
+    "dateRequired": "La date est requise",
+    "dateMustBeFuture": "La date doit être dans le futur",
+    "invalidId": "ID de rendez-vous invalide",
+    "notFound": "Rendez-vous introuvable",
+    "alreadyProcessed": "Ce rendez-vous a déjà été traité",
+    "cannotModifyNonPending": "Vous ne pouvez modifier que les rendez-vous en attente",
+    "cannotDeleteNonPending": "Vous ne pouvez supprimer que les rendez-vous en attente",
+    "invalidStatus": "Statut invalide",
+    "accessDenied": "Accès refusé",
+    "fetchError": "Erreur lors de la récupération des rendez-vous",
+    "approveError": "Erreur lors de l'approbation du rendez-vous",
+    "rejectError": "Erreur lors du rejet du rendez-vous",
+    "updateError": "Erreur lors de la mise à jour du rendez-vous",
+    "deleteError": "Erreur lors de la suppression du rendez-vous",
+    
+    "client": {
+      "myAppointments": "Mes Rendez-vous",
+      "myAppointmentsDescription": "Gérez vos demandes de rendez-vous",
+      "myAppointmentDetails": "Détails de mon rendez-vous",
+      "detailsDescription": "Informations complètes sur votre rendez-vous",
+      "totalAppointments": "Total Rendez-vous",
+      "newAppointment": "Nouveau Rendez-vous",
+      "filtersDescription": "Filtrez vos rendez-vous par statut",
+      "myAppointmentsList": "Mes Rendez-vous",
+      
+      "appointmentReason": "Motif du rendez-vous",
+      
+      "statusMessages": {
+        "pending": "Votre demande est en cours de traitement. Nous vous contacterons bientôt.",
+        "approved": "Votre rendez-vous est confirmé ! Nous vous attendons à la date prévue.",
+        "rejected": "Votre demande a été refusée. Veuillez consulter la note ci-dessous pour plus d'informations."
+      },
+      
+      "approvedAlert": "✅ Rendez-vous confirmé ! Nous vous attendons à la date et heure indiquées. En cas d'empêchement, merci de nous prévenir.",
+      "rejectedAlert": "❌ Votre demande n'a pas pu être acceptée. Vous pouvez créer une nouvelle demande avec une autre date si vous le souhaitez.",
+      "pendingAlert": "⏳ Votre demande est en attente de validation. Nous vous répondrons dans les plus brefs délais."
+    },
+    
+    "noMyRendezVous": "Vous n'avez aucun rendez-vous",
+    "noMyRendezVousHint": "Cliquez sur 'Nouveau Rendez-vous' pour en créer un",
+    
+    "cancelAppointment": "Annuler le rendez-vous",
+    "cancelAppointmentTitle": "Annuler ce rendez-vous ?",
+    "cancelAppointmentDescription": "Cette action est irréversible. Vous devrez créer un nouveau rendez-vous si nécessaire.",
+    "confirmCancel": "Oui, annuler",
+    "cancelling": "Annulation...",
+    
+    "unauthorized": {
+      "notYourRendezVous": "Vous n'avez pas accès à ce rendez-vous"
+    }
   }
 }

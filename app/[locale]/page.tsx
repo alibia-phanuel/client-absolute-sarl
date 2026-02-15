@@ -40,7 +40,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 import AppointmentModal from "@/components/AppointmentModal";
 // ========================================
 // TYPES
@@ -518,10 +518,10 @@ export default function HomePage() {
                 className="h-11 sm:h-12 px-6 sm:px-8 text-sm sm:text-base group w-full sm:w-auto"
                 asChild
               >
-                <Link href="#contact">
+                <a href="#contact">
                   {t("hero.ctaPrimary")}
                   <ArrowRight className="ml-2 w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform" />
-                </Link>
+                </a>
               </Button>
               <Button
                 size="lg"
@@ -529,7 +529,7 @@ export default function HomePage() {
                 className="h-11 sm:h-12 px-6 sm:px-8 text-sm sm:text-base w-full sm:w-auto"
                 asChild
               >
-                <Link href="#services">{t("hero.ctaSecondary")}</Link>
+                <a href="#services">{t("hero.ctaSecondary")}</a>
               </Button>
               <Button
                 size="lg"
@@ -743,10 +743,10 @@ export default function HomePage() {
                 className="h-12 sm:h-14 px-8 sm:px-10 text-sm sm:text-base group w-full sm:w-auto"
                 asChild
               >
-                <Link href="#contact">
+                <a  href="#contact">
                   {t("cta.primary")}
                   <ArrowRight className="ml-2 w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform" />
-                </Link>
+                </a>
               </Button>
               <Button
                 size="lg"

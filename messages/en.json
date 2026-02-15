@@ -296,6 +296,7 @@
     "home": "Home",
     "services": "Services",
     "blog": "Blog",
+    "faq": "Faq",
     "contact": "Contact",
     "messages": "Messages",
     "login": "Sign in",
@@ -303,10 +304,32 @@
     "appointment": "Book an appointment",
     "profile": "My profile",
     "admin": "Administration",
-    "logout": "Logout"
+    "logout": "Logout",
+    "Appointments": "Appointments",
+    "sms": "Messages",
+    "quotes": "Quotes"
   },
 
   "auth": {
+    "verifyAccount": {
+      "title": "Verify Your Account",
+      "subtitle": "Enter the verification code sent to your email address",
+      "otpCode": "Verification Code",
+      "submit": "Verify My Account",
+      "loading": "Verifying...",
+      "didntReceive": "Didn't receive the code?",
+      "resend": "Resend Code",
+      "resending": "Sending...",
+      "backToLogin": "Back to Login",
+      "successTitle": "Account Verified!",
+      "successMessage": "Your account has been successfully verified.",
+      "redirecting": "Redirecting...",
+      "noEmail": "No email address found"
+    },
+
+    "validation": {
+      "codeLength": "The code must contain 6 digits"
+    },
     "loginError": "Login failed",
     "authCheckError": "Authentication check failed",
     "unauthorizedAccess": "Unauthorized access. Admin and employee accounts cannot access this interface.",
@@ -453,19 +476,20 @@
     "subjectRequired": "Please select a subject",
     "messageRequired": "Message is required",
     "messageMin": "Message must be at least 10 characters",
-
-
-        "dateRequired": "Date is required",
+    "dateRequired": "Date is required",
     "dateFuture": "Date must be in the future",
     "timeRequired": "Time is required",
     "timeInvalid": "Invalid time format (HH:MM)",
     "noteRequired": "Note is required",
     "noteMin": "Note must be at least 10 characters",
-    "noteMax": "Note cannot exceed 500 characters"
-
-
-
-   
+    "noteMax": "Note cannot exceed 500 characters",
+    "titleRequired": "Title is required",
+    "titleMin": "Title must be at least 3 characters",
+    "titleMax": "Title cannot exceed 200 characters",
+    "contentRequired": "Content is required",
+    "contentMin": "Content must be at least 50 characters",
+    "invalidData": "Invalid data",
+    "roleRequired": "Role is required"
   },
 
   "appointment": {
@@ -744,6 +768,297 @@
     "madeWith": "Built with",
     "by": "by"
   },
+  "faq": {
+    "hero": {
+      "badge": "Help Center",
+      "title": "Frequently Asked Questions",
+      "subtitle": "Quickly find answers to your questions about our immigration, digital marketing, and professional support services."
+    },
+    "filters": {
+      "search": "Search for a question...",
+      "questionSingular": "question",
+      "questionPlural": "questions"
+    },
+    "categories": {
+      "all": "All Questions",
+      "immigration": "Immigration",
+      "services": "Services",
+      "general": "General"
+    },
+    "categoriesSection": {
+      "title": "Browse by Category",
+      "subtitle": "Filter questions according to your needs"
+    },
+    "stats": {
+      "questions": "Questions",
+      "availability": "Availability",
+      "experts": "Experts",
+      "satisfaction": "Satisfaction"
+    },
+    "noResults": {
+      "title": "No Results",
+      "subtitle": "Try modifying your search or contact us directly",
+      "cta": "Contact Us"
+    },
+    "cta": {
+      "title": "Haven't Found Your Answer?",
+      "subtitle": "Our team is here to help. Contact us and get a personalized answer to your questions.",
+      "primary": "Contact Us",
+      "secondary": "Request a Free Quote",
+      "features": {
+        "fast": {
+          "title": "Fast Response",
+          "description": "Within 2 hours on weekdays"
+        },
+        "expert": {
+          "title": "Guaranteed Expertise",
+          "description": "Specialized Advisors"
+        },
+        "free": {
+          "title": "No Commitment",
+          "description": "Free Consultation"
+        }
+      }
+    },
+    "questions": [
+      {
+        "id": 1,
+        "question": "What services does ABSOLUTE SARL offer?",
+        "answer": "ABSOLUTE SARL offers a complete range of professional services:\n\n• Immigration (Canada, Belgium, France)\n• Digital marketing and communication strategy\n• Graphic design and visual identity\n• E-secretariat and administrative assistance\n• General commerce\n\nWe are your multi-service partner for your professional and personal projects.",
+        "category": "general",
+        "tags": ["Services", "Overview"]
+      },
+      {
+        "id": 2,
+        "question": "Do you help with immigration to Canada?",
+        "answer": "Yes, absolutely! We assist our clients with their Canadian immigration procedures for:\n\n• Permanent residence (all programs)\n• Study visas\n• Professional and academic guidance\n• Complete file preparation\n• Follow-up until submission and beyond\n\nOur specialized team guides you through every step of the process.",
+        "category": "immigration",
+        "tags": ["Canada", "Permanent Residence", "Studies"]
+      },
+      {
+        "id": 3,
+        "question": "Do you help with immigration to Belgium?",
+        "answer": "Yes, we specialize in support for studies in Belgium:\n\n• Choice of universities and programs\n• Complete admission file\n• Student visa preparation\n• Comprehensive administrative assistance\n• Personalized follow-up until your departure\n\nWe help you realize your study project in Europe with complete peace of mind.",
+        "category": "immigration",
+        "tags": ["Belgium", "Europe", "Studies"]
+      },
+      {
+        "id": 4,
+        "question": "Do you offer services for France?",
+        "answer": "Yes, we support students with their study project in France:\n\n• Personalized academic guidance\n• Choice of institutions and programs\n• Campus France file preparation\n• Student visa preparation\n• Support until visa approval\n\nOur expertise ensures a solid and professional application.",
+        "category": "immigration",
+        "tags": ["France", "Campus France", "Studies"]
+      },
+      {
+        "id": 5,
+        "question": "Do you guarantee visa approval?",
+        "answer": "No, we cannot guarantee visa approval as the final decision belongs to consular and immigration authorities.\n\nHowever, we do everything possible to maximize your chances of success:\n\n• In-depth profile analysis\n• Complete and compliant file preparation\n• Optimal interview preparation\n• Rigorous follow-up of all stages\n• Expertise based on our field experience\n\nOur commitment: professional and transparent support.",
+        "category": "immigration",
+        "tags": ["Visa", "Guarantee", "Support"]
+      },
+      {
+        "id": 6,
+        "question": "Where are you physically located?",
+        "answer": "Our headquarters is located in Douala, Cameroon:\n\n📍 Address: Cité des Palmiers, near Collège Dauphine\nYellow Building - 2nd Floor - Office B09\nDouala - Cameroon\n\n📞 Phones:\n• Main: +237 699 99 28 18\n• Secondary: +237 675 15 78 71\n\n🕒 Hours:\n• Monday - Friday: 08:00 - 17:00\n• Saturday: 08:00 - 15:00\n\nWe are happy to welcome you to discuss your projects!",
+        "category": "general",
+        "tags": ["Location", "Contact", "Hours"]
+      },
+      {
+        "id": 7,
+        "question": "Do you work entirely remotely?",
+        "answer": "Yes, we offer 100% online support for all our services!\n\n✅ Remote work advantages:\n• Video consultations\n• Secure document sending\n• Real-time file tracking\n• Constant communication (email, WhatsApp, phone)\n• Flexibility and time savings\n\nWhether you are in Cameroon, Africa or elsewhere in the world, we support you effectively.",
+        "category": "general",
+        "tags": ["Online", "Remote", "Digital"]
+      },
+      {
+        "id": 8,
+        "question": "What are your processing times?",
+        "answer": "Processing times vary by service type:\n\n⏱️ Digital services & Graphic design: 1 to 7 days\n⏱️ E-secretariat: Immediate to 3 days\n⏱️ Immigration (Canada, Belgium, France): 6 to 12 months\n⏱️ General commerce: Depending on availability\n\nWe provide you with a precise schedule from the beginning of our collaboration. Our priority: meeting deadlines while maintaining quality.",
+        "category": "services",
+        "tags": ["Deadlines", "Timing", "Planning"]
+      },
+      {
+        "id": 9,
+        "question": "Can I pay in installments?",
+        "answer": "Yes, we offer payment facilities for most of our services!\n\n💳 Installment payment options:\n• Payment in 2, 3 or 4 installments depending on the service\n• Personalized payment schedule\n• Transparent and clear conditions\n\n💰 Accepted payment methods:\n• Bank transfer\n• Mobile Money (MTN, Orange)\n• Cash (at the office)\n\nContact us to establish a payment plan adapted to your budget.",
+        "category": "general",
+        "tags": ["Payment", "Facilities", "Pricing"]
+      },
+      {
+        "id": 10,
+        "question": "Do you have dedicated advisors for each service?",
+        "answer": "Yes, each domain is managed by dedicated experts:\n\n👨‍💼 Canada Immigration: Dilane Kamto\n👨‍💼 Europe Immigration: Mike Tchabet\n👩‍💼 Digital Services: Adeline Ntouko\n👨‍💼 General Management: Jordan Ntouko\n\nEach advisor has in-depth expertise in their field and personally supports you throughout your project.",
+        "category": "general",
+        "tags": ["Team", "Advisors", "Expertise"]
+      },
+      {
+        "id": 11,
+        "question": "Do you offer free quotes?",
+        "answer": "Yes, all our quotes are free and without obligation!\n\n📋 Our process:\n1. Initial contact (phone, email, WhatsApp)\n2. Free needs assessment\n3. Detailed and personalized quote\n4. Presentation of options and terms\n5. No obligation on your part\n\nWe believe in total transparency. You know the exact price before committing.",
+        "category": "services",
+        "tags": ["Quote", "Free", "Pricing"]
+      },
+      {
+        "id": 12,
+        "question": "What are the prerequisites for Canadian immigration?",
+        "answer": "The basic documents to start your Canada file:\n\n📄 Essential documents:\n• Valid passport\n• Detailed CV\n• Diplomas and transcripts\n• Employment certificates\n• Identity documents\n• Recent passport photos\n\nOther specific documents may be required depending on your profile and chosen program. We guide you to build a complete file.",
+        "category": "immigration",
+        "tags": ["Canada", "Documents", "Requirements"]
+      },
+      {
+        "id": 13,
+        "question": "Do you offer digital marketing services?",
+        "answer": "Yes, we offer a complete range of digital services:\n\n🎯 Digital Marketing:\n• Professional community management\n• Facebook Ads & Google Ads\n• Digital communication strategy\n• Engaging content creation\n• Social media management\n\n🎨 Graphic Design:\n• Visual identity creation\n• Professional logo design\n• Flyers, posters, brochures\n• Corporate materials\n\nBoost your online presence with our expertise!",
+        "category": "services",
+        "tags": ["Marketing", "Digital", "Social Media"]
+      },
+      {
+        "id": 14,
+        "question": "What is the E-secretariat service?",
+        "answer": "Our E-secretariat service frees you from administrative tasks:\n\n📝 Included services:\n• Professional writing (letters, reports)\n• Agenda and appointment management\n• Document entry and formatting\n• Complete administrative support\n• Flexible remote assistance\n\nIdeal for entrepreneurs, SMEs and professionals who want to focus on their core business.",
+        "category": "services",
+        "tags": ["Secretariat", "Administration", "Assistance"]
+      },
+      {
+        "id": 15,
+        "question": "What is your cancellation policy?",
+        "answer": "Our cancellation policy is clear and fair:\n\n✅ Cancellation possible before service starts\n✅ Specific conditions depending on service type\n✅ Partial or full refund depending on progress\n✅ Total transparency on terms\n\nWe discuss these conditions from contract signing to avoid any confusion.",
+        "category": "general",
+        "tags": ["Cancellation", "Refund", "Policy"]
+      },
+      {
+        "id": 16,
+        "question": "Do you offer guarantees on your services?",
+        "answer": "Yes, we commit to several guarantees:\n\n🛡️ Our guarantees:\n• Professional service quality\n• Absolute data confidentiality\n• Continuous support and regular follow-up\n• Transparency on processes and pricing\n• Availability and responsiveness of our team\n\nYour satisfaction is our absolute priority.",
+        "category": "services",
+        "tags": ["Guarantee", "Quality", "Commitment"]
+      },
+      {
+        "id": 17,
+        "question": "How does the ordering process work?",
+        "answer": "Our process is simple and structured in 5 steps:\n\n1️⃣ CONTACT: Initial contact by phone, email or WhatsApp\n2️⃣ DIAGNOSTIC: Free analysis of your needs and profile\n3️⃣ QUOTE: Detailed and personalized proposal\n4️⃣ PAYMENT: Contract signing and payment according to terms\n5️⃣ EXECUTION: Project start and follow-up until completion\n\nWe support you at every step with transparency.",
+        "category": "general",
+        "tags": ["Process", "Order", "Steps"]
+      },
+      {
+        "id": 18,
+        "question": "What is your target audience?",
+        "answer": "We support a diverse clientele:\n\n👥 Client profiles:\n• Students (18-30 years)\n• Skilled workers\n• Entrepreneurs and business leaders\n• SMEs and startups\n• Individuals\n• African diaspora\n\n🌍 Geographic areas:\n• Cameroon and French-speaking Africa\n• Canada and Europe (mainly Belgium and France)",
+        "category": "general",
+        "tags": ["Audience", "Clientele", "Target"]
+      },
+      {
+        "id": 19,
+        "question": "Do you offer online training?",
+        "answer": "This is a project in development!\n\n🎓 Training coming soon:\n• Immigration procedures preparation\n• Digital marketing for entrepreneurs\n• Efficient administrative management\n• Thematic workshops and webinars\n\nSign up for our newsletter to be informed of our training launch.",
+        "category": "services",
+        "tags": ["Training", "Learning", "Webinar"]
+      },
+      {
+        "id": 20,
+        "question": "How do you differentiate yourself from competitors?",
+        "answer": "ABSOLUTE SARL stands out through several key elements:\n\n⭐ Our differentiation:\n• 100% personalized and human approach\n• Real and progressive file tracking\n• Proven field expertise\n• Integrated multi-services (time savings)\n• Permanent availability and responsiveness\n• Total transparency on processes\n• Dedicated team of specialized experts\n\nWe are not just a service provider, we are your trusted partner.",
+        "category": "general",
+        "tags": ["Differentiation", "Benefits", "Expertise"]
+      },
+      {
+        "id": 21,
+        "question": "What are your opening hours?",
+        "answer": "We are available all week:\n\n🕒 Opening hours:\n• Monday - Friday: 08:00 - 17:00\n• Saturday: 08:00 - 15:00\n• Sunday: Closed\n\n📱 Online availability:\n• WhatsApp Business: Response within 2 hours on weekdays\n• Email: Response within 24 hours\n• Emergencies: On-call number available\n\nWe remain flexible to adapt to your schedule.",
+        "category": "general",
+        "tags": ["Hours", "Availability", "Contact"]
+      },
+      {
+        "id": 22,
+        "question": "How much do your services cost?",
+        "answer": "Our rates are established on a custom basis according to your needs:\n\n💰 Pricing:\n• Free personalized quote\n• Transparent and competitive prices\n• No hidden fees\n• Payment facilities available\n\n📊 Price range examples:\n• Digital services: From 50,000 FCFA\n• E-secretariat: On contractual basis\n• Immigration: On quote (long-term project)\n\nContact us for a precise estimate adapted to your project.",
+        "category": "services",
+        "tags": ["Price", "Rates", "Cost"]
+      },
+      {
+        "id": 23,
+        "question": "Do you work with international partners?",
+        "answer": "Yes, we actively develop our network of partners:\n\n🤝 Current and upcoming partnerships:\n• Universities and schools in Canada, Belgium, France\n• International immigration firms\n• Digital marketing agencies\n• Recruitment platforms\n\n🎯 Goal: To offer you the best opportunities and a complete end-to-end service.\n\nOur network is constantly growing to better serve you.",
+        "category": "general",
+        "tags": ["Partners", "Network", "International"]
+      },
+      {
+        "id": 24,
+        "question": "Can I track the progress of my file in real time?",
+        "answer": "Absolutely! Transparency and follow-up are our priorities:\n\n📊 File tracking:\n• Scheduled regular updates\n• Updates by email and WhatsApp\n• Access to progress status\n• Quick answers to your questions\n• Client platform in development\n\nYou are never left in the dark. We keep you informed at every important step.",
+        "category": "services",
+        "tags": ["Tracking", "Transparency", "File"]
+      },
+      {
+        "id": 25,
+        "question": "How can I contact you?",
+        "answer": "Several ways are available:\n\n📞 Phones:\n• +237 699 99 28 18 (Main)\n• +237 675 15 78 71 (Secondary)\n\n📧 Emails:\n• servicesclients@absolutesarl.com\n• jordan.ntouko@absolutesarl.com\n\n💬 WhatsApp Business: +237 699 99 28 18\n\n🌐 Social Media:\n• Facebook: ABSOLUTE SARL\n• LinkedIn: ABSOLUTE SARL\n\nWe respond quickly on all channels!",
+        "category": "general",
+        "tags": ["Contact", "Communication", "Support"]
+      }
+    ]
+  },
+  "users": {
+    "title": "Users Management",
+    "description": "Manage users, roles and permissions",
+    "totalUsers": "Total Users",
+    "verified": "Verified",
+    "notVerified": "Not Verified",
+    "roles": {
+      "admin": "Administrator",
+      "employe": "Employee",
+      "client": "Client"
+    },
+    "filters": "Filters and Search",
+    "filtersDescription": "Filter and search users",
+    "searchPlaceholder": "Search by name or email...",
+    "allRoles": "All roles",
+    "refresh": "Refresh",
+    "refreshed": "List refreshed successfully",
+    "usersList": "Users List",
+    "noUsers": "No users found",
+    "name": "Name",
+    "email": "Email",
+    "password": "Password",
+    "passwordHint": "Min. 8 characters, 1 uppercase, 1 lowercase, 1 number",
+    "role": "Role",
+    "status": "Status",
+    "createdAt": "Created",
+    "updatedAt": "Updated",
+    "actions": "Actions",
+    "viewDetails": "View Details",
+    "edit": "Edit",
+    "delete": "Delete",
+    "save": "Save",
+    "cancel": "Cancel",
+    "saving": "Saving...",
+    "deleting": "Deleting...",
+    "creating": "Creating...",
+    "addUser": "Add User",
+    "addUserDescription": "Create a new user account",
+    "createUser": "Create User",
+    "editUser": "Edit User",
+    "editUserDescription": "Update user information",
+    "deleteUser": "Delete User",
+    "deleteUserDescription": "This action is irreversible",
+    "deleteWarning": "Warning: This action will permanently delete this user and all associated data.",
+    "confirmDelete": "Confirm Deletion",
+    "userDetails": "User Details",
+    "userDetailsDescription": "Complete information about the user",
+    "namePlaceholder": "User's full name",
+    "selectRole": "Select a role",
+    "listRetrievedSuccess": "Users list retrieved successfully",
+    "retrievedSuccess": "User retrieved successfully",
+    "updateSuccess": "User updated successfully",
+    "deleteSuccess": "User deleted successfully",
+    "userCreatedSuccess": "User created successfully",
+    "notFound": "User not found",
+    "invalidRole": "The provided role is invalid",
+    "accessDenied": "Access denied",
+    "fetchError": "Error fetching users",
+    "updateError": "Error updating user",
+    "deleteError": "Error deleting user"
+  },
   "blog": {
     "hero": {
       "title": "ABSOLUTE SARL Blog",
@@ -755,6 +1070,284 @@
       "results": "article(s) found"
     },
     "readMore": "Read more",
-    "noResults": "No articles found for your search"
+    "noResults": "No articles found for your search",
+    "created": "Article created successfully",
+    "updated": "Article updated successfully",
+    "deleted": "Article deleted successfully",
+    "notFound": "Article not found",
+    "validation": {
+      "missingFields": "All fields (titles and content FR/EN) are required"
+    },
+    "unauthorized": {
+      "notOwner": "You are not authorized to modify this article"
+    }
+  },
+  "blogs": {
+    "title": "Blog Management",
+    "description": "Manage blog articles and their multilingual content",
+    "totalBlogs": "Total Articles",
+    "myBlogs": "My Articles",
+    "withImages": "With Images",
+    "recent": "Recent (7d)",
+    "filters": "Filters and Search",
+    "filtersDescription": "Search and filter articles",
+    "searchPlaceholder": "Search by title, content or author...",
+    "refresh": "Refresh",
+    "refreshed": "List refreshed successfully",
+    "blogsList": "Articles List",
+    "noBlogs": "No articles found",
+    "image": "Image",
+    "titleFr": "Title (Français)",
+    "titleEn": "Title (English)",
+    "titleFrPlaceholder": "Entrez le titre en français...",
+    "titleEnPlaceholder": "Enter the title in English...",
+    "content": "Content",
+    "contentFr": "Content (Français)",
+    "contentEn": "Content (English)",
+    "contentFrPlaceholder": "Rédigez le contenu de l'article en français...",
+    "contentEnPlaceholder": "Write the article content in English...",
+    "author": "Author",
+    "metadata": "Metadata",
+    "createdAt": "Created",
+    "updatedAt": "Updated",
+    "actions": "Actions",
+    "viewDetails": "View Details",
+    "edit": "Edit",
+    "delete": "Delete",
+    "save": "Save",
+    "cancel": "Cancel",
+    "saving": "Saving...",
+    "deleting": "Deleting...",
+    "creating": "Creating...",
+    "addBlog": "Add Article",
+    "addBlogDescription": "Create a new multilingual blog article",
+    "createBlog": "Create Article",
+    "editBlog": "Edit Article",
+    "editBlogDescription": "Update the article content",
+    "deleteBlog": "Delete Article",
+    "deleteBlogDescription": "This action is irreversible",
+    "deleteWarning": "Warning: This action will permanently delete this article and its associated image.",
+    "confirmDelete": "Confirm Deletion",
+    "imageWillBeDeleted": "The image will also be deleted from Cloudinary",
+    "blogDetails": "Article Details",
+    "blogDetailsDescription": "Complete information about the article",
+    "imageUpload": {
+      "optional": "optional",
+      "clickToUpload": "Click to upload",
+      "orDragDrop": "or drag and drop",
+      "maxSize": "max 5MB",
+      "tip": "The image will be hosted on Cloudinary and automatically optimized",
+      "uploading": "Uploading...",
+      "success": "Image uploaded successfully",
+      "error": "Failed to upload image",
+      "invalidType": "Invalid file type. Use PNG, JPG or WEBP",
+      "tooLarge": "Image is too large. Maximum 5MB",
+      "remove": "Remove image",
+      "removed": "Image removed"
+    },
+    "created": "Article created successfully",
+    "updated": "Article updated successfully",
+    "deleted": "Article deleted successfully",
+    "notFound": "Article not found",
+    "accessDenied": "Access denied",
+    "unauthorized": {
+      "notOwner": "You are not authorized to modify this article"
+    },
+    "validation": {
+      "missingFields": "All fields (titles and content FR/EN) are required"
+    },
+    "fetchError": "Error fetching articles",
+    "createError": "Error creating article",
+    "updateError": "Error updating article",
+    "deleteError": "Error deleting article"
+  },
+  "rendezvous": {
+    "title": "Appointments Management",
+    "description": "Manage client appointment requests",
+    "totalRendezVous": "Total Appointments",
+    "allStatuses": "All statuses",
+    "filters": "Filters",
+    "filtersDescription": "Filter appointments by status",
+    "refresh": "Refresh",
+    "refreshed": "List refreshed successfully",
+    "rendezVousList": "Appointments List",
+    "noRendezVous": "No appointments found",
+    "client": "Client",
+    "date": "Date",
+    "dateTime": "Date and time",
+    "status": "Status",
+    "note": "Note / Reason",
+    "noNote": "No note",
+    "createdAt": "Created",
+    "updatedAt": "Updated",
+    "actions": "Actions",
+    "statuses": {
+      "pending": "Pending",
+      "approved": "Approved",
+      "rejected": "Rejected"
+    },
+    "viewDetails": "View Details",
+    "approve": "Approve",
+    "approving": "Approving...",
+    "reject": "Reject",
+    "rejecting": "Rejecting...",
+    "delete": "Delete",
+    "deleting": "Deleting...",
+    "cancel": "Cancel",
+    "details": "Appointment Details",
+    "detailsDescription": "Complete information about the appointment",
+    "deleteTitle": "Delete Appointment",
+    "deleteDescription": "This action is irreversible",
+    "deleteWarning": "Warning: This action will permanently delete this appointment.",
+    "confirmDelete": "Confirm Deletion",
+    "rejectTitle": "Reject Appointment",
+    "rejectDescription": "You can add a note explaining the rejection",
+    "rejectNote": "Rejection reason",
+    "rejectNotePlaceholder": "E.g.: Date not available, please choose another date...",
+    "rejectNoteHint": "This note will be visible to the client",
+    "confirmReject": "Confirm Rejection",
+    "optional": "optional",
+    "page": "Page",
+    "of": "of",
+    "previous": "Previous",
+    "next": "Next",
+    "createSuccess": "Appointment created successfully",
+    "fetchSuccess": "Appointments retrieved successfully",
+    "approveSuccess": "Appointment approved successfully",
+    "rejectSuccess": "Appointment rejected successfully",
+    "updateSuccess": "Appointment updated successfully",
+    "deleteSuccess": "Appointment deleted successfully",
+    "dateRequired": "Date is required",
+    "dateMustBeFuture": "Date must be in the future",
+    "invalidId": "Invalid appointment ID",
+    "notFound": "Appointment not found",
+    "alreadyProcessed": "This appointment has already been processed",
+    "cannotModifyNonPending": "You can only modify pending appointments",
+    "cannotDeleteNonPending": "You can only delete pending appointments",
+    "invalidStatus": "Invalid status",
+    "accessDenied": "Access denied",
+    "fetchError": "Error fetching appointments",
+    "approveError": "Error approving appointment",
+    "rejectError": "Error rejecting appointment",
+    "updateError": "Error updating appointment",
+    "deleteError": "Error deleting appointment"
+  },
+  "rendezvous": {
+    "title": "Appointments Management",
+    "description": "Manage client appointment requests",
+
+    "totalRendezVous": "Total Appointments",
+    "allStatuses": "All statuses",
+    "filters": "Filters",
+    "filtersDescription": "Filter appointments by status",
+    "refresh": "Refresh",
+    "refreshed": "List refreshed successfully",
+
+    "rendezVousList": "Appointments List",
+    "noRendezVous": "No appointments found",
+
+    "client": "Client",
+    "date": "Date",
+    "dateTime": "Date and time",
+    "status": "Status",
+    "note": "Note / Reason",
+    "noNote": "No note",
+    "createdAt": "Created",
+    "updatedAt": "Updated",
+    "actions": "Actions",
+
+    "statuses": {
+      "pending": "Pending",
+      "approved": "Approved",
+      "rejected": "Rejected"
+    },
+
+    "viewDetails": "View Details",
+    "approve": "Approve",
+    "approving": "Approving...",
+    "reject": "Reject",
+    "rejecting": "Rejecting...",
+    "delete": "Delete",
+    "deleting": "Deleting...",
+    "cancel": "Cancel",
+
+    "details": "Appointment Details",
+    "detailsDescription": "Complete information about the appointment",
+
+    "deleteTitle": "Delete Appointment",
+    "deleteDescription": "This action is irreversible",
+    "deleteWarning": "Warning: This action will permanently delete this appointment.",
+    "confirmDelete": "Confirm Deletion",
+
+    "rejectTitle": "Reject Appointment",
+    "rejectDescription": "You can add a note explaining the rejection",
+    "rejectNote": "Rejection reason",
+    "rejectNotePlaceholder": "E.g.: Date not available, please choose another date...",
+    "rejectNoteHint": "This note will be visible to the client",
+    "confirmReject": "Confirm Rejection",
+    "optional": "optional",
+
+    "page": "Page",
+    "of": "of",
+    "previous": "Previous",
+    "next": "Next",
+
+    "createSuccess": "Appointment created successfully",
+    "fetchSuccess": "Appointments retrieved successfully",
+    "approveSuccess": "Appointment approved successfully",
+    "rejectSuccess": "Appointment rejected successfully",
+    "updateSuccess": "Appointment updated successfully",
+    "deleteSuccess": "Appointment deleted successfully",
+
+    "dateRequired": "Date is required",
+    "dateMustBeFuture": "Date must be in the future",
+    "invalidId": "Invalid appointment ID",
+    "notFound": "Appointment not found",
+    "alreadyProcessed": "This appointment has already been processed",
+    "cannotModifyNonPending": "You can only modify pending appointments",
+    "cannotDeleteNonPending": "You can only delete pending appointments",
+    "invalidStatus": "Invalid status",
+    "accessDenied": "Access denied",
+    "fetchError": "Error fetching appointments",
+    "approveError": "Error approving appointment",
+    "rejectError": "Error rejecting appointment",
+    "updateError": "Error updating appointment",
+    "deleteError": "Error deleting appointment",
+
+    "client": {
+      "myAppointments": "My Appointments",
+      "myAppointmentsDescription": "Manage your appointment requests",
+      "myAppointmentDetails": "My Appointment Details",
+      "detailsDescription": "Complete information about your appointment",
+      "totalAppointments": "Total Appointments",
+      "newAppointment": "New Appointment",
+      "filtersDescription": "Filter your appointments by status",
+      "myAppointmentsList": "My Appointments",
+
+      "appointmentReason": "Appointment reason",
+
+      "statusMessages": {
+        "pending": "Your request is being processed. We will contact you soon.",
+        "approved": "Your appointment is confirmed! We look forward to seeing you at the scheduled time.",
+        "rejected": "Your request has been declined. Please see the note below for more information."
+      },
+
+      "approvedAlert": "✅ Appointment confirmed! We look forward to seeing you at the scheduled date and time. If you cannot make it, please let us know.",
+      "rejectedAlert": "❌ Your request could not be accepted. You can create a new request with a different date if you wish.",
+      "pendingAlert": "⏳ Your request is pending validation. We will respond as soon as possible."
+    },
+
+    "noMyRendezVous": "You have no appointments",
+    "noMyRendezVousHint": "Click 'New Appointment' to create one",
+
+    "cancelAppointment": "Cancel Appointment",
+    "cancelAppointmentTitle": "Cancel this appointment?",
+    "cancelAppointmentDescription": "This action is irreversible. You will need to create a new appointment if necessary.",
+    "confirmCancel": "Yes, cancel",
+    "cancelling": "Cancelling...",
+
+    "unauthorized": {
+      "notYourRendezVous": "You don't have access to this appointment"
+    }
   }
 }

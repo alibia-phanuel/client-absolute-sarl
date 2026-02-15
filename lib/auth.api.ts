@@ -3,9 +3,13 @@
 // ===========================
 
 import axiosInstance from "./axiosInstance";
+import axios, { AxiosError } from "axios";
 
 export type UserRole = "CLIENT" | "ADMIN" | "EMPLOYE";
-
+interface ApiErrorResponse {
+  messageKey?: string;
+  message?: string;
+}
 export interface RegisterRequest {
   name: string;
   email: string;
@@ -119,12 +123,20 @@ export const register = async (
     );
 
     return response.data;
-  } catch (error: any) {
-    if (error.response?.data?.messageKey) {
-      throw new Error(error.response.data.messageKey);
+  } catch (error: unknown) {
+    if (error instanceof AxiosError) {
+      const axiosError = error as AxiosError<ApiErrorResponse>;
+
+      if (axiosError.response?.data?.messageKey) {
+        throw new Error(axiosError.response.data.messageKey);
+      }
+
+      throw new Error(
+        axiosError.response?.data?.message || "auth.registerError",
+      );
     }
 
-    throw new Error(error.response?.data?.message || "auth.registerError");
+    throw new Error("auth.registerError");
   }
 };
 
@@ -141,19 +153,22 @@ export const login = async (data: LoginRequest): Promise<LoginResponse> => {
     );
 
     return response.data;
-  } catch (error: any) {
-    if (error.response?.data?.messageKey) {
-      throw new Error(error.response.data.messageKey);
+  } catch (error: unknown) {
+    if (axios.isAxiosError<ApiErrorResponse>(error)) {
+      if (error.response?.data?.messageKey) {
+        throw new Error(error.response.data.messageKey);
+      }
+
+      if (error.response?.status === 401) {
+        throw new Error("auth.invalidCredentials");
+      }
+
+      throw new Error(error.response?.data?.message || "auth.loginError");
     }
 
-    if (error.response?.status === 401) {
-      throw new Error("auth.invalidCredentials");
-    }
-
-    throw new Error(error.response?.data?.message || "auth.loginError");
+    throw new Error("auth.loginError");
   }
 };
-
 /**
  * Vérifier si l'utilisateur est authentifié
  * @returns Données de l'utilisateur connecté
@@ -164,16 +179,20 @@ export const isAuth = async (): Promise<IsAuthResponse> => {
       await axiosInstance.get<IsAuthResponse>("/api/auth/is-auth");
 
     return response.data;
-  } catch (error: any) {
-    if (error.response?.data?.messageKey) {
-      throw new Error(error.response.data.messageKey);
+  } catch (error: unknown) {
+    if (axios.isAxiosError<ApiErrorResponse>(error)) {
+      if (error.response?.data?.messageKey) {
+        throw new Error(error.response.data.messageKey);
+      }
+
+      if (error.response?.status === 401) {
+        throw new Error("auth.notAuthenticated");
+      }
+
+      throw new Error(error.response?.data?.message || "auth.authCheckError");
     }
 
-    if (error.response?.status === 401) {
-      throw new Error("auth.notAuthenticated");
-    }
-
-    throw new Error(error.response?.data?.message || "auth.authCheckError");
+    throw new Error("auth.authCheckError");
   }
 };
 
@@ -192,23 +211,26 @@ export const sendVerifyOtp = async (
     );
 
     return response.data;
-  } catch (error: any) {
-    if (error.response?.data?.messageKey) {
-      throw new Error(error.response.data.messageKey);
+  } catch (error: unknown) {
+    if (axios.isAxiosError<ApiErrorResponse>(error)) {
+      if (error.response?.data?.messageKey) {
+        throw new Error(error.response.data.messageKey);
+      }
+
+      if (error.response?.status === 400) {
+        throw new Error("auth.alreadyVerified");
+      }
+
+      if (error.response?.status === 404) {
+        throw new Error("auth.userNotFound");
+      }
+
+      throw new Error(error.response?.data?.message || "auth.sendOtpError");
     }
 
-    if (error.response?.status === 400) {
-      throw new Error("auth.alreadyVerified");
-    }
-
-    if (error.response?.status === 404) {
-      throw new Error("auth.userNotFound");
-    }
-
-    throw new Error(error.response?.data?.message || "auth.sendOtpError");
+    throw new Error("auth.sendOtpError");
   }
 };
-
 /**
  * Vérifier le compte avec l'OTP
  * @param data - Email et code OTP
@@ -224,20 +246,26 @@ export const verifyAccount = async (
     );
 
     return response.data;
-  } catch (error: any) {
-    if (error.response?.data?.messageKey) {
-      throw new Error(error.response.data.messageKey);
+  } catch (error: unknown) {
+    if (axios.isAxiosError<ApiErrorResponse>(error)) {
+      if (error.response?.data?.messageKey) {
+        throw new Error(error.response.data.messageKey);
+      }
+
+      if (error.response?.status === 400) {
+        throw new Error("auth.invalidOtp");
+      }
+
+      if (error.response?.status === 404) {
+        throw new Error("auth.userNotFound");
+      }
+
+      throw new Error(
+        error.response?.data?.message || "auth.verifyAccountError",
+      );
     }
 
-    if (error.response?.status === 400) {
-      throw new Error("auth.invalidOtp");
-    }
-
-    if (error.response?.status === 404) {
-      throw new Error("auth.userNotFound");
-    }
-
-    throw new Error(error.response?.data?.message || "auth.verifyAccountError");
+    throw new Error("auth.verifyAccountError");
   }
 };
 
@@ -256,7 +284,8 @@ export const sendResetOtp = async (
     );
 
     return response.data;
-  } catch (error: any) {
+  } catch (error: unknown) {
+  if (axios.isAxiosError<ApiErrorResponse>(error)) {
     if (error.response?.data?.messageKey) {
       throw new Error(error.response.data.messageKey);
     }
@@ -269,9 +298,13 @@ export const sendResetOtp = async (
       throw new Error("auth.userNotFound");
     }
 
-    throw new Error(error.response?.data?.message || "auth.sendResetOtpError");
+    throw new Error(
+      error.response?.data?.message || "auth.sendResetOtpError"
+    );
   }
-};
+
+  throw new Error("auth.sendResetOtpError");
+}};
 
 /**
  * Réinitialiser le mot de passe avec un OTP
@@ -288,19 +321,25 @@ export const resetPassword = async (
     );
 
     return response.data;
-  } catch (error: any) {
+  } catch (error: unknown) {
+  if (axios.isAxiosError<ApiErrorResponse>(error)) {
     if (error.response?.data?.messageKey) {
       throw new Error(error.response.data.messageKey);
     }
 
-    if (error.response?.status === 400) {
-      throw new Error("auth.invalidResetOtp");
+    switch (error.response?.status) {
+      case 400:
+        throw new Error("auth.invalidResetOtp");
+      case 404:
+        throw new Error("auth.userNotFound");
+      default:
+        throw new Error(
+          error.response?.data?.message || "auth.resetPasswordError"
+        );
     }
-
-    if (error.response?.status === 404) {
-      throw new Error("auth.userNotFound");
-    }
-
-    throw new Error(error.response?.data?.message || "auth.resetPasswordError");
   }
+
+  // Cas où ce n’est pas une erreur axios
+  throw new Error("auth.resetPasswordError");
+}
 };

@@ -5,7 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { motion } from "framer-motion";
 import { Eye, EyeOff, Mail, Lock, User, Loader2 } from "lucide-react";
 import Image from "next/image";
-import { Link, useRouter } from "@/i18n/routing";
+import { Link, useRouter as useI18nRouter } from "@/i18n/routing";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -22,6 +22,7 @@ import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { register, sendVerifyOtp } from "@/lib/auth.api";
 import { useAuthStore } from "@/store/authStore";
+import { useGuestOnly } from "@/hooks/useRouteGuard";
 
 export default function RegisterForm() {
   const [showPassword, setShowPassword] = useState(false);
@@ -32,9 +33,12 @@ export default function RegisterForm() {
   const t = useTranslations();
   const tAuth = useTranslations("auth");
   const V = useTranslations("validation");
-  const router = useRouter();
+  const i18nRouter = useI18nRouter();
 
-  // ✅ Validation Zod locale
+  // Rediriger si déjà connecté et vérifié
+  useGuestOnly();
+
+  // Validation Zod locale
   const registerSchema = z
     .object({
       name: z
@@ -42,18 +46,12 @@ export default function RegisterForm() {
         .min(1, V("nameRequired"))
         .min(2, V("nameMin"))
         .max(50, V("nameMax")),
-      email: z
-        .string()
-        .min(1, V("emailRequired"))
-        .email(V("emailInvalid")),
+      email: z.string().min(1, V("emailRequired")).email(V("emailInvalid")),
       password: z
         .string()
         .min(1, V("passwordRequired"))
         .min(8, V("passwordMin"))
-        .regex(
-          /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/,
-          V("passwordStrong"),
-        ),
+        .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/, V("passwordStrong")),
       confirmPassword: z.string().min(1, V("confirmPasswordRequired")),
     })
     .refine((data) => data.password === data.confirmPassword, {
@@ -83,34 +81,38 @@ export default function RegisterForm() {
         role: "CLIENT",
       });
 
+      // Stocker les informations d'authentification
       const store = useAuthStore.getState();
       store.setAuth(result.token, result.userData);
-      store.setPendingVerificationEmail(result.userData.email);
 
       toast.success(t(result.messageKey));
 
+      // Attendre que les cookies soient synchronisés
+      await new Promise((resolve) => setTimeout(resolve, 300));
+
+      // Si le compte n'est pas vérifié, envoyer l'OTP et rediriger
       if (!result.userData.isAccountVerified) {
+        store.setPendingVerificationEmail(result.userData.email);
+
         try {
           const otpResult = await sendVerifyOtp({
             email: result.userData.email,
           });
 
           toast.success(t(otpResult.messageKey));
-          router.push("/verify-account");
         } catch (otpError: unknown) {
-          toast.error(
-            t(
-              (otpError as Error)?.message ??
-                (typeof otpError === "string" ? otpError : "Erreur inconnue"),
-            ),
-          );
-          router.push("/verify-account");
+          // Même si l'envoi de l'OTP échoue, on redirige vers la vérification
+          // L'utilisateur pourra renvoyer le code depuis cette page
+          console.error("Error sending OTP:", otpError);
         }
+
+        i18nRouter.push("/verify-account");
       } else {
-        router.push("/");
+        // Si le compte est déjà vérifié (cas rare), rediriger vers l'accueil
+        i18nRouter.push("/");
       }
     } catch (error: unknown) {
-      toast.error(t((error as Error)?.message ?? "Erreur inconnue"));
+      toast.error(t((error as Error)?.message ?? "auth.registerError"));
     } finally {
       setIsLoading(false);
     }
