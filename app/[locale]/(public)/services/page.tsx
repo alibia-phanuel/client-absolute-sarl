@@ -67,14 +67,7 @@ const containerVariants = {
   },
 };
 
-const itemVariants = {
-  hidden: { y: 20, opacity: 0 },
-  visible: {
-    y: 0,
-    opacity: 1,
-    transition: { duration: 0.5, ease: "easeOut" },
-  },
-};
+
 
 const ServiceCard = ({
   service,
@@ -89,6 +82,17 @@ const ServiceCard = ({
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const [isHovered, setIsHovered] = useState(false);
 
+  // 🎨 Mapping des images pour chaque service
+  const serviceImages: Record<string, string> = {
+    canada: "/services/canada.jpeg",
+    belgium: "/services/bg.jpeg",
+    france: "/services/paris.jpeg",
+    digital: "/services/Marketing-digital.jpeg",
+    infography: "/services/infography.jpeg",
+    secretariat: "/services/Assistance-virtuelle.jpeg",
+    commerce: "/services/Commerce-général.jpeg",
+  };
+
   return (
     <motion.div
       ref={ref}
@@ -99,31 +103,52 @@ const ServiceCard = ({
       onHoverEnd={() => setIsHovered(false)}
     >
       <Card className="group relative h-full overflow-hidden border-2 hover:border-primary/50 transition-all duration-300 hover:shadow-2xl">
-        {/* Gradient background on hover */}
+        
+        {/* ====== IMAGE DE FOND AVEC EFFET ZOOM ====== */}
+        <div className="relative h-48 overflow-hidden">
+          <motion.img
+            src={serviceImages[service.id] || "/images/default.jpg"}
+            alt={service.title}
+            className="w-full h-full object-cover"
+            animate={{
+              scale: isHovered ? 1.15 : 1, // ✨ Zoom x1.15 au hover
+            }}
+            transition={{ 
+              duration: 0.6, 
+              ease: "easeOut" 
+            }}
+          />
+          
+          {/* Overlay gradient pour améliorer la lisibilité du texte */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
+          
+          {/* Badge avec icône flottant sur l'image */}
+          <motion.div
+            animate={{
+              scale: isHovered ? 1.1 : 1,
+              y: isHovered ? -5 : 0,
+            }}
+            transition={{ duration: 0.3 }}
+            className={`absolute bottom-4 left-4 w-14 h-14 rounded-xl ${service.gradient} flex items-center justify-center shadow-lg backdrop-blur-sm`}
+          >
+            <service.icon className="w-7 h-7 text-white" />
+          </motion.div>
+        </div>
+
+        {/* Gradient background on hover (reste de la carte) */}
         <motion.div
-          className={`absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-300 ${service.gradient}`}
+          className={`absolute inset-0 opacity-0 group-hover:opacity-5 transition-opacity duration-300 ${service.gradient}`}
           animate={{
-            opacity: isHovered ? 0.1 : 0,
+            opacity: isHovered ? 0.05 : 0,
           }}
         />
 
         {/* Decorative corner accent */}
         <div
-          className={`absolute top-0 right-0 w-24 h-24 ${service.gradient} opacity-10 rounded-bl-full`}
+          className={`absolute top-48 right-0 w-24 h-24 ${service.gradient} opacity-10 rounded-bl-full`}
         />
 
-        <CardHeader className="relative z-10">
-          <motion.div
-            animate={{
-              scale: isHovered ? 1.1 : 1,
-              rotate: isHovered ? 5 : 0,
-            }}
-            transition={{ duration: 0.3 }}
-            className={`w-16 h-16 rounded-2xl ${service.gradient} flex items-center justify-center mb-4 shadow-lg`}
-          >
-            <service.icon className="w-8 h-8 text-white" />
-          </motion.div>
-
+        <CardHeader className="relative z-10 pt-6">
           <CardTitle className="text-2xl mb-2 group-hover:text-primary transition-colors">
             {service.title}
           </CardTitle>

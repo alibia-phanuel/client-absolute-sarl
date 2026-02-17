@@ -1,19 +1,22 @@
 "use client";
 
+// ============================================================
+// 📌 IMPORTS
+// ============================================================
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { motion } from "framer-motion";
-import { 
-  Mail, 
-  Phone, 
-  MapPin, 
-  Send, 
+import {
+  Mail,
+  Phone,
+  MapPin,
+  Send,
   Loader2,
   User,
   Clock,
   Calendar,
-  MessageSquare
+  MessageSquare,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
@@ -38,36 +41,61 @@ import {
 } from "@/components/ui/select";
 import AppointmentModal from "@/components/AppointmentModal";
 
+// ✅ Import de la fonction API depuis ton fichier existant
+import { createContactMessage } from "@/lib/contact.api";
+
+// ============================================================
+// 📌 MAPPING DES SUJETS
+// ============================================================
+/**
+ * Convertit les valeurs du Select (minuscules) en valeurs API (majuscules)
+ *
+ * Le formulaire envoie : "canada", "belgium", etc.
+ * L'API backend attend : "CANADA", "BELGIUM", etc.
+ */
+const SUBJECT_MAP: Record<string, string> = {
+  canada: "CANADA",
+  belgium: "BELGIUM",
+  france: "FRANCE",
+  digital: "DIGITAL",
+  secretariat: "SECRETARIAT",
+  commerce: "COMMERCE",
+  other: "OTHER",
+};
+
+// ============================================================
+// 📌 COMPOSANT PRINCIPAL
+// ============================================================
 export default function ContactPage() {
+  // 🌐 Traductions (next-intl)
   const t = useTranslations("contact");
   const V = useTranslations("validation");
+
+  // 🔄 États locaux
   const [isLoading, setIsLoading] = useState(false);
-const [isModalOpen, setIsModalOpen] = useState(false);
-  // ✅ Validation Zod locale
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  // ============================================================
+  // 📌 SCHÉMA DE VALIDATION ZOD (côté client)
+  // ============================================================
   const contactSchema = z.object({
-    name: z
-      .string()
-      .min(1, V("nameRequired"))
-      .min(2, V("nameMin")),
-    email: z
-      .string()
-      .min(1, V("emailRequired"))
-      .email(V("emailInvalid")),
-    phone: z
-      .string()
-      .min(1, V("phoneRequired"))
-      .min(9, V("phoneMin")),
-    subject: z
-      .string()
-      .min(1, V("subjectRequired")),
-    message: z
-      .string()
-      .min(1, V("messageRequired"))
-      .min(10, V("messageMin")),
+    name: z.string().min(1, V("nameRequired")).min(2, V("nameMin")),
+
+    email: z.string().min(1, V("emailRequired")).email(V("emailInvalid")),
+
+    // ✅ Validation internationale : min 8 pour numéros mondiaux
+    phone: z.string().min(1, V("phoneRequired")).min(8, V("phoneMin")),
+
+    subject: z.string().min(1, V("subjectRequired")),
+
+    message: z.string().min(1, V("messageRequired")).min(10, V("messageMin")),
   });
 
   type ContactFormData = z.infer<typeof contactSchema>;
 
+  // ============================================================
+  // 📌 INITIALISATION DU FORMULAIRE
+  // ============================================================
   const form = useForm<ContactFormData>({
     resolver: zodResolver(contactSchema),
     defaultValues: {
@@ -79,65 +107,108 @@ const [isModalOpen, setIsModalOpen] = useState(false);
     },
   });
 
+  // ============================================================
+  // 📌 SOUMISSION DU FORMULAIRE
+  // ============================================================
+  /**
+   * Cette fonction est appelée après validation Zod côté client
+   *
+   * Flow :
+   * 1. Convertir le sujet (canada → CANADA)
+   * 2. Construire le payload avec métadonnées
+   * 3. Appeler createContactMessage() depuis l'API
+   * 4. Gérer succès/erreurs avec toasts
+   */
   const onSubmit = async (data: ContactFormData) => {
     setIsLoading(true);
-    
-    // ✅ LOG des données validées prêtes pour l'API
-    console.log("📦 Données validées pour l'API:", {
-      name: data.name,
-      email: data.email,
-      phone: data.phone,
-      subject: data.subject,
-      message: data.message,
-      timestamp: new Date().toISOString(),
-      locale: navigator.language,
-    });
-
-    // ✅ Payload formaté pour l'API
-    const apiPayload = {
-      name: data.name.trim(),
-      email: data.email.toLowerCase().trim(),
-      phone: data.phone.trim(),
-      subject: data.subject,
-      message: data.message.trim(),
-      metadata: {
-        userAgent: navigator.userAgent,
-        referrer: document.referrer || "direct",
-        timestamp: new Date().toISOString(),
-      }
-    };
-
-    console.log("🚀 Payload API complet:", JSON.stringify(apiPayload, null, 2));
 
     try {
-      const response = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(apiPayload),
-      });
+      // 🔄 Étape 1 : Convertir le sujet en MAJUSCULES
+      const mappedSubject = SUBJECT_MAP[data.subject.toLowerCase()];
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        console.error("❌ Erreur API:", errorData);
-        throw new Error(errorData.message || "Erreur lors de l'envoi");
+      if (!mappedSubject) {
+        throw new Error(`Sujet invalide : "${data.subject}"`);
       }
 
-      const result = await response.json();
-      console.log("✅ Réponse API:", result);
+      // 📦 Étape 2 : Construire le payload pour l'API
+      const payload = {
+        // Nettoyage des espaces
+        name: data.name.trim(),
 
-      toast.success(t("form.success"));
-      form.reset();
-    } catch (error) {
+        // Email en minuscules (double sécurité avec backend)
+        email: data.email.toLowerCase().trim(),
+
+        // Supprime les espaces du téléphone
+        phone: data.phone.replace(/\s/g, "").trim(),
+
+        // Sujet converti en majuscules
+        subject: mappedSubject,
+
+        // Message nettoyé
+        message: data.message.trim(),
+
+        // 🌐 Métadonnées collectées automatiquement depuis le navigateur
+        metadata: {
+          userAgent: navigator.userAgent,
+          referrer: document.referrer || "direct",
+        },
+      };
+
+      // 🔍 Debug : Log du payload (à retirer en production)
+      if (process.env.NODE_ENV === "development") {
+        console.log("📦 Payload envoyé:", payload);
+      }
+
+      // 🚀 Étape 3 : Appel à l'API via createContactMessage()
+      // Cette fonction gère automatiquement :
+      //   - La requête POST /api/contact-messages
+      //   - Les erreurs HTTP (400, 429, etc.)
+      //   - Le format de la réponse
+      const result = await createContactMessage(payload);
+
+      // ✅ Succès : Afficher toast et réinitialiser le formulaire
+      console.log("✅ Message créé, ID:", result.data.id);
+
+      toast.success(t("form.success"), {
+        description: "Nous vous répondrons dans les plus brefs délais.",
+      });
+
+      // Délai avant reset pour une meilleure UX
+      setTimeout(() => form.reset(), 1000);
+    } catch (error: any) {
+      // ❌ GESTION DES ERREURS
+
       console.error("❌ Erreur lors de l'envoi:", error);
-      toast.error(t("form.error"));
+
+      // Afficher le message d'erreur approprié
+      if (error.message === "Données invalides") {
+        toast.error("Formulaire invalide", {
+          description: "Veuillez vérifier les champs du formulaire.",
+        });
+      } else if (
+        error.message === "Trop de requêtes. Veuillez réessayer plus tard."
+      ) {
+        toast.error("Trop de messages envoyés", {
+          description: "Veuillez patienter 15 minutes avant de réessayer.",
+        });
+      } else {
+        // Erreur générique
+        toast.error(t("form.error"), {
+          description: "Veuillez réessayer plus tard.",
+        });
+      }
     } finally {
+      // 🔄 Désactiver le spinner dans tous les cas
       setIsLoading(false);
     }
   };
 
+  // ============================================================
+  // 📌 RENDU JSX
+  // ============================================================
   return (
     <div className="min-h-screen bg-gradient-to-b from-background to-muted/20">
-      {/* Hero Section */}
+      {/* ── HERO SECTION ─────────────────────────────────────── */}
       <motion.section
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -165,11 +236,11 @@ const [isModalOpen, setIsModalOpen] = useState(false);
         </div>
       </motion.section>
 
-      {/* Contact Section */}
+      {/* ── CONTACT SECTION ──────────────────────────────────── */}
       <section className="py-16">
         <div className="container mx-auto px-4">
           <div className="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
-            {/* Contact Info */}
+            {/* ── INFOS DE CONTACT (colonne gauche) ────────── */}
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
@@ -183,9 +254,9 @@ const [isModalOpen, setIsModalOpen] = useState(false);
                 </p>
               </div>
 
-              {/* Contact Cards */}
+              {/* Cartes de contact */}
               <div className="space-y-4">
-                {/* Address */}
+                {/* Adresse */}
                 <motion.div
                   whileHover={{ scale: 1.02 }}
                   className="flex items-start gap-4 p-6 bg-card border border-border rounded-xl hover:shadow-lg transition-shadow"
@@ -236,7 +307,7 @@ const [isModalOpen, setIsModalOpen] = useState(false);
                   </div>
                 </motion.div>
 
-                {/* Phones */}
+                {/* Téléphones */}
                 <motion.div
                   whileHover={{ scale: 1.02 }}
                   className="flex items-start gap-4 p-6 bg-card border border-border rounded-xl hover:shadow-lg transition-shadow"
@@ -280,7 +351,7 @@ const [isModalOpen, setIsModalOpen] = useState(false);
                 </motion.div>
               </div>
 
-              {/* Business Hours */}
+              {/* Horaires d'ouverture */}
               <div className="p-6 bg-gradient-to-br from-primary/5 to-primary/10 rounded-xl border border-primary/20">
                 <div className="flex items-center gap-2 mb-4">
                   <Clock className="h-5 w-5 text-primary" />
@@ -315,7 +386,7 @@ const [isModalOpen, setIsModalOpen] = useState(false);
               </div>
             </motion.div>
 
-            {/* Contact Form */}
+            {/* ── FORMULAIRE DE CONTACT (colonne droite) ────── */}
             <motion.div
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
@@ -334,7 +405,7 @@ const [isModalOpen, setIsModalOpen] = useState(false);
                   onSubmit={form.handleSubmit(onSubmit)}
                   className="space-y-5"
                 >
-                  {/* Name */}
+                  {/* Champ Nom */}
                   <FormField
                     control={form.control}
                     name="name"
@@ -357,8 +428,9 @@ const [isModalOpen, setIsModalOpen] = useState(false);
                     )}
                   />
 
-                  {/* Email & Phone */}
+                  {/* Champs Email & Téléphone côte à côte */}
                   <div className="grid md:grid-cols-2 gap-4">
+                    {/* Email */}
                     <FormField
                       control={form.control}
                       name="email"
@@ -382,6 +454,7 @@ const [isModalOpen, setIsModalOpen] = useState(false);
                       )}
                     />
 
+                    {/* Téléphone */}
                     <FormField
                       control={form.control}
                       name="phone"
@@ -405,7 +478,13 @@ const [isModalOpen, setIsModalOpen] = useState(false);
                     />
                   </div>
 
-                  {/* Subject */}
+                  {/* 
+                    ⚠️ IMPORTANT : Champ Sujet
+                    
+                    Les valeurs du Select sont en MINUSCULES ("canada", "belgium"...)
+                    Le SUBJECT_MAP les convertit en MAJUSCULES ("CANADA", "BELGIUM"...)
+                    avant l'envoi à l'API
+                  */}
                   <FormField
                     control={form.control}
                     name="subject"
@@ -473,18 +552,20 @@ const [isModalOpen, setIsModalOpen] = useState(false);
                     )}
                   />
 
-                  {/* Submit Button */}
+                  {/* Bouton de soumission */}
                   <Button
                     type="submit"
                     disabled={isLoading}
                     className="w-full h-12 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold relative overflow-hidden group"
                   >
                     {isLoading ? (
+                      // État de chargement
                       <>
                         <Loader2 className="mr-2 h-5 w-5 animate-spin" />
                         {t("form.sending")}
                       </>
                     ) : (
+                      // État normal
                       <>
                         <Send className="mr-2 h-5 w-5" />
                         <span className="relative z-10">
@@ -500,6 +581,7 @@ const [isModalOpen, setIsModalOpen] = useState(false);
                     )}
                   </Button>
 
+                  {/* Mention de confidentialité */}
                   <p className="text-xs text-center text-muted-foreground">
                     {t("form.privacy")}
                   </p>
@@ -510,7 +592,7 @@ const [isModalOpen, setIsModalOpen] = useState(false);
         </div>
       </section>
 
-      {/* CTA Section */}
+      {/* ── CTA SECTION ──────────────────────────────────────── */}
       <section className="py-16 bg-gradient-to-r from-primary/10 to-primary/5">
         <div className="container mx-auto px-4">
           <motion.div

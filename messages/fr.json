@@ -238,8 +238,8 @@
     "admin": "Administration",
     "logout": "Se déconnecter",
     "Appointments": "Rendez-vous",
-     "sms": "Messages",
-     "devis": "devis"
+    "sms": "Messages",
+    "devis": "devis"
   },
 
   "auth": {
@@ -1158,7 +1158,7 @@
     "updateError": "Erreur lors de la mise à jour de l'article",
     "deleteError": "Erreur lors de la suppression de l'article"
   },
-"rendezvous": {
+  "rendezvous": {
     "title": "Gestion des Rendez-vous",
     "description": "Gérez les demandes de rendez-vous des clients",
     "totalRendezVous": "Total Rendez-vous",
@@ -1177,13 +1177,13 @@
     "createdAt": "Créé le",
     "updatedAt": "Modifié le",
     "actions": "Actions",
-    
+
     "statuses": {
       "pending": "En attente",
       "approved": "Approuvé",
       "rejected": "Rejeté"
     },
-    
+
     "viewDetails": "Voir les détails",
     "approve": "Approuver",
     "approving": "Approbation...",
@@ -1192,15 +1192,15 @@
     "delete": "Supprimer",
     "deleting": "Suppression...",
     "cancel": "Annuler",
-    
+
     "details": "Détails du Rendez-vous",
     "detailsDescription": "Informations complètes sur le rendez-vous",
-    
+
     "deleteTitle": "Supprimer le Rendez-vous",
     "deleteDescription": "Cette action est irréversible",
     "deleteWarning": "Attention : Cette action supprimera définitivement ce rendez-vous.",
     "confirmDelete": "Confirmer la suppression",
-    
+
     "rejectTitle": "Rejeter le Rendez-vous",
     "rejectDescription": "Vous pouvez ajouter une note expliquant le rejet",
     "rejectNote": "Motif du rejet",
@@ -1208,19 +1208,19 @@
     "rejectNoteHint": "Cette note sera visible par le client",
     "confirmReject": "Confirmer le rejet",
     "optional": "optionnel",
-    
+
     "page": "Page",
     "of": "sur",
     "previous": "Précédent",
     "next": "Suivant",
-    
+
     "createSuccess": "Rendez-vous créé avec succès",
     "fetchSuccess": "Rendez-vous récupérés avec succès",
     "approveSuccess": "Rendez-vous approuvé avec succès",
     "rejectSuccess": "Rendez-vous rejeté avec succès",
     "updateSuccess": "Rendez-vous mis à jour avec succès",
     "deleteSuccess": "Rendez-vous supprimé avec succès",
-    
+
     "dateRequired": "La date est requise",
     "dateMustBeFuture": "La date doit être dans le futur",
     "invalidId": "ID de rendez-vous invalide",
@@ -1235,7 +1235,7 @@
     "rejectError": "Erreur lors du rejet du rendez-vous",
     "updateError": "Erreur lors de la mise à jour du rendez-vous",
     "deleteError": "Erreur lors de la suppression du rendez-vous",
-    
+
     "client": {
       "myAppointments": "Mes Rendez-vous",
       "myAppointmentsDescription": "Gérez vos demandes de rendez-vous",
@@ -1245,31 +1245,120 @@
       "newAppointment": "Nouveau Rendez-vous",
       "filtersDescription": "Filtrez vos rendez-vous par statut",
       "myAppointmentsList": "Mes Rendez-vous",
-      
+
       "appointmentReason": "Motif du rendez-vous",
-      
+
       "statusMessages": {
         "pending": "Votre demande est en cours de traitement. Nous vous contacterons bientôt.",
         "approved": "Votre rendez-vous est confirmé ! Nous vous attendons à la date prévue.",
         "rejected": "Votre demande a été refusée. Veuillez consulter la note ci-dessous pour plus d'informations."
       },
-      
+
       "approvedAlert": "✅ Rendez-vous confirmé ! Nous vous attendons à la date et heure indiquées. En cas d'empêchement, merci de nous prévenir.",
       "rejectedAlert": "❌ Votre demande n'a pas pu être acceptée. Vous pouvez créer une nouvelle demande avec une autre date si vous le souhaitez.",
       "pendingAlert": "⏳ Votre demande est en attente de validation. Nous vous répondrons dans les plus brefs délais."
     },
-    
+
     "noMyRendezVous": "Vous n'avez aucun rendez-vous",
     "noMyRendezVousHint": "Cliquez sur 'Nouveau Rendez-vous' pour en créer un",
-    
+
     "cancelAppointment": "Annuler le rendez-vous",
     "cancelAppointmentTitle": "Annuler ce rendez-vous ?",
     "cancelAppointmentDescription": "Cette action est irréversible. Vous devrez créer un nouveau rendez-vous si nécessaire.",
     "confirmCancel": "Oui, annuler",
     "cancelling": "Annulation...",
-    
+
     "unauthorized": {
       "notYourRendezVous": "Vous n'avez pas accès à ce rendez-vous"
     }
+  },
+  "contactMessages": {
+
+    
+    "title": "Messages de Contact",
+    "description": "Gérez les messages reçus depuis le formulaire de contact",
+
+    "totalMessages": "Total des messages",
+    "newMessages": "Nouveaux",
+    "inProgress": "En cours",
+    "resolved": "Résolus",
+
+    "filters": "Filtres et Recherche",
+    "filtersDescription": "Filtrez et recherchez parmi les messages",
+    "searchPlaceholder": "Rechercher par nom, email ou message...",
+    "filterByStatus": "Filtrer par statut",
+    "filterBySubject": "Filtrer par sujet",
+    "allStatuses": "Tous les statuts",
+    "allSubjects": "Tous les sujets",
+    "resetFilters": "Réinitialiser",
+    "refresh": "Actualiser",
+    "refreshed": "Liste actualisée avec succès",
+
+    "messagesList": "Liste des messages",
+    "noMessages": "Aucun message pour le moment",
+
+    "name": "Nom",
+    "email": "Email",
+    "phone": "Téléphone",
+    "contact": "Contact",
+    "subject": "Sujet",
+    "status": "Statut",
+    "date": "Date",
+    "message": "Message",
+    "actions": "Actions",
+
+    "viewDetails": "Voir les détails",
+    "updateStatus": "Changer le statut",
+    "delete": "Supprimer",
+
+    "statusNEW": "Nouveau",
+    "statusREAD": "Lu",
+    "statusIN_PROGRESS": "En cours",
+    "statusRESOLVED": "Résolu",
+    "statusARCHIVED": "Archivé",
+
+    "subjectCANADA": "Immigration Canada",
+    "subjectBELGIUM": "Immigration Belgique",
+    "subjectFRANCE": "Immigration France",
+    "subjectDIGITAL": "Services Digitaux",
+    "subjectSECRETARIAT": "Secrétariat",
+    "subjectCOMMERCE": "Commerce",
+    "subjectOTHER": "Autre",
+
+    "messageDetails": "Détails du Message",
+    "messageDetailsDescription": "Informations complètes sur le message reçu",
+    "currentStatus": "Statut actuel",
+    "contactInfo": "Informations du Contact",
+    "messageContent": "Contenu du Message",
+    "internalNotes": "Notes Internes",
+    "metadata": "Métadonnées",
+    "createdAt": "Date de réception",
+    "readAt": "Lu le",
+    "technicalInfo": "Informations techniques",
+
+    "updateStatusDescription": "Modifier le statut et ajouter des notes internes",
+    "newStatus": "Nouveau statut",
+    "notesPlaceholder": "Ajoutez des notes internes pour votre équipe...",
+    "cancel": "Annuler",
+    "save": "Enregistrer",
+    "saving": "Enregistrement...",
+
+    "deleteMessage": "Supprimer le Message",
+    "deleteMessageDescription": "Cette action est irréversible",
+    "deleteWarning": "⚠️ Attention : ce message sera définitivement supprimé",
+    "confirmDelete": "Confirmer la suppression",
+    "deleting": "Suppression...",
+
+    "fetchSuccess": "Messages récupérés avec succès",
+    "createSuccess": "Message envoyé avec succès",
+    "updateSuccess": "Message mis à jour avec succès",
+    "deleteSuccess": "Message supprimé avec succès",
+
+    "notFound": "Message introuvable",
+    "accessDenied": "Accès refusé",
+    "fetchError": "Erreur lors de la récupération des messages",
+    "createError": "Erreur lors de l'envoi du message",
+    "updateError": "Erreur lors de la mise à jour du message",
+    "deleteError": "Erreur lors de la suppression du message"
   }
 }
