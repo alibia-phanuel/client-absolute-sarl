@@ -1,8 +1,8 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { motion, useInView } from "framer-motion";
-import { useRef, useState } from "react";
+import { motion, useInView, useMotionValue, useSpring } from "framer-motion";
+import { useRef, useState, useEffect } from "react";
 import {
   Plane,
   GraduationCap,
@@ -42,6 +42,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Link } from "@/i18n/routing";
 import AppointmentModal from "@/components/AppointmentModal";
+
 // ========================================
 // TYPES
 // ========================================
@@ -74,6 +75,15 @@ interface Destination {
   flag: string;
 }
 
+interface Particle {
+  id: number;
+  x: number;
+  y: number;
+  size: number;
+  duration: number;
+  delay: number;
+}
+
 // ========================================
 // ANIMATION VARIANTS
 // ========================================
@@ -87,6 +97,206 @@ const staggerContainer = {
     },
   },
 };
+
+// ========================================
+// HERO SUB-COMPONENTS
+// ========================================
+
+function FloatingParticles() {
+  const [particles, setParticles] = useState<Particle[]>([]);
+
+  useEffect(() => {
+    const generated = Array.from({ length: 18 }, (_, i) => ({
+      id: i,
+      x: Math.random() * 100,
+      y: Math.random() * 100,
+      size: Math.random() * 4 + 2,
+      duration: Math.random() * 8 + 6,
+      delay: Math.random() * 4,
+    }));
+    setParticles(generated);
+  }, []);
+
+  return (
+    <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      {particles.map((p) => (
+        <motion.div
+          key={p.id}
+          className="absolute rounded-full"
+          style={{
+            left: `${p.x}%`,
+            top: `${p.y}%`,
+            width: p.size,
+            height: p.size,
+            background: `rgba(28, 169, 201, ${Math.random() * 0.4 + 0.15})`,
+            boxShadow: `0 0 ${p.size * 3}px rgba(28, 169, 201, 0.5)`,
+          }}
+          animate={{
+            y: [0, -30, 0],
+            opacity: [0.3, 0.9, 0.3],
+            scale: [1, 1.4, 1],
+          }}
+          transition={{
+            duration: p.duration,
+            delay: p.delay,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
+      ))}
+    </div>
+  );
+}
+
+function AnimatedGrid() {
+  return (
+    <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      {/* Grille de fond */}
+      <div
+        className="absolute inset-0 opacity-[0.04]"
+        style={{
+          backgroundImage: `
+            linear-gradient(rgba(28,169,201,1) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(28,169,201,1) 1px, transparent 1px)
+          `,
+          backgroundSize: "60px 60px",
+        }}
+      />
+
+      {/* Orbes lumineux animés */}
+      <motion.div
+        className="absolute -top-32 -left-32 w-[500px] h-[500px] rounded-full"
+        style={{
+          background:
+            "radial-gradient(circle, rgba(28,169,201,0.18) 0%, transparent 70%)",
+        }}
+        animate={{ scale: [1, 1.2, 1], opacity: [0.6, 1, 0.6] }}
+        transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+      />
+      <motion.div
+        className="absolute -bottom-32 -right-32 w-[600px] h-[600px] rounded-full"
+        style={{
+          background:
+            "radial-gradient(circle, rgba(28,169,201,0.12) 0%, transparent 70%)",
+        }}
+        animate={{ scale: [1.2, 1, 1.2], opacity: [0.5, 0.9, 0.5] }}
+        transition={{
+          duration: 8,
+          repeat: Infinity,
+          ease: "easeInOut",
+          delay: 2,
+        }}
+      />
+      <motion.div
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] rounded-full"
+        style={{
+          background:
+            "radial-gradient(circle, rgba(28,169,201,0.08) 0%, transparent 70%)",
+        }}
+        animate={{ scale: [1, 1.3, 1] }}
+        transition={{
+          duration: 10,
+          repeat: Infinity,
+          ease: "easeInOut",
+          delay: 1,
+        }}
+      />
+
+      {/* Ligne de scan */}
+      <motion.div
+        className="absolute left-0 right-0 h-px"
+        style={{
+          background:
+            "linear-gradient(90deg, transparent, rgba(28,169,201,0.4), transparent)",
+        }}
+        animate={{ top: ["0%", "100%"] }}
+        transition={{
+          duration: 8,
+          repeat: Infinity,
+          ease: "linear",
+          repeatDelay: 2,
+        }}
+      />
+    </div>
+  );
+}
+
+function MouseFollower() {
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+  const springX = useSpring(mouseX, { stiffness: 80, damping: 20 });
+  const springY = useSpring(mouseY, { stiffness: 80, damping: 20 });
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      mouseX.set(e.clientX - 160);
+      mouseY.set(e.clientY - 160);
+    };
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, [mouseX, mouseY]);
+
+  return (
+    <motion.div
+      className="fixed pointer-events-none z-0 w-80 h-80 rounded-full"
+      style={{
+        x: springX,
+        y: springY,
+        background:
+          "radial-gradient(circle, rgba(28,169,201,0.08) 0%, transparent 70%)",
+      }}
+    />
+  );
+}
+
+function MagneticBadge({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="relative inline-block">
+      {/* Anneau tournant 1 */}
+      <motion.div
+        className="absolute rounded-full"
+        style={{
+          inset: "-2px",
+          background:
+            "conic-gradient(from 0deg, transparent 60%, rgba(28,169,201,0.7) 80%, transparent 100%)",
+          padding: "2px",
+          borderRadius: "9999px",
+        }}
+        animate={{ rotate: 360 }}
+        transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+      >
+        <div className="w-full h-full rounded-full bg-background" />
+      </motion.div>
+
+      {/* Anneau tournant 2 (inverse, plus large) */}
+      <motion.div
+        className="absolute rounded-full"
+        style={{
+          inset: "-6px",
+          background:
+            "conic-gradient(from 180deg, transparent 60%, rgba(28,169,201,0.35) 80%, transparent 100%)",
+          borderRadius: "9999px",
+        }}
+        animate={{ rotate: -360 }}
+        transition={{ duration: 5, repeat: Infinity, ease: "linear" }}
+      />
+
+      {/* Halo pulsant */}
+      <motion.div
+        className="absolute inset-0 rounded-full"
+        animate={{
+          boxShadow: [
+            "0 0 0 0px rgba(28,169,201,0.6)",
+            "0 0 0 10px rgba(28,169,201,0)",
+          ],
+        }}
+        transition={{ duration: 2, repeat: Infinity, ease: "easeOut" }}
+      />
+
+      <div className="relative z-10">{children}</div>
+    </div>
+  );
+}
 
 // ========================================
 // UTILITY COMPONENTS
@@ -312,6 +522,23 @@ const WhyUsFeatureCard = ({
 export default function HomePage() {
   const t = useTranslations("HomePage");
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  // Magnetic CTA button
+  const btnX = useMotionValue(0);
+  const btnY = useMotionValue(0);
+  const springBtnX = useSpring(btnX, { stiffness: 200, damping: 15 });
+  const springBtnY = useSpring(btnY, { stiffness: 200, damping: 15 });
+
+  const handleBtnMove = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    btnX.set((e.clientX - (rect.left + rect.width / 2)) * 0.25);
+    btnY.set((e.clientY - (rect.top + rect.height / 2)) * 0.25);
+  };
+  const handleBtnLeave = () => {
+    btnX.set(0);
+    btnY.set(0);
+  };
+
   const services: ServiceCard[] = [
     {
       icon: Plane,
@@ -464,12 +691,18 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-background via-background to-muted/20">
-      {/* HERO SECTION */}
-      <section className="relative py-12 sm:py-20 lg:py-32 overflow-hidden">
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-10 sm:top-20 left-5 sm:left-10 w-48 sm:w-72 h-48 sm:h-72 bg-primary/10 rounded-full blur-3xl animate-pulse" />
-          <div className="absolute bottom-10 sm:bottom-20 right-5 sm:right-10 w-64 sm:w-96 h-64 sm:h-96 bg-primary/5 rounded-full blur-3xl animate-pulse delay-1000" />
-        </div>
+      {/* ============================================================ */}
+      {/* HERO SECTION — version animée                                */}
+      {/* ============================================================ */}
+      <MouseFollower />
+
+      <section
+        className="relative py-12 sm:py-20 lg:py-32 overflow-hidden"
+        style={{ isolation: "isolate" }}
+      >
+        {/* Fond animé */}
+        <AnimatedGrid />
+        <FloatingParticles />
 
         <div className="container mx-auto px-4 relative z-10">
           <motion.div
@@ -478,80 +711,159 @@ export default function HomePage() {
             transition={{ duration: 0.8 }}
             className="text-center max-w-4xl mx-auto"
           >
+            {/* Badge avec animation circulaire */}
             <motion.div
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5, delay: 0.2 }}
-              className="inline-block mb-4 sm:mb-6"
+              className="inline-block mb-6 sm:mb-8"
             >
-              <Badge
-                className="px-3 py-1.5 sm:px-4 sm:py-2 text-xs sm:text-sm font-semibold"
-                variant="outline"
-              >
-                <Sparkles className="w-3 h-3 sm:w-4 sm:h-4 mr-2" />
-                {t("hero.badge")}
-              </Badge>
+              <MagneticBadge>
+                <Badge
+                  className="px-4 py-2 text-xs sm:text-sm font-semibold relative z-10"
+                  style={{
+                    border: "1px solid rgba(28,169,201,0.4)",
+                    background: "rgba(28,169,201,0.08)",
+                    color: "#1CA9C9",
+                  }}
+                  variant="outline"
+                >
+                  <motion.span
+                    animate={{ rotate: [0, 15, -15, 0] }}
+                    transition={{ duration: 2, repeat: Infinity, delay: 1 }}
+                    className="inline-block mr-2"
+                  >
+                    <Sparkles className="w-3 h-3 sm:w-4 sm:h-4" />
+                  </motion.span>
+                  {t("hero.badge")}
+                </Badge>
+              </MagneticBadge>
             </motion.div>
 
-            <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold mb-4 sm:mb-6">
-              <span className="bg-gradient-to-r from-primary via-primary/80 to-primary/60 bg-clip-text text-transparent">
+            {/* Titre */}
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.3 }}
+              className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold mb-4 sm:mb-6"
+            >
+              <span
+                className="bg-clip-text text-transparent"
+                style={{
+                  backgroundImage:
+                    "linear-gradient(135deg, #1CA9C9 0%, #0e7fa0 50%, #1CA9C9 100%)",
+                  backgroundSize: "200% auto",
+                  animation: "heroGradientShift 4s linear infinite",
+                }}
+              >
                 {t("hero.title")}
               </span>
               <br />
               <span className="text-foreground text-2xl sm:text-3xl md:text-5xl lg:text-6xl">
                 {t("hero.titleHighlight")}
               </span>
-            </h1>
+            </motion.h1>
 
-            <p className="text-sm sm:text-lg md:text-xl text-muted-foreground mb-6 sm:mb-8 leading-relaxed max-w-2xl mx-auto px-4">
+            {/* Sous-titre */}
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.8, delay: 0.45 }}
+              className="text-sm sm:text-lg md:text-xl text-muted-foreground mb-6 sm:mb-8 leading-relaxed max-w-2xl mx-auto px-4"
+            >
               {t("hero.subtitle")}
-            </p>
+            </motion.p>
 
+            {/* Boutons */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
+              transition={{ duration: 0.6, delay: 0.55 }}
               className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4 justify-center px-4"
             >
-              <Button
-                size="lg"
-                className="h-11 sm:h-12 px-6 sm:px-8 text-sm sm:text-base group w-full sm:w-auto"
-                asChild
+              {/* CTA Primary — magnétique + shimmer */}
+              <motion.a
+                href="#contact"
+                style={{
+                  x: springBtnX,
+                  y: springBtnY,
+                  background: "linear-gradient(135deg, #1CA9C9, #0e7fa0)",
+                  boxShadow: "0 4px 20px rgba(28,169,201,0.35)",
+                  padding: "12px",
+                  borderRadius: "8px",
+                }}
+                onMouseMove={handleBtnMove}
+                onMouseLeave={handleBtnLeave}
+                whileHover={{ scale: 1.04 }}
+                whileTap={{ scale: 0.97 }}
+                className="relative inline-flex items-center justify-center h-11 sm:h-12 px-6 sm:px-8 text-sm sm:text-base font-semibold rounded-xl text-white overflow-hidden group w-full sm:w-auto"
               >
-                <a href="#contact">
-                  {t("hero.ctaPrimary")}
-                  <ArrowRight className="ml-2 w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform" />
-                </a>
-              </Button>
-              <Button
-                size="lg"
-                variant="outline"
-                className="h-11 sm:h-12 px-6 sm:px-8 text-sm sm:text-base w-full sm:w-auto"
-                asChild
+                <motion.span
+                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity"
+                  style={{
+                    background:
+                      "linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.2) 50%, transparent 100%)",
+                    backgroundSize: "200% 100%",
+                  }}
+                  animate={{ backgroundPosition: ["-100% 0", "200% 0"] }}
+                  transition={{
+                    duration: 1.5,
+                    repeat: Infinity,
+                    ease: "linear",
+                  }}
+                />
+                {t("hero.ctaPrimary")}
+                <ArrowRight className="ml-2 w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform" />
+              </motion.a>
+
+              {/* CTA Secondary */}
+              <motion.a
+                href="#services"
+                whileHover={{ scale: 1.04 }}
+                whileTap={{ scale: 0.97 }}
+                className="inline-flex items-center justify-center h-11 sm:h-12 px-6 sm:px-8 text-sm sm:text-base font-semibold rounded-xl border border-border text-foreground hover:border-[#1CA9C9] hover:text-[#1CA9C9] transition-colors w-full sm:w-auto"
               >
-                <a href="#services">{t("hero.ctaSecondary")}</a>
-              </Button>
-              <Button
-                size="lg"
-                variant="outline"
-                className="h-11 sm:h-12 px-6 sm:px-8 text-sm sm:text-base bg-green-500 hover:bg-green-600 text-white border-green-500 hover:border-green-600 w-full sm:w-auto"
-                asChild
+                {t("hero.ctaSecondary")}
+              </motion.a>
+
+              {/* WhatsApp */}
+              <motion.a
+                href="https://wa.me/237699992818"
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={{ scale: 1.04 }}
+                whileTap={{ scale: 0.97 }}
+                className="inline-flex items-center justify-center h-11 sm:h-12 px-6 sm:px-8 text-sm sm:text-base font-semibold rounded-xl bg-green-500 hover:bg-green-600 text-white transition-colors w-full sm:w-auto"
+                style={{ boxShadow: "0 4px 16px rgba(34,197,94,0.3)" }}
               >
-                <a
-                  href="https://wa.me/237699992818"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <MessageCircle className="mr-2 w-4 h-4 sm:w-5 sm:h-5" />
-                  {t("hero.ctaWhatsApp")}
-                </a>
-              </Button>
+                <MessageCircle className="mr-2 w-4 h-4 sm:w-5 sm:h-5" />
+                {t("hero.ctaWhatsApp")}
+              </motion.a>
             </motion.div>
           </motion.div>
         </div>
+
+        {/* Dégradé bas de section */}
+        <div
+          className="absolute bottom-0 left-0 right-0 h-24 pointer-events-none"
+          style={{
+            background:
+              "linear-gradient(to bottom, transparent, rgba(28,169,201,0.03))",
+          }}
+        />
       </section>
 
-      {/* STATS SECTION */}
+      {/* Keyframe gradient titre */}
+      <style>{`
+        @keyframes heroGradientShift {
+          0%   { background-position: 0% center; }
+          100% { background-position: 200% center; }
+        }
+      `}</style>
+
+      {/* ============================================================ */}
+      {/* STATS SECTION                                                */}
+      {/* ============================================================ */}
       <section className="py-12 sm:py-16 border-y border-border/50 bg-muted/30">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
@@ -562,7 +874,9 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* SERVICES SECTION */}
+      {/* ============================================================ */}
+      {/* SERVICES SECTION                                             */}
+      {/* ============================================================ */}
       <section id="services" className="py-12 sm:py-20">
         <div className="container mx-auto px-4">
           <motion.div
@@ -615,7 +929,9 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* PROCESS SECTION */}
+      {/* ============================================================ */}
+      {/* PROCESS SECTION                                              */}
+      {/* ============================================================ */}
       <section className="py-12 sm:py-20 bg-muted/30">
         <div className="container mx-auto px-4">
           <motion.div
@@ -651,7 +967,9 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* DESTINATIONS SECTION */}
+      {/* ============================================================ */}
+      {/* DESTINATIONS SECTION                                         */}
+      {/* ============================================================ */}
       <section className="py-12 sm:py-20">
         <div className="container mx-auto px-4">
           <motion.div
@@ -684,7 +1002,9 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* WHY US SECTION */}
+      {/* ============================================================ */}
+      {/* WHY US SECTION                                               */}
+      {/* ============================================================ */}
       <section className="py-12 sm:py-20 bg-muted/30">
         <div className="container mx-auto px-4">
           <motion.div
@@ -718,7 +1038,9 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* CTA SECTION */}
+      {/* ============================================================ */}
+      {/* CTA SECTION                                                  */}
+      {/* ============================================================ */}
       <section className="py-12 sm:py-20 bg-gradient-to-br from-primary/10 via-primary/5 to-background relative overflow-hidden">
         <div className="absolute inset-0 bg-grid-white/5" />
 
@@ -743,7 +1065,7 @@ export default function HomePage() {
                 className="h-12 sm:h-14 px-8 sm:px-10 text-sm sm:text-base group w-full sm:w-auto"
                 asChild
               >
-                <a  href="#contact">
+                <a href="#contact">
                   {t("cta.primary")}
                   <ArrowRight className="ml-2 w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform" />
                 </a>
@@ -794,7 +1116,9 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* CONTACT SECTION */}
+      {/* ============================================================ */}
+      {/* CONTACT SECTION                                              */}
+      {/* ============================================================ */}
       <section id="contact" className="py-12 sm:py-20">
         <div className="container mx-auto px-4">
           <motion.div
@@ -911,6 +1235,7 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
       <AppointmentModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}

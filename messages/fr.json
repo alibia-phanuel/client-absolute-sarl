@@ -763,19 +763,7 @@
     "madeWith": "Développé avec",
     "by": "par"
   },
-  "blog": {
-    "hero": {
-      "title": "Blog ABSOLUTE SARL",
-      "subtitle": "Conseils, actualités et guides pour réussir vos projets d'immigration et votre transformation digitale"
-    },
-    "filters": {
-      "search": "Rechercher un article...",
-      "allCategories": "Toutes les catégories",
-      "results": "article(s) trouvé(s)"
-    },
-    "readMore": "Lire la suite",
-    "noResults": "Aucun article trouvé pour votre recherche"
-  },
+
   "faq": {
     "hero": {
       "badge": "Centre d'aide",
@@ -1068,95 +1056,99 @@
     "deleteError": "Erreur lors de la suppression de l'utilisateur"
   },
   "blog": {
-    "created": "Article créé avec succès",
-    "updated": "Article mis à jour avec succès",
-    "deleted": "Article supprimé avec succès",
-    "notFound": "Article introuvable",
-    "validation": {
-      "missingFields": "Tous les champs (titres et contenus FR/EN) sont requis"
+    "hero": {
+      "title": "Blog ABSOLUTE SARL",
+      "subtitle": "Conseils, actualités et guides pour réussir vos projets d'immigration et votre transformation digitale"
     },
-    "unauthorized": {
-      "notOwner": "Vous n'êtes pas autorisé à modifier cet article"
-    }
+    "filters": {
+      "search": "Rechercher un article...",
+      "allCategories": "Toutes les catégories",
+      "results": "article(s) trouvé(s)"
+    },
+    "readMore": "Lire la suite",
+    "noResults": "Aucun article trouvé pour votre recherche",
+    "errorLoading": "Erreur lors du chargement des articles"
   },
-  "blogs": {
-    "title": "Gestion des Blogs",
-    "description": "Gérez les articles de blog et leur contenu multilingue",
-    "totalBlogs": "Total Articles",
-    "myBlogs": "Mes Articles",
-    "withImages": "Avec Images",
-    "recent": "Récents (7j)",
-    "filters": "Filtres et Recherche",
-    "filtersDescription": "Recherchez et filtrez les articles",
-    "searchPlaceholder": "Rechercher par titre, contenu ou auteur...",
-    "refresh": "Actualiser",
-    "refreshed": "Liste actualisée avec succès",
-    "blogsList": "Liste des Articles",
-    "noBlogs": "Aucun article trouvé",
-    "image": "Image",
-    "titleFr": "Titre (Français)",
-    "titleEn": "Titre (English)",
-    "titleFrPlaceholder": "Entrez le titre en français...",
-    "titleEnPlaceholder": "Enter the title in English...",
-    "content": "Contenu",
-    "contentFr": "Contenu (Français)",
-    "contentEn": "Contenu (English)",
-    "contentFrPlaceholder": "Rédigez le contenu de l'article en français...",
-    "contentEnPlaceholder": "Write the article content in English...",
-    "author": "Auteur",
-    "metadata": "Métadonnées",
-    "createdAt": "Créé le",
-    "updatedAt": "Modifié le",
-    "actions": "Actions",
-    "viewDetails": "Voir les détails",
-    "edit": "Modifier",
-    "delete": "Supprimer",
-    "save": "Enregistrer",
-    "cancel": "Annuler",
-    "saving": "Enregistrement...",
-    "deleting": "Suppression...",
-    "creating": "Création...",
-    "addBlog": "Ajouter un Article",
-    "addBlogDescription": "Créez un nouveau article de blog multilingue",
-    "createBlog": "Créer l'article",
-    "editBlog": "Modifier l'Article",
-    "editBlogDescription": "Mettez à jour le contenu de l'article",
-    "deleteBlog": "Supprimer l'Article",
-    "deleteBlogDescription": "Cette action est irréversible",
-    "deleteWarning": "Attention : Cette action supprimera définitivement cet article et son image associée.",
-    "confirmDelete": "Confirmer la suppression",
-    "imageWillBeDeleted": "L'image sera également supprimée de Cloudinary",
-    "blogDetails": "Détails de l'Article",
-    "blogDetailsDescription": "Informations complètes sur l'article",
-    "imageUpload": {
-      "optional": "optionnel",
-      "clickToUpload": "Cliquez pour uploader",
-      "orDragDrop": "ou glissez-déposez",
-      "maxSize": "max 5MB",
-      "tip": "L'image sera hébergée sur Cloudinary et optimisée automatiquement",
-      "uploading": "Upload en cours...",
-      "success": "Image uploadée avec succès",
-      "error": "Échec de l'upload de l'image",
-      "invalidType": "Type de fichier invalide. Utilisez PNG, JPG ou WEBP",
-      "tooLarge": "L'image est trop grande. Maximum 5MB",
-      "remove": "Supprimer l'image",
-      "removed": "Image supprimée"
-    },
-    "created": "Article créé avec succès",
-    "updated": "Article mis à jour avec succès",
-    "deleted": "Article supprimé avec succès",
-    "notFound": "Article introuvable",
-    "accessDenied": "Accès refusé",
-    "unauthorized": {
-      "notOwner": "Vous n'êtes pas autorisé à modifier cet article"
-    },
-    "validation": {
-      "missingFields": "Tous les champs (titres et contenus FR/EN) sont requis"
-    },
-    "fetchError": "Erreur lors de la récupération des articles",
-    "createError": "Erreur lors de la création de l'article",
-    "updateError": "Erreur lors de la mise à jour de l'article",
-    "deleteError": "Erreur lors de la suppression de l'article"
+  "admin": {
+    "blog": {
+      "title": "Gestion des Blogs",
+      "description": "Gérez les articles de blog et leur contenu multilingue",
+      "totalBlogs": "Total Articles",
+      "myBlogs": "Mes Articles",
+      "withImages": "Avec Images",
+      "recent": "Récents (7j)",
+      "filters": "Filtres et Recherche",
+      "filtersDescription": "Recherchez et filtrez les articles",
+      "searchPlaceholder": "Rechercher par titre, contenu ou auteur...",
+      "refresh": "Actualiser",
+      "refreshed": "Liste actualisée avec succès",
+      "blogsList": "Liste des Articles",
+      "noBlogs": "Aucun article trouvé",
+      "image": "Image",
+      "titleFr": "Titre (Français)",
+      "titleEn": "Titre (English)",
+      "titleFrPlaceholder": "Entrez le titre en français...",
+      "titleEnPlaceholder": "Enter the title in English...",
+      "content": "Contenu",
+      "contentFr": "Contenu (Français)",
+      "contentEn": "Contenu (English)",
+      "contentFrPlaceholder": "Rédigez le contenu de l'article en français...",
+      "contentEnPlaceholder": "Write the article content in English...",
+      "author": "Auteur",
+      "metadata": "Métadonnées",
+      "createdAt": "Créé le",
+      "updatedAt": "Modifié le",
+      "actions": "Actions",
+      "viewDetails": "Voir les détails",
+      "edit": "Modifier",
+      "delete": "Supprimer",
+      "save": "Enregistrer",
+      "cancel": "Annuler",
+      "saving": "Enregistrement...",
+      "deleting": "Suppression...",
+      "creating": "Création...",
+      "addBlog": "Ajouter un Article",
+      "addBlogDescription": "Créez un nouveau article de blog multilingue",
+      "createBlog": "Créer l'article",
+      "editBlog": "Modifier l'Article",
+      "editBlogDescription": "Mettez à jour le contenu de l'article",
+      "deleteBlog": "Supprimer l'Article",
+      "deleteBlogDescription": "Cette action est irréversible",
+      "deleteWarning": "Attention : Cette action supprimera définitivement cet article et son image associée.",
+      "confirmDelete": "Confirmer la suppression",
+      "imageWillBeDeleted": "L'image sera également supprimée de Cloudinary",
+      "blogDetails": "Détails de l'Article",
+      "blogDetailsDescription": "Informations complètes sur l'article",
+      "imageUpload": {
+        "optional": "optionnel",
+        "clickToUpload": "Cliquez pour uploader",
+        "orDragDrop": "ou glissez-déposez",
+        "maxSize": "max 5MB",
+        "tip": "L'image sera hébergée sur Cloudinary et optimisée automatiquement",
+        "uploading": "Upload en cours...",
+        "success": "Image uploadée avec succès",
+        "error": "Échec de l'upload de l'image",
+        "invalidType": "Type de fichier invalide. Utilisez PNG, JPG ou WEBP",
+        "tooLarge": "L'image est trop grande. Maximum 5MB",
+        "remove": "Supprimer l'image",
+        "removed": "Image supprimée"
+      },
+      "created": "Article créé avec succès",
+      "updated": "Article mis à jour avec succès",
+      "deleted": "Article supprimé avec succès",
+      "notFound": "Article introuvable",
+      "accessDenied": "Accès refusé",
+      "unauthorized": {
+        "notOwner": "Vous n'êtes pas autorisé à modifier cet article"
+      },
+      "validation": {
+        "missingFields": "Tous les champs (titres et contenus FR/EN) sont requis"
+      },
+      "fetchError": "Erreur lors de la récupération des articles",
+      "createError": "Erreur lors de la création de l'article",
+      "updateError": "Erreur lors de la mise à jour de l'article",
+      "deleteError": "Erreur lors de la suppression de l'article"
+    }
   },
   "rendezvous": {
     "title": "Gestion des Rendez-vous",
@@ -1273,8 +1265,6 @@
     }
   },
   "contactMessages": {
-
-    
     "title": "Messages de Contact",
     "description": "Gérez les messages reçus depuis le formulaire de contact",
 

@@ -2,7 +2,15 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, User, LogOut, Calendar, MessageSquare, FileText } from "lucide-react";
+import {
+  Menu,
+  X,
+  User,
+  LogOut,
+  Calendar,
+  MessageSquare,
+  FileText,
+} from "lucide-react";
 import Image from "next/image";
 import { Link, routing, useRouter as useI18nRouter } from "@/i18n/routing";
 import { useTranslations } from "next-intl";
@@ -43,7 +51,6 @@ export default function NavBar() {
   const handleLogout = async () => {
     logout();
     toast.success(tAuth("logoutSuccess"));
-    // Attendre la synchronisation des cookies
     await new Promise((resolve) => setTimeout(resolve, 300));
     i18nRouter.push("/");
   };
@@ -65,33 +72,80 @@ export default function NavBar() {
       transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
       className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60"
     >
-      <nav className="container mx-auto px-4 py-4">
-        <div className="flex items-center justify-between">
-          {/* Logo */}
+      <nav className="container mx-auto px-4 py-4 lg:py-5 xl:py-6 relative">
+        <div className="flex items-center justify-between lg:justify-end">
+          {/* ====== LOGO DESKTOP (ABSOLUTE) - IMPOSANT ====== */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
+            className="hidden lg:block absolute left-4 top-1/2 -translate-y-1/2 z-10"
           >
-            <Link href="/" className="flex items-center gap-3 group">
+            <Link href="/" className="block group">
               <motion.div
-                whileHover={{ scale: 1.05, rotate: 2 }}
-                whileTap={{ scale: 0.95 }}
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
                 transition={{ type: "spring", stiffness: 400, damping: 17 }}
-                className="relative h-20 w-72"
+                className="relative"
               >
-                <Image
-                  src="/logo.png"
-                  alt="ABSOLUTE SARL"
-                  fill
-                  className="object-contain"
-                  priority
+                {/* Container du logo IMPOSANT avec effet vignet */}
+                <div className="relative h-32 w-96 xl:h-36 xl:w-[28rem] 2xl:h-40 2xl:w-[32rem]">
+                  {/* Effet vignet renforcé */}
+                  <div
+                    className="absolute inset-0 rounded-2xl "
+                    style={{
+                      background: `
+                        radial-gradient(
+                          ellipse 92% 85% at 50% 50%,
+                          rgba(255, 255, 255, 0) 0%,
+                          rgba(255, 255, 255, 0.25) 65%,
+                          rgba(255, 255, 255, 0.7) 100%
+                        )
+                      `,
+                      mixBlendMode: "multiply",
+                    }}
+                  />
+
+                  {/* Logo */}
+                  <Image
+                    src="/logo.png"
+                    alt="ABSOLUTE SARL"
+                    fill
+                    className="object-contain drop-shadow-lg  md:my-[25px]"
+                    priority
+                  />
+
+                  {/* Overlay subtil pour améliorer le contraste */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-background/15 via-transparent to-transparent rounded-2xl pointer-events-none" />
+                </div>
+
+                {/* Effet glow au hover RENFORCÉ */}
+                <motion.div
+                  className="absolute inset-0 rounded-2xl bg-primary/10 opacity-0 opacity-100 transition-opacity duration-300 blur-2xl -z-10"
+                  initial={false}
+                />
+
+                {/* Effet de pulsation subtile pour attirer l'attention */}
+                <motion.div
+                  className="absolute inset-0 rounded-2xl bg-primary/5 blur-xl -z-20"
+                  animate={{
+                    scale: [1, 1.05, 1],
+                    opacity: [0.3, 0.5, 0.3],
+                  }}
+                  transition={{
+                    duration: 3,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  }}
                 />
               </motion.div>
             </Link>
           </motion.div>
 
-          {/* Desktop Navigation */}
+          {/* ====== MOBILE : Espace vide pour équilibrer avec le bouton menu ====== */}
+          <div className="lg:hidden w-48 sm:w-60" />
+
+          {/* ====== DESKTOP NAVIGATION ====== */}
           <div className="hidden lg:flex items-center gap-1">
             {navItems.map((item, index) => (
               <motion.div
@@ -114,16 +168,15 @@ export default function NavBar() {
             ))}
           </div>
 
-          {/* Desktop Actions */}
+          {/* ====== DESKTOP ACTIONS ====== */}
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5, delay: 0.3 }}
-            className="hidden lg:flex items-center gap-4"
+            className="hidden lg:flex items-center gap-4 ml-6"
           >
             <LocaleSwitcher />
 
-            {/* Affichage conditionnel : Login ou User Menu */}
             {isAuthenticated() && user ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
@@ -153,7 +206,6 @@ export default function NavBar() {
                   </DropdownMenuLabel>
                   <DropdownMenuSeparator />
 
-                  {/* Lien Admin pour ADMIN/EMPLOYE */}
                   {(user.role === "ADMIN" || user.role === "EMPLOYE") && (
                     <>
                       <DropdownMenuItem asChild>
@@ -168,46 +220,40 @@ export default function NavBar() {
                       <DropdownMenuSeparator />
                     </>
                   )}
-                  {/* Appointments */}
+
                   {user.role === "CLIENT" && (
-                    <DropdownMenuItem asChild>
-                      <Link
-                        href="/rendezvous"
-                        className="flex items-center cursor-pointer"
-                      >
-                        <Calendar className="mr-2 h-4 w-4" />
-                        <span>{t("Appointments")}</span>
-                      </Link>
-                    </DropdownMenuItem>
+                    <>
+                      <DropdownMenuItem asChild>
+                        <Link
+                          href="/rendezvous"
+                          className="flex items-center cursor-pointer"
+                        >
+                          <Calendar className="mr-2 h-4 w-4" />
+                          <span>{t("Appointments")}</span>
+                        </Link>
+                      </DropdownMenuItem>
+                      <DropdownMenuItem asChild>
+                        <Link
+                          href="/sms"
+                          className="flex items-center cursor-pointer"
+                        >
+                          <MessageSquare className="mr-2 h-4 w-4" />
+                          <span>{t("sms")}</span>
+                        </Link>
+                      </DropdownMenuItem>
+                      <DropdownMenuItem asChild>
+                        <Link
+                          href="/devisclient"
+                          className="flex items-center cursor-pointer"
+                        >
+                          <FileText className="mr-2 h-4 w-4" />
+                          <span>{t("devis")}</span>
+                        </Link>
+                      </DropdownMenuItem>
+                      <DropdownMenuSeparator />
+                    </>
                   )}
 
-                  {/* Messages */}
-                  {user.role === "CLIENT" && (
-                    <DropdownMenuItem asChild>
-                      <Link
-                        href="/sms"
-                        className="flex items-center cursor-pointer"
-                      >
-                        <MessageSquare className="mr-2 h-4 w-4" />
-                        <span>{t("sms")}</span>
-                      </Link>
-                    </DropdownMenuItem>
-                  )}
-
-                  {/* Quotes */}
-                  {user.role === "CLIENT" && (
-                    <DropdownMenuItem asChild>
-                      <Link
-                        href="/devisclient"
-                        className="flex items-center cursor-pointer"
-                      >
-                        <FileText className="mr-2 h-4 w-4" />
-                        <span>{t("devis")}</span>
-                      </Link>
-                    </DropdownMenuItem>
-                  )}
-
-                  <DropdownMenuSeparator />
                   <DropdownMenuItem
                     onClick={handleLogout}
                     className="text-red-600 focus:text-red-600 cursor-pointer"
@@ -240,7 +286,7 @@ export default function NavBar() {
             )}
           </motion.div>
 
-          {/* Mobile Menu Button */}
+          {/* ====== MOBILE MENU BUTTON ====== */}
           <motion.button
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -275,7 +321,7 @@ export default function NavBar() {
           </motion.button>
         </div>
 
-        {/* Mobile Menu */}
+        {/* ====== MOBILE MENU ====== */}
         <AnimatePresence>
           {isOpen && (
             <motion.div
@@ -285,7 +331,46 @@ export default function NavBar() {
               transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
               className="lg:hidden overflow-hidden"
             >
-              <motion.div className="py-6 space-y-4">
+              {/* Logo centré en haut du menu mobile avec marges améliorées */}
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3, delay: 0.1 }}
+                className="flex justify-center pt-8 pb-6"
+              >
+                <Link href="/" onClick={() => setIsOpen(false)}>
+                  <div className="relative h-20 w-64 sm:h-24 sm:w-80">
+                    {/* Effet vignet */}
+                    <div
+                      className="absolute inset-0 rounded-xl"
+                      style={{
+                        background: `
+                          radial-gradient(
+                            ellipse 90% 80% at 50% 50%,
+                            rgba(255, 255, 255, 0) 0%,
+                            rgba(255, 255, 255, 0.3) 70%,
+                            rgba(255, 255, 255, 0.8) 100%
+                          )
+                        `,
+                        mixBlendMode: "multiply",
+                      }}
+                    />
+
+                    {/* Logo */}
+                    <Image
+                      src="/logo.png"
+                      alt="ABSOLUTE SARL"
+                      fill
+                      className="object-contain drop-shadow-sm"
+                    />
+
+                    {/* Overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-background/20 via-transparent to-transparent rounded-xl pointer-events-none" />
+                  </div>
+                </Link>
+              </motion.div>
+
+              <motion.div className="py-4 space-y-2 px-2">
                 {navItems.map((item, index) => (
                   <motion.div
                     key={item.key}
@@ -296,7 +381,7 @@ export default function NavBar() {
                     <Link
                       href={item.href}
                       onClick={() => setIsOpen(false)}
-                      className="block px-4 py-2 text-base font-medium text-foreground/80 hover:text-primary hover:bg-muted rounded-md transition-all"
+                      className="block px-4 py-3 text-base font-medium text-foreground/80 hover:text-primary hover:bg-muted rounded-md transition-all"
                     >
                       {t(item.key)}
                     </Link>
@@ -307,16 +392,15 @@ export default function NavBar() {
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.3, delay: 0.3 }}
-                  className="pt-4 border-t border-border space-y-4 px-4"
+                  className="pt-4 mt-4 border-t border-border space-y-4 px-2"
                 >
-                  <div className="flex items-center justify-between">
+                  <div className="flex items-center justify-between px-2">
                     <span className="text-sm text-muted-foreground">
                       {t("language")}
                     </span>
                     <LocaleSwitcher />
                   </div>
 
-                  {/* Mobile : Login ou User Info */}
                   {isAuthenticated() && user ? (
                     <div className="space-y-3">
                       <div className="flex items-center gap-3 p-3 bg-muted rounded-lg">
@@ -336,7 +420,6 @@ export default function NavBar() {
                         </div>
                       </div>
 
-                      {/* Lien Admin pour ADMIN/EMPLOYE */}
                       {(user.role === "ADMIN" || user.role === "EMPLOYE") && (
                         <Link
                           href="/admin"
@@ -348,14 +431,13 @@ export default function NavBar() {
                         </Link>
                       )}
 
-                      {/* Lien Admin pour ADMIN/EMPLOYE */}
                       {user.role === "CLIENT" && (
                         <Link
                           href="/rendezvous"
                           onClick={() => setIsOpen(false)}
                           className="flex items-center gap-2 px-4 py-2 text-sm text-foreground/80 hover:text-primary hover:bg-muted rounded-md transition-all"
                         >
-                          <User className="h-4 w-4" />
+                          <Calendar className="h-4 w-4" />
                           <span>{t("Appointments")}</span>
                         </Link>
                       )}

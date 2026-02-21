@@ -793,5 +793,5 @@ export default function ServicesPage() {
         onClose={() => setIsModalOpen(false)}
       />
     </div>
-  );
+  ); 
 }
