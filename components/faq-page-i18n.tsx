@@ -485,7 +485,7 @@ export default function FAQPage() {
             <p className="text-lg md:text-xl text-muted-foreground mb-10 leading-relaxed">
               {t("cta.subtitle")}
             </p>
-            <div className="flex flex-wrap gap-4 justify-center">
+            {/* <div className="flex flex-wrap gap-4 justify-center">
               <Button size="lg" className="h-14 px-10 text-base group">
                 <MessageCircle className="w-5 h-5 mr-2" />
                 {t("cta.primary")}
@@ -498,7 +498,7 @@ export default function FAQPage() {
                 <Shield className="w-5 h-5 mr-2" />
                 {t("cta.secondary")}
               </Button>
-            </div>
+            </div> */}
 
             <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6 text-sm">
               <div className="flex flex-col items-center gap-2">

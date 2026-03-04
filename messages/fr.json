@@ -10,7 +10,7 @@
       "ctaWhatsApp": "WhatsApp"
     },
     "stats": {
-      "experience": "Depuis 2025",
+      "experience": "Depuis 2020",
       "services": "Services Complets",
       "countries": "Pays Couverts",
       "satisfaction": "Satisfaction Client"
@@ -151,24 +151,84 @@
     "destinations": {
       "badge": "Nos Destinations",
       "title": "Concrétisez Votre Projet d'Immigration",
-      "subtitle": "Expertise reconnue pour vos démarches au Canada, en Belgique et en France",
+      "subtitle": "Expertise reconnue pour vos démarches au Canada et en Europe",
       "canada": {
         "title": "Canada",
         "description": "Résidence permanente et études",
-        "programs": "Multiples programmes d'immigration",
+        "programs": "Résidence permanente & Visa d'études",
         "cta": "Explorer le Canada"
       },
-      "belgium": {
-        "title": "Belgique",
-        "description": "Études supérieures et formation",
-        "programs": "Accès aux universités européennes",
-        "cta": "Explorer la Belgique"
+      "europe": {
+        "title": "Europe",
+        "description": "Belgique · France · Luxembourg",
+        "programs": "Études supérieures & Visa travail",
+        "cta": "Explorer l'Europe"
       },
-      "france": {
-        "title": "France",
-        "description": "Études et opportunités professionnelles",
-        "programs": "Formation et insertion professionnelle",
-        "cta": "Explorer la France"
+      "modal": {
+        "canada": {
+          "title": "Immigration Canada",
+          "subtitle": "Accompagnement complet pour votre projet vers le Canada",
+          "intro": "Vous recherchez un cabinet d'immigration au Cameroun fiable et structuré pour votre projet vers le Canada ? ABSOLUTE SARL vous accompagne de A à Z avec méthode, transparence et rigueur documentaire.",
+          "whyTitle": "Pourquoi choisir ABSOLUTE pour votre immigration ?",
+          "whyPoints": [
+            "Analyse stratégique personnalisée",
+            "Maîtrise des procédures internationales",
+            "Accompagnement complet jusqu'au dépôt",
+            "Suivi administratif continu",
+            "Conseils réalistes et objectifs"
+          ],
+          "whyTagline": "Nous ne vendons pas du rêve. Nous construisons un dossier solide.",
+          "servicesTitle": "Nous accompagnons notamment pour :",
+          "services": {
+            "residency": "Résidence permanente (Entrée Express, programmes provinciaux)",
+            "residencyDetail": "Optimisation du dossier pour augmenter vos chances d'acceptation.",
+            "study": "Visa d'études",
+            "studyDetail": "Analyse de profil, choix du programme, constitution du dossier, suivi jusqu'au dépôt."
+          },
+          "methodTitle": "Notre méthode en 5 étapes",
+          "methodSteps": [
+            "Diagnostic approfondi de profil",
+            "Choix du programme adapté",
+            "Plan d'action personnalisé",
+            "Constitution & vérification complète du dossier",
+            "Suivi jusqu'à décision finale"
+          ],
+          "cta": "Demander un diagnostic gratuit",
+          "whatsapp": "Discuter sur WhatsApp"
+        },
+        "europe": {
+          "title": "Immigration Europe",
+          "subtitle": "Belgique · France · Luxembourg",
+          "intro": "ABSOLUTE SARL vous accompagne pour vos projets d'études supérieures et d'immigration en Belgique, en France et au Luxembourg. Visa travail, études ou orientation stratégique : nous vous guidons de A à Z avec méthode et rigueur documentaire.",
+          "whyTitle": "Pourquoi choisir ABSOLUTE pour votre immigration ?",
+          "whyPoints": [
+            "Analyse stratégique personnalisée",
+            "Maîtrise des procédures internationales",
+            "Accompagnement complet jusqu'au dépôt",
+            "Suivi administratif continu",
+            "Conseils réalistes et objectifs"
+          ],
+          "whyTagline": "Votre projet d'immigration mérite une stratégie solide.",
+          "servicesTitle": "Immigration Europe (Belgique – France – Luxembourg)",
+          "services": {
+            "studies": "Études supérieures",
+            "studiesDetail": "Analyse de profil, choix d'études, constitution du dossier, suivi jusqu'au dépôt.",
+            "work": "Visa travail",
+            "workDetail": "Analyse de profil, constitution du dossier, suivi jusqu'au dépôt.",
+            "orientation": "Orientation stratégique",
+            "orientationDetail": "Expertise et conseils personnalisés pour choisir le programme et le pays adaptés à votre profil."
+          },
+          "methodTitle": "Notre méthode en 5 étapes",
+          "methodSteps": [
+            "Diagnostic approfondi de profil",
+            "Choix du programme adapté",
+            "Plan d'action personnalisé",
+            "Constitution & vérification complète du dossier",
+            "Suivi jusqu'à décision finale"
+          ],
+          "cta": "Demander un diagnostic gratuit",
+          "whatsapp": "Discuter sur WhatsApp"
+        }
       }
     },
     "testimonials": {
@@ -195,8 +255,8 @@
       "subtitle": "Notre équipe est disponible pour répondre à toutes vos questions",
       "address": {
         "title": "Adresse",
-        "line1": "Cité des Palmiers Immeuble Jaune ",
-        "line2": " 2ᵉ étage - Bureau B09",
+        "line1": "Cité des Palmiers Immeuble Jaune",
+        "line2": "2ᵉ étage - Bureau B09",
         "line3": "Douala, Cameroun"
       },
       "hours": {
@@ -241,7 +301,6 @@
     "sms": "Messages",
     "devis": "devis"
   },
-
   "auth": {
     "verifyAccount": {
       "title": "Vérifiez votre compte",
@@ -258,7 +317,6 @@
       "redirecting": "Redirection en cours...",
       "noEmail": "Aucune adresse email trouvée"
     },
-
     "validation": {
       "codeLength": "Le code doit contenir 6 chiffres"
     },
@@ -297,7 +355,6 @@
         "privacy": "Politique de confidentialité"
       }
     },
-
     "forgotPassword": {
       "title": "Mot de passe oublié ?",
       "subtitle": "Entrez votre email pour réinitialiser",
@@ -310,7 +367,7 @@
       "otpCode": "Code de vérification",
       "didntReceive": "Vous n'avez pas reçu le code ?",
       "resend": "Renvoyer le code",
-      "changeEmail": "Modifier l’e-mail",
+      "changeEmail": "Modifier l'e-mail",
       "title": "Nouveau mot de passe",
       "subtitle": "Créez un nouveau mot de passe sécurisé",
       "password": "Nouveau mot de passe",
@@ -349,7 +406,6 @@
       "invalidOtp": "Code invalide. Veuillez vérifier et réessayer.",
       "otpExpired": "Ce code a expiré. Veuillez en demander un nouveau."
     },
-
     "missingFields": "Veuillez remplir tous les champs requis.",
     "unauthorized": {
       "createAdmin": "Vous n'êtes pas autorisé à créer un compte administrateur."
@@ -763,7 +819,6 @@
     "madeWith": "Développé avec",
     "by": "par"
   },
-
   "faq": {
     "hero": {
       "badge": "Centre d'aide",
@@ -1169,13 +1224,11 @@
     "createdAt": "Créé le",
     "updatedAt": "Modifié le",
     "actions": "Actions",
-
     "statuses": {
       "pending": "En attente",
       "approved": "Approuvé",
       "rejected": "Rejeté"
     },
-
     "viewDetails": "Voir les détails",
     "approve": "Approuver",
     "approving": "Approbation...",
@@ -1184,15 +1237,12 @@
     "delete": "Supprimer",
     "deleting": "Suppression...",
     "cancel": "Annuler",
-
     "details": "Détails du Rendez-vous",
     "detailsDescription": "Informations complètes sur le rendez-vous",
-
     "deleteTitle": "Supprimer le Rendez-vous",
     "deleteDescription": "Cette action est irréversible",
     "deleteWarning": "Attention : Cette action supprimera définitivement ce rendez-vous.",
     "confirmDelete": "Confirmer la suppression",
-
     "rejectTitle": "Rejeter le Rendez-vous",
     "rejectDescription": "Vous pouvez ajouter une note expliquant le rejet",
     "rejectNote": "Motif du rejet",
@@ -1200,19 +1250,16 @@
     "rejectNoteHint": "Cette note sera visible par le client",
     "confirmReject": "Confirmer le rejet",
     "optional": "optionnel",
-
     "page": "Page",
     "of": "sur",
     "previous": "Précédent",
     "next": "Suivant",
-
     "createSuccess": "Rendez-vous créé avec succès",
     "fetchSuccess": "Rendez-vous récupérés avec succès",
     "approveSuccess": "Rendez-vous approuvé avec succès",
     "rejectSuccess": "Rendez-vous rejeté avec succès",
     "updateSuccess": "Rendez-vous mis à jour avec succès",
     "deleteSuccess": "Rendez-vous supprimé avec succès",
-
     "dateRequired": "La date est requise",
     "dateMustBeFuture": "La date doit être dans le futur",
     "invalidId": "ID de rendez-vous invalide",
@@ -1227,8 +1274,17 @@
     "rejectError": "Erreur lors du rejet du rendez-vous",
     "updateError": "Erreur lors de la mise à jour du rendez-vous",
     "deleteError": "Erreur lors de la suppression du rendez-vous",
-
-    "client": {
+    "noMyRendezVous": "Vous n'avez aucun rendez-vous",
+    "noMyRendezVousHint": "Cliquez sur 'Nouveau Rendez-vous' pour en créer un",
+    "cancelAppointment": "Annuler le rendez-vous",
+    "cancelAppointmentTitle": "Annuler ce rendez-vous ?",
+    "cancelAppointmentDescription": "Cette action est irréversible. Vous devrez créer un nouveau rendez-vous si nécessaire.",
+    "confirmCancel": "Oui, annuler",
+    "cancelling": "Annulation...",
+    "unauthorized": {
+      "notYourRendezVous": "Vous n'avez pas accès à ce rendez-vous"
+    },
+    "clientSection": {
       "myAppointments": "Mes Rendez-vous",
       "myAppointmentsDescription": "Gérez vos demandes de rendez-vous",
       "myAppointmentDetails": "Détails de mon rendez-vous",
@@ -1237,42 +1293,24 @@
       "newAppointment": "Nouveau Rendez-vous",
       "filtersDescription": "Filtrez vos rendez-vous par statut",
       "myAppointmentsList": "Mes Rendez-vous",
-
       "appointmentReason": "Motif du rendez-vous",
-
       "statusMessages": {
         "pending": "Votre demande est en cours de traitement. Nous vous contacterons bientôt.",
         "approved": "Votre rendez-vous est confirmé ! Nous vous attendons à la date prévue.",
         "rejected": "Votre demande a été refusée. Veuillez consulter la note ci-dessous pour plus d'informations."
       },
-
       "approvedAlert": "✅ Rendez-vous confirmé ! Nous vous attendons à la date et heure indiquées. En cas d'empêchement, merci de nous prévenir.",
       "rejectedAlert": "❌ Votre demande n'a pas pu être acceptée. Vous pouvez créer une nouvelle demande avec une autre date si vous le souhaitez.",
       "pendingAlert": "⏳ Votre demande est en attente de validation. Nous vous répondrons dans les plus brefs délais."
-    },
-
-    "noMyRendezVous": "Vous n'avez aucun rendez-vous",
-    "noMyRendezVousHint": "Cliquez sur 'Nouveau Rendez-vous' pour en créer un",
-
-    "cancelAppointment": "Annuler le rendez-vous",
-    "cancelAppointmentTitle": "Annuler ce rendez-vous ?",
-    "cancelAppointmentDescription": "Cette action est irréversible. Vous devrez créer un nouveau rendez-vous si nécessaire.",
-    "confirmCancel": "Oui, annuler",
-    "cancelling": "Annulation...",
-
-    "unauthorized": {
-      "notYourRendezVous": "Vous n'avez pas accès à ce rendez-vous"
     }
   },
   "contactMessages": {
     "title": "Messages de Contact",
     "description": "Gérez les messages reçus depuis le formulaire de contact",
-
     "totalMessages": "Total des messages",
     "newMessages": "Nouveaux",
     "inProgress": "En cours",
     "resolved": "Résolus",
-
     "filters": "Filtres et Recherche",
     "filtersDescription": "Filtrez et recherchez parmi les messages",
     "searchPlaceholder": "Rechercher par nom, email ou message...",
@@ -1283,10 +1321,8 @@
     "resetFilters": "Réinitialiser",
     "refresh": "Actualiser",
     "refreshed": "Liste actualisée avec succès",
-
     "messagesList": "Liste des messages",
     "noMessages": "Aucun message pour le moment",
-
     "name": "Nom",
     "email": "Email",
     "phone": "Téléphone",
@@ -1296,17 +1332,14 @@
     "date": "Date",
     "message": "Message",
     "actions": "Actions",
-
     "viewDetails": "Voir les détails",
     "updateStatus": "Changer le statut",
     "delete": "Supprimer",
-
     "statusNEW": "Nouveau",
     "statusREAD": "Lu",
     "statusIN_PROGRESS": "En cours",
     "statusRESOLVED": "Résolu",
     "statusARCHIVED": "Archivé",
-
     "subjectCANADA": "Immigration Canada",
     "subjectBELGIUM": "Immigration Belgique",
     "subjectFRANCE": "Immigration France",
@@ -1314,7 +1347,6 @@
     "subjectSECRETARIAT": "Secrétariat",
     "subjectCOMMERCE": "Commerce",
     "subjectOTHER": "Autre",
-
     "messageDetails": "Détails du Message",
     "messageDetailsDescription": "Informations complètes sur le message reçu",
     "currentStatus": "Statut actuel",
@@ -1325,30 +1357,133 @@
     "createdAt": "Date de réception",
     "readAt": "Lu le",
     "technicalInfo": "Informations techniques",
-
     "updateStatusDescription": "Modifier le statut et ajouter des notes internes",
     "newStatus": "Nouveau statut",
     "notesPlaceholder": "Ajoutez des notes internes pour votre équipe...",
     "cancel": "Annuler",
     "save": "Enregistrer",
     "saving": "Enregistrement...",
-
     "deleteMessage": "Supprimer le Message",
     "deleteMessageDescription": "Cette action est irréversible",
     "deleteWarning": "⚠️ Attention : ce message sera définitivement supprimé",
     "confirmDelete": "Confirmer la suppression",
     "deleting": "Suppression...",
-
     "fetchSuccess": "Messages récupérés avec succès",
     "createSuccess": "Message envoyé avec succès",
     "updateSuccess": "Message mis à jour avec succès",
     "deleteSuccess": "Message supprimé avec succès",
-
     "notFound": "Message introuvable",
     "accessDenied": "Accès refusé",
     "fetchError": "Erreur lors de la récupération des messages",
     "createError": "Erreur lors de l'envoi du message",
     "updateError": "Erreur lors de la mise à jour du message",
     "deleteError": "Erreur lors de la suppression du message"
+  },
+  "diagnostic": {
+    "step": "Étape",
+    "back": "Retour",
+    "next": "Suivant",
+    "submit": "Envoyer ma demande",
+    "submitting": "Envoi en cours...",
+    "steps": {
+      "step1": { "title": "Informations personnelles" },
+      "step2": { "title": "Niveau d'études actuel" },
+      "step3": { "title": "Filière & domaine" },
+      "step4": { "title": "Projet d'études" },
+      "step5": { "title": "Situation & besoins" },
+      "step6": {
+        "title": "Coordonnées de contact",
+        "recap": "Dernière étape ! Renseignez vos coordonnées pour que notre équipe puisse vous recontacter rapidement."
+      }
+    },
+    "fields": {
+      "lastName": "Nom",
+      "firstName": "Prénom",
+      "birthDate": "Date de naissance",
+      "residenceCountry": "Pays de résidence",
+      "nationality": "Nationalité",
+      "lastDiploma": "Dernier diplôme obtenu",
+      "diplomaYear": "Année d'obtention",
+      "institution": "Établissement fréquenté",
+      "diplomaTitle": "Intitulé du diplôme",
+      "currentStatus": "Statut actuel",
+      "studyDomain": "Domaine d'étude",
+      "professionalExperience": "Expérience professionnelle",
+      "destination": "Destination",
+      "targetLevel": "Niveau visé",
+      "targetIntake": "Rentrée cible",
+      "previousAttempt": "Tentative précédente de visa/admission ?",
+      "identifiedNeeds": "Besoins identifiés (optionnel)",
+      "frenchLevel": "Niveau de français",
+      "englishLevel": "Niveau d'anglais",
+      "email": "Adresse email",
+      "whatsapp": "Numéro WhatsApp",
+      "preferredContact": "Mode de contact préféré"
+    },
+    "placeholders": {
+      "lastName": "Votre nom de famille",
+      "firstName": "Votre prénom",
+      "residenceCountry": "Ex: Cameroun",
+      "nationality": "Ex: Camerounaise",
+      "select": "Sélectionnez une option",
+      "institution": "Ex: Université de Yaoundé I",
+      "diplomaTitle": "Ex: Licence en Informatique",
+      "studyDomain": "Ex: Informatique, Médecine, Commerce...",
+      "professionalExperience": "Décrivez votre expérience professionnelle...",
+      "identifiedNeeds": "Ex: aide constitution dossier, orientation, choix école...",
+      "langLevel": "Sélectionnez votre niveau"
+    },
+    "options": {
+      "diploma": {
+        "baccalaureat": "Baccalauréat",
+        "licence": "Licence (Bachelor)",
+        "master": "Master",
+        "other": "Autre"
+      },
+      "status": {
+        "employed": "Employé(e)",
+        "unemployed": "Au chômage",
+        "student": "Étudiant(e)",
+        "other": "Autre"
+      },
+      "destination": {
+        "canada": "Canada",
+        "belgium": "Belgique",
+        "france": "France",
+        "other": "Autre"
+      },
+      "level": {
+        "licence": "Licence (Bachelor)",
+        "master": "Master",
+        "phd": "Doctorat (PhD)",
+        "professional": "Formation professionnelle",
+        "other": "Autre"
+      },
+      "intake": {
+        "rentre": "Rentrée"
+      },
+      "yesNo": {
+        "yes": "Oui",
+        "no": "Non"
+      },
+      "langLevel": {
+        "native": "Langue maternelle"
+      },
+      "contact": {
+        "whatsapp": "WhatsApp",
+        "call": "Appel téléphonique",
+        "email": "Email"
+      }
+    },
+    "validation": {
+      "required": "Ce champ est obligatoire",
+      "invalidEmail": "Adresse email invalide",
+      "invalidYear": "Année invalide (format AAAA)"
+    },
+    "success": {
+      "title": "Demande envoyée !",
+      "message": "Merci ! Notre équipe a bien reçu votre formulaire de diagnostic. Nous vous contacterons dans les plus brefs délais pour discuter de votre projet.",
+      "close": "Fermer"
+    }
   }
 }

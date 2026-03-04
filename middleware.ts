@@ -5,7 +5,7 @@ import { routing } from "./i18n/routing";
 
 // Create the next-intl middleware
 const intlMiddleware = createIntlMiddleware(routing);
-
+// https://chatgpt.com/c/698b04b7-9154-8330-ad37-dce85b1614e2 :App Vente fatou
 // Define public routes that don't require authentication
 const PUBLIC_ROUTES = [
   "/login",

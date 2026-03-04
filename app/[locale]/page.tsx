@@ -1,7 +1,13 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { motion, useInView, useMotionValue, useSpring } from "framer-motion";
+import {
+  motion,
+  useInView,
+  useMotionValue,
+  useSpring,
+  AnimatePresence,
+} from "framer-motion";
 import { useRef, useState, useEffect } from "react";
 import {
   Plane,
@@ -30,6 +36,8 @@ import {
   Heart,
   Star,
   LucideIcon,
+  X,
+  Briefcase,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -42,6 +50,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Link } from "@/i18n/routing";
 import AppointmentModal from "@/components/AppointmentModal";
+import DiagnosticModal from "@/components/DiagnosticModal";
 
 // ========================================
 // TYPES
@@ -67,6 +76,7 @@ interface WhyUsFeature {
 }
 
 interface Destination {
+  key: "canada" | "europe";
   title: string;
   description: string;
   programs: string;
@@ -151,7 +161,6 @@ function FloatingParticles() {
 function AnimatedGrid() {
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
-      {/* Grille de fond */}
       <div
         className="absolute inset-0 opacity-[0.04]"
         style={{
@@ -162,8 +171,6 @@ function AnimatedGrid() {
           backgroundSize: "60px 60px",
         }}
       />
-
-      {/* Orbes lumineux animés */}
       <motion.div
         className="absolute -top-32 -left-32 w-[500px] h-[500px] rounded-full"
         style={{
@@ -201,8 +208,6 @@ function AnimatedGrid() {
           delay: 1,
         }}
       />
-
-      {/* Ligne de scan */}
       <motion.div
         className="absolute left-0 right-0 h-px"
         style={{
@@ -252,7 +257,6 @@ function MouseFollower() {
 function MagneticBadge({ children }: { children: React.ReactNode }) {
   return (
     <div className="relative inline-block">
-      {/* Anneau tournant 1 */}
       <motion.div
         className="absolute rounded-full"
         style={{
@@ -267,8 +271,6 @@ function MagneticBadge({ children }: { children: React.ReactNode }) {
       >
         <div className="w-full h-full rounded-full bg-background" />
       </motion.div>
-
-      {/* Anneau tournant 2 (inverse, plus large) */}
       <motion.div
         className="absolute rounded-full"
         style={{
@@ -280,8 +282,6 @@ function MagneticBadge({ children }: { children: React.ReactNode }) {
         animate={{ rotate: -360 }}
         transition={{ duration: 5, repeat: Infinity, ease: "linear" }}
       />
-
-      {/* Halo pulsant */}
       <motion.div
         className="absolute inset-0 rounded-full"
         animate={{
@@ -292,9 +292,245 @@ function MagneticBadge({ children }: { children: React.ReactNode }) {
         }}
         transition={{ duration: 2, repeat: Infinity, ease: "easeOut" }}
       />
-
       <div className="relative z-10">{children}</div>
     </div>
+  );
+}
+
+// ========================================
+// DESTINATION MODAL
+// ========================================
+
+function DestinationModal({
+  isOpen,
+  onClose,
+  destination,
+  t,
+}: {
+  isOpen: boolean;
+  onClose: () => void;
+  destination: "canada" | "europe" | null;
+  t: ReturnType<typeof useTranslations<"HomePage">>;
+}) {
+  if (!destination) return null;
+
+  const isCanada = destination === "canada";
+
+  const modalData = {
+    canada: {
+      flag: "🇨🇦",
+      gradient: "from-red-500 to-red-700",
+      title: t("destinations.modal.canada.title"),
+      subtitle: t("destinations.modal.canada.subtitle"),
+      intro: t("destinations.modal.canada.intro"),
+      whyTitle: t("destinations.modal.canada.whyTitle"),
+      whyPoints: t.raw("destinations.modal.canada.whyPoints") as string[],
+      whyTagline: t("destinations.modal.canada.whyTagline"),
+      servicesTitle: t("destinations.modal.canada.servicesTitle"),
+      services: [
+        {
+          icon: FileText,
+          label: t("destinations.modal.canada.services.residency"),
+          detail: t("destinations.modal.canada.services.residencyDetail"),
+        },
+        {
+          icon: GraduationCap,
+          label: t("destinations.modal.canada.services.study"),
+          detail: t("destinations.modal.canada.services.studyDetail"),
+        },
+      ],
+      methodTitle: t("destinations.modal.canada.methodTitle"),
+      methodSteps: t.raw("destinations.modal.canada.methodSteps") as string[],
+      cta: t("destinations.modal.canada.cta"),
+      whatsapp: t("destinations.modal.canada.whatsapp"),
+    },
+    europe: {
+      flag: "🌍",
+      gradient: "from-blue-600 to-indigo-700",
+      title: t("destinations.modal.europe.title"),
+      subtitle: t("destinations.modal.europe.subtitle"),
+      intro: t("destinations.modal.europe.intro"),
+      whyTitle: t("destinations.modal.europe.whyTitle"),
+      whyPoints: t.raw("destinations.modal.europe.whyPoints") as string[],
+      whyTagline: t("destinations.modal.europe.whyTagline"),
+      servicesTitle: t("destinations.modal.europe.servicesTitle"),
+      services: [
+        {
+          icon: GraduationCap,
+          label: t("destinations.modal.europe.services.studies"),
+          detail: t("destinations.modal.europe.services.studiesDetail"),
+        },
+        {
+          icon: Briefcase,
+          label: t("destinations.modal.europe.services.work"),
+          detail: t("destinations.modal.europe.services.workDetail"),
+        },
+        {
+          icon: Target,
+          label: t("destinations.modal.europe.services.orientation"),
+          detail: t("destinations.modal.europe.services.orientationDetail"),
+        },
+      ],
+      methodTitle: t("destinations.modal.europe.methodTitle"),
+      methodSteps: t.raw("destinations.modal.europe.methodSteps") as string[],
+      cta: t("destinations.modal.europe.cta"),
+      whatsapp: t("destinations.modal.europe.whatsapp"),
+    },
+  };
+
+  const data = modalData[destination];
+
+  return (
+    <AnimatePresence>
+      {isOpen && (
+        <>
+          {/* Overlay */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={onClose}
+            className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50"
+          />
+
+          {/* Modal */}
+          <motion.div
+            initial={{ opacity: 0, y: 60, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 40, scale: 0.95 }}
+            transition={{ type: "spring", stiffness: 300, damping: 30 }}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 pointer-events-none"
+          >
+            <div
+              className="bg-background rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto pointer-events-auto border border-border"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Header */}
+              <div
+                className={`relative bg-gradient-to-br ${data.gradient} p-6 sm:p-8 rounded-t-2xl overflow-hidden`}
+              >
+                <div
+                  className="absolute inset-0 opacity-10"
+                  style={{
+                    backgroundImage: `linear-gradient(rgba(255,255,255,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.3) 1px, transparent 1px)`,
+                    backgroundSize: "30px 30px",
+                  }}
+                />
+                <button
+                  onClick={onClose}
+                  className="absolute top-4 right-4 w-8 h-8 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center text-white transition-colors"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+                <div className="relative z-10">
+                  <div className="text-5xl mb-3">{data.flag}</div>
+                  <h2 className="text-2xl sm:text-3xl font-bold text-white mb-2">
+                    {data.title}
+                  </h2>
+                  <p className="text-white/80 text-sm sm:text-base">
+                    {data.subtitle}
+                  </p>
+                </div>
+              </div>
+
+              {/* Body */}
+              <div className="p-6 sm:p-8 space-y-6">
+                {/* Intro */}
+                <p className="text-muted-foreground text-sm sm:text-base leading-relaxed">
+                  {data.intro}
+                </p>
+
+                {/* Pourquoi nous */}
+                <div>
+                  <h3 className="font-bold text-base sm:text-lg mb-3 flex items-center gap-2">
+                    <Target className="w-5 h-5 text-primary" />
+                    {data.whyTitle}
+                  </h3>
+                  <ul className="space-y-2">
+                    {data.whyPoints.map((point, i) => (
+                      <li
+                        key={i}
+                        className="flex items-start gap-2 text-sm text-muted-foreground"
+                      >
+                        <CheckCircle2 className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
+                        <span>{point}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <p className="mt-3 text-sm font-semibold text-foreground italic">
+                    {data.whyTagline}
+                  </p>
+                </div>
+
+                {/* Services */}
+                <div>
+                  <h3 className="font-bold text-base sm:text-lg mb-3 flex items-center gap-2">
+                    <Globe className="w-5 h-5 text-primary" />
+                    {data.servicesTitle}
+                  </h3>
+                  <div className="grid gap-3">
+                    {data.services.map((service, i) => (
+                      <div
+                        key={i}
+                        className="flex items-start gap-3 p-3 rounded-xl bg-muted/50 border border-border"
+                      >
+                        <div className="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+                          <service.icon className="w-5 h-5 text-primary" />
+                        </div>
+                        <div>
+                          <div className="font-semibold text-sm">
+                            {service.label}
+                          </div>
+                          <div className="text-xs text-muted-foreground mt-0.5">
+                            {service.detail}
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Méthode */}
+                <div>
+                  <h3 className="font-bold text-base sm:text-lg mb-3 flex items-center gap-2">
+                    <FileText className="w-5 h-5 text-primary" />
+                    {data.methodTitle}
+                  </h3>
+                  <div className="space-y-2">
+                    {data.methodSteps.map((step, i) => (
+                      <div key={i} className="flex items-center gap-3 text-sm">
+                        <div className="w-6 h-6 rounded-full bg-primary text-white flex items-center justify-center text-xs font-bold flex-shrink-0">
+                          {i + 1}
+                        </div>
+                        <span className="text-muted-foreground">{step}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* CTAs */}
+                <div className="flex flex-col sm:flex-row gap-3 pt-2">
+                  <Button
+                    variant="outline"
+                    className="flex-1 h-11 bg-green-500 hover:bg-green-600 text-white border-green-500 hover:border-green-600"
+                    asChild
+                  >
+                    <a
+                      href="https://wa.me/237699992818"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <MessageCircle className="mr-2 w-4 h-4" />
+                      {data.whatsapp}
+                    </a>
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        </>
+      )}
+    </AnimatePresence>
   );
 }
 
@@ -335,6 +571,25 @@ const ServiceCardComponent = ({
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const [isHovered, setIsHovered] = useState(false);
 
+  const serviceImages: Record<string, string> = {
+    immigration: "/services/Immigration.jpg",
+    digital: "/services/Marketing-digital.jpeg",
+    infography: "/services/infography.jpeg",
+    secretariat: "/services/Assistance-virtuelle.jpeg",
+    commerce: "/services/Commerce-général.jpeg",
+    consulting: "/services/bg.jpeg",
+  };
+
+  const serviceKeys = [
+    "immigration",
+    "digital",
+    "infography",
+    "secretariat",
+    "commerce",
+    "consulting",
+  ];
+  const imageKey = serviceKeys[index] || "immigration";
+
   return (
     <motion.div
       ref={ref}
@@ -345,24 +600,33 @@ const ServiceCardComponent = ({
       onHoverEnd={() => setIsHovered(false)}
     >
       <Card className="group relative h-full overflow-hidden border-2 hover:border-primary/50 transition-all duration-300 hover:shadow-2xl">
+        <div className="relative h-48 overflow-hidden">
+          <motion.img
+            src={serviceImages[imageKey] || "/images/default.jpg"}
+            alt={service.title}
+            className="w-full h-full object-cover"
+            animate={{ scale: isHovered ? 1.15 : 1 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
+          <motion.div
+            animate={{ scale: isHovered ? 1.1 : 1, y: isHovered ? -5 : 0 }}
+            transition={{ duration: 0.3 }}
+            className={`absolute bottom-4 left-4 w-14 h-14 rounded-xl ${service.gradient} flex items-center justify-center shadow-lg backdrop-blur-sm`}
+          >
+            <service.icon className="w-7 h-7 text-white" />
+          </motion.div>
+        </div>
+
         <motion.div
           className={`absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-300 ${service.gradient}`}
           animate={{ opacity: isHovered ? 0.1 : 0 }}
         />
         <div
-          className={`absolute top-0 right-0 w-20 h-20 sm:w-24 sm:h-24 ${service.gradient} opacity-10 rounded-bl-full`}
+          className={`absolute top-48 right-0 w-20 h-20 sm:w-24 sm:h-24 ${service.gradient} opacity-10 rounded-bl-full`}
         />
-        <CardHeader className="relative z-10">
-          <motion.div
-            animate={{
-              scale: isHovered ? 1.1 : 1,
-              rotate: isHovered ? 5 : 0,
-            }}
-            transition={{ duration: 0.3 }}
-            className={`w-12 h-12 sm:w-16 sm:h-16 rounded-2xl ${service.gradient} flex items-center justify-center mb-3 sm:mb-4 shadow-lg`}
-          >
-            <service.icon className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
-          </motion.div>
+
+        <CardHeader className="relative z-10 pt-6">
           <CardTitle className="text-lg sm:text-2xl mb-2 group-hover:text-primary transition-colors">
             {service.title}
           </CardTitle>
@@ -370,7 +634,8 @@ const ServiceCardComponent = ({
             {service.description}
           </CardDescription>
         </CardHeader>
-        <CardContent className="relative z-10 space-y-3 sm:space-y-4">
+
+        <CardContent className="relative z-10 space-y-3 sm:space-y-4 pb-6">
           <ul className="space-y-1.5 sm:space-y-2">
             {service.features.map((feature, idx) => (
               <li
@@ -383,6 +648,7 @@ const ServiceCardComponent = ({
             ))}
           </ul>
         </CardContent>
+
         <motion.div
           className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-primary to-transparent"
           initial={{ scaleX: 0 }}
@@ -397,9 +663,11 @@ const ServiceCardComponent = ({
 const DestinationCard = ({
   destination,
   index,
+  onOpen,
 }: {
   destination: Destination;
   index: number;
+  onOpen: (key: "canada" | "europe") => void;
 }) => {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true });
@@ -431,7 +699,11 @@ const DestinationCard = ({
             <GraduationCap className="w-4 h-4 text-primary" />
             <span>{destination.programs}</span>
           </div>
-          <Button className="w-full group/btn" variant="outline">
+          <Button
+            className="w-full group/btn"
+            variant="outline"
+            onClick={() => onOpen(destination.key)}
+          >
             {destination.cta}
             <ArrowRight className="ml-2 w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
           </Button>
@@ -477,7 +749,6 @@ const ProcessStep = ({
           {description}
         </p>
       </div>
-
       {index < 4 && (
         <div className="hidden lg:block absolute top-1/2 -right-3 w-6 h-0.5 bg-gradient-to-r from-primary/50 to-transparent" />
       )}
@@ -488,11 +759,9 @@ const ProcessStep = ({
 const WhyUsFeatureCard = ({
   feature,
   index,
-  t,
 }: {
   feature: WhyUsFeature;
   index: number;
-  t: ReturnType<typeof useTranslations<"HomePage">>;
 }) => {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true });
@@ -522,14 +791,17 @@ const WhyUsFeatureCard = ({
 export default function HomePage() {
   const t = useTranslations("HomePage");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isDiagnosticOpen, setIsDiagnosticOpen] = useState(false);
+  const [destinationModal, setDestinationModal] = useState<
+    "canada" | "europe" | null
+  >(null);
 
-  // Magnetic CTA button
   const btnX = useMotionValue(0);
   const btnY = useMotionValue(0);
   const springBtnX = useSpring(btnX, { stiffness: 200, damping: 15 });
   const springBtnY = useSpring(btnY, { stiffness: 200, damping: 15 });
 
-  const handleBtnMove = (e: React.MouseEvent<HTMLAnchorElement>) => {
+  const handleBtnMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();
     btnX.set((e.clientX - (rect.left + rect.width / 2)) * 0.25);
     btnY.set((e.clientY - (rect.top + rect.height / 2)) * 0.25);
@@ -585,9 +857,9 @@ export default function HomePage() {
   ];
 
   const stats: StatCard[] = [
-    { icon: Award, value: "2025", label: t("stats.experience") },
+    { icon: Award, value: "2026", label: t("stats.experience") },
     { icon: Sparkles, value: "6+", label: t("stats.services") },
-    { icon: Globe, value: "3", label: t("stats.countries") },
+    { icon: Globe, value: "4", label: t("stats.countries") },
     { icon: Heart, value: "98%", label: t("stats.satisfaction") },
   ];
 
@@ -636,6 +908,7 @@ export default function HomePage() {
 
   const destinations: Destination[] = [
     {
+      key: "canada",
       title: t("destinations.canada.title"),
       description: t("destinations.canada.description"),
       programs: t("destinations.canada.programs"),
@@ -644,20 +917,13 @@ export default function HomePage() {
       flag: "🇨🇦",
     },
     {
-      title: t("destinations.belgium.title"),
-      description: t("destinations.belgium.description"),
-      programs: t("destinations.belgium.programs"),
-      cta: t("destinations.belgium.cta"),
-      gradient: "bg-gradient-to-br from-yellow-500 to-amber-600",
-      flag: "🇧🇪",
-    },
-    {
-      title: t("destinations.france.title"),
-      description: t("destinations.france.description"),
-      programs: t("destinations.france.programs"),
-      cta: t("destinations.france.cta"),
+      key: "europe",
+      title: t("destinations.europe.title"),
+      description: t("destinations.europe.description"),
+      programs: t("destinations.europe.programs"),
+      cta: t("destinations.europe.cta"),
       gradient: "bg-gradient-to-br from-blue-600 to-indigo-700",
-      flag: "🇫🇷",
+      flag: "🌍",
     },
   ];
 
@@ -692,7 +958,7 @@ export default function HomePage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-background via-background to-muted/20">
       {/* ============================================================ */}
-      {/* HERO SECTION — version animée                                */}
+      {/* HERO SECTION                                                 */}
       {/* ============================================================ */}
       <MouseFollower />
 
@@ -700,7 +966,6 @@ export default function HomePage() {
         className="relative py-12 sm:py-20 lg:py-32 overflow-hidden"
         style={{ isolation: "isolate" }}
       >
-        {/* Fond animé */}
         <AnimatedGrid />
         <FloatingParticles />
 
@@ -711,7 +976,6 @@ export default function HomePage() {
             transition={{ duration: 0.8 }}
             className="text-center max-w-4xl mx-auto"
           >
-            {/* Badge avec animation circulaire */}
             <motion.div
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -740,7 +1004,6 @@ export default function HomePage() {
               </MagneticBadge>
             </motion.div>
 
-            {/* Titre */}
             <motion.h1
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -764,7 +1027,6 @@ export default function HomePage() {
               </span>
             </motion.h1>
 
-            {/* Sous-titre */}
             <motion.p
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -774,16 +1036,14 @@ export default function HomePage() {
               {t("hero.subtitle")}
             </motion.p>
 
-            {/* Boutons */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.55 }}
               className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4 justify-center px-4"
             >
-              {/* CTA Primary — magnétique + shimmer */}
-              <motion.a
-                href="#contact"
+              <motion.div
+                onClick={() => setIsDiagnosticOpen(true)}
                 style={{
                   x: springBtnX,
                   y: springBtnY,
@@ -796,7 +1056,7 @@ export default function HomePage() {
                 onMouseLeave={handleBtnLeave}
                 whileHover={{ scale: 1.04 }}
                 whileTap={{ scale: 0.97 }}
-                className="relative inline-flex items-center justify-center h-11 sm:h-12 px-6 sm:px-8 text-sm sm:text-base font-semibold rounded-xl text-white overflow-hidden group w-full sm:w-auto"
+                className="relative inline-flex items-center justify-center h-11 sm:h-12 px-6 sm:px-8 text-sm sm:text-base font-semibold rounded-xl text-white overflow-hidden group w-full sm:w-auto cursor-pointer"
               >
                 <motion.span
                   className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity"
@@ -814,19 +1074,18 @@ export default function HomePage() {
                 />
                 {t("hero.ctaPrimary")}
                 <ArrowRight className="ml-2 w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform" />
-              </motion.a>
+              </motion.div>
 
-              {/* CTA Secondary */}
-              <motion.a
-                href="#services"
-                whileHover={{ scale: 1.04 }}
-                whileTap={{ scale: 0.97 }}
-                className="inline-flex items-center justify-center h-11 sm:h-12 px-6 sm:px-8 text-sm sm:text-base font-semibold rounded-xl border border-border text-foreground hover:border-[#1CA9C9] hover:text-[#1CA9C9] transition-colors w-full sm:w-auto"
-              >
-                {t("hero.ctaSecondary")}
-              </motion.a>
+              <Link href="/services">
+                <motion.div
+                  whileHover={{ scale: 1.04 }}
+                  whileTap={{ scale: 0.97 }}
+                  className="inline-flex items-center justify-center h-11 sm:h-12 px-6 sm:px-8 text-sm sm:text-base font-semibold rounded-xl border border-border text-foreground hover:border-[#1CA9C9] hover:text-[#1CA9C9] transition-colors w-full sm:w-auto"
+                >
+                  {t("hero.ctaSecondary")}
+                </motion.div>
+              </Link>
 
-              {/* WhatsApp */}
               <motion.a
                 href="https://wa.me/237699992818"
                 target="_blank"
@@ -843,7 +1102,6 @@ export default function HomePage() {
           </motion.div>
         </div>
 
-        {/* Dégradé bas de section */}
         <div
           className="absolute bottom-0 left-0 right-0 h-24 pointer-events-none"
           style={{
@@ -853,7 +1111,6 @@ export default function HomePage() {
         />
       </section>
 
-      {/* Keyframe gradient titre */}
       <style>{`
         @keyframes heroGradientShift {
           0%   { background-position: 0% center; }
@@ -886,7 +1143,7 @@ export default function HomePage() {
             transition={{ duration: 0.6 }}
             className="text-center max-w-3xl mx-auto mb-12 sm:mb-16"
           >
-            <Badge className="mb-4" variant="outline">
+            <Badge className="mb-4 text-sm sm:text-base md:text-lg font-semibold" variant="outline">
               {t("services.badge")}
             </Badge>
             <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold mb-3 sm:mb-4">
@@ -941,7 +1198,7 @@ export default function HomePage() {
             transition={{ duration: 0.6 }}
             className="text-center max-w-3xl mx-auto mb-12 sm:mb-16"
           >
-            <Badge className="mb-4" variant="outline">
+            <Badge className="mb-4 text-sm sm:text-base md:text-lg font-semibold" variant="outline">
               {t("process.badge")}
             </Badge>
             <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold mb-3 sm:mb-4">
@@ -979,7 +1236,7 @@ export default function HomePage() {
             transition={{ duration: 0.6 }}
             className="text-center max-w-3xl mx-auto mb-12 sm:mb-16"
           >
-            <Badge className="mb-4" variant="outline">
+            <Badge className="mb-4 text-sm sm:text-base md:text-lg font-semibold" variant="outline">
               {t("destinations.badge")}
             </Badge>
             <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold mb-3 sm:mb-4">
@@ -990,12 +1247,15 @@ export default function HomePage() {
             </p>
           </motion.div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 max-w-5xl mx-auto">
+          {/* 2 cartes centrées */}
+          <div className="grid sm:grid-cols-2 gap-6 sm:gap-8 max-w-3xl mx-auto">
             {destinations.map((destination, index) => (
               <DestinationCard
                 key={index}
                 destination={destination}
                 index={index}
+                onOpen={(key) => setDestinationModal(key)}
+             
               />
             ))}
           </div>
@@ -1014,7 +1274,7 @@ export default function HomePage() {
             transition={{ duration: 0.6 }}
             className="text-center max-w-3xl mx-auto mb-12 sm:mb-16"
           >
-            <Badge className="mb-4" variant="outline">
+            <Badge className="mb-4 text-sm sm:text-base md:text-lg font-semibold" variant="outline">
               {t("whyUs.badge")}
             </Badge>
             <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold mb-3 sm:mb-4">
@@ -1027,12 +1287,7 @@ export default function HomePage() {
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 max-w-6xl mx-auto">
             {whyUsFeatures.map((feature, index) => (
-              <WhyUsFeatureCard
-                key={index}
-                feature={feature}
-                index={index}
-                t={t}
-              />
+              <WhyUsFeatureCard key={index} feature={feature} index={index} />
             ))}
           </div>
         </div>
@@ -1043,7 +1298,6 @@ export default function HomePage() {
       {/* ============================================================ */}
       <section className="py-12 sm:py-20 bg-gradient-to-br from-primary/10 via-primary/5 to-background relative overflow-hidden">
         <div className="absolute inset-0 bg-grid-white/5" />
-
         <div className="container mx-auto px-4 relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -1061,14 +1315,12 @@ export default function HomePage() {
 
             <div className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4 justify-center mb-8 sm:mb-12 px-4">
               <Button
+                onClick={() => setIsDiagnosticOpen(true)}
                 size="lg"
                 className="h-12 sm:h-14 px-8 sm:px-10 text-sm sm:text-base group w-full sm:w-auto"
-                asChild
               >
-                <a href="#contact">
-                  {t("cta.primary")}
-                  <ArrowRight className="ml-2 w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform" />
-                </a>
+                {t("cta.primary")}
+                <ArrowRight className="ml-2 w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform" />
               </Button>
               <Button
                 size="lg"
@@ -1236,6 +1488,19 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ============================================================ */}
+      {/* MODALS                                                       */}
+      {/* ============================================================ */}
+      <DestinationModal
+        isOpen={destinationModal !== null}
+        onClose={() => setDestinationModal(null)}
+        destination={destinationModal}
+        t={t}
+      />
+      <DiagnosticModal
+        isOpen={isDiagnosticOpen}
+        onClose={() => setIsDiagnosticOpen(false)}
+      />
       <AppointmentModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}

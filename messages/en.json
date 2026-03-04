@@ -1,71 +1,4 @@
 {
-  "contact": {
-    "hero": {
-      "title": "Contact Us",
-      "subtitle": "Our team is here to bring your projects to life",
-      "slogan": "Serving you, always better"
-    },
-    "info": {
-      "title": "Contact Information",
-      "description": "Feel free to contact us for any questions or information requests. We will respond as soon as possible.",
-      "address": {
-        "title": "Address",
-        "line1": "Cité des Palmiers, near Collège Dauphine",
-        "line2": "Yellow Building – 2nd Floor – Office B09",
-        "line3": "Douala – Cameroon"
-      },
-      "email": {
-        "title": "Emails"
-      },
-      "phone": {
-        "title": "Phone Numbers",
-        "primary": "Primary",
-        "secondary": "Secondary"
-      },
-      "hours": {
-        "title": "Business Hours",
-        "weekdays": "Monday - Friday",
-        "saturday": "Saturday",
-        "sunday": "Sunday",
-        "closed": "Closed"
-      }
-    },
-    "form": {
-      "title": "Send us a message",
-      "subtitle": "Fill out this form and we will contact you shortly",
-      "name": "Full name",
-      "namePlaceholder": "Your full name",
-      "email": "Email",
-      "emailPlaceholder": "your@email.com",
-      "phone": "Phone",
-      "phonePlaceholder": "+237 6XX XX XX XX",
-      "subject": "Subject of your request",
-      "subjectPlaceholder": "Select a subject",
-      "subjects": {
-        "canada": "Canada Immigration",
-        "belgium": "Belgium Immigration",
-        "france": "France Immigration",
-        "digital": "Digital Services & Graphic Design",
-        "secretariat": "E-secretariat",
-        "commerce": "General Commerce",
-        "other": "Other request"
-      },
-      "message": "Your message",
-      "messagePlaceholder": "Describe your project or request in detail...",
-      "submit": "Send message",
-      "sending": "Sending...",
-      "success": "Message sent successfully! We will respond very soon.",
-      "error": "Error sending message. Please try again or contact us directly.",
-      "privacy": "Your data is protected and will never be shared with third parties."
-    },
-    "cta": {
-      "title": "Ready to start your project?",
-      "subtitle": "Schedule an appointment with an advisor or contact us on WhatsApp",
-      "appointment": "Schedule appointment",
-      "whatsapp": "WhatsApp Business"
-    }
-  },
-
   "HomePage": {
     "hero": {
       "badge": "Serving You, Always Better",
@@ -217,25 +150,85 @@
     },
     "destinations": {
       "badge": "Our Destinations",
-      "title": "Realize Your Immigration Project",
-      "subtitle": "Recognized expertise for your procedures in Canada, Belgium and France",
+      "title": "Make Your Immigration Project a Reality",
+      "subtitle": "Recognized expertise for your applications in Canada and Europe",
       "canada": {
         "title": "Canada",
-        "description": "Permanent residence and studies",
-        "programs": "Multiple immigration programs",
+        "description": "Permanent residency and studies",
+        "programs": "Permanent Residency & Study Visa",
         "cta": "Explore Canada"
       },
-      "belgium": {
-        "title": "Belgium",
-        "description": "Higher education and training",
-        "programs": "Access to European universities",
-        "cta": "Explore Belgium"
+      "europe": {
+        "title": "Europe",
+        "description": "Belgium · France · Luxembourg",
+        "programs": "Higher Education & Work Visa",
+        "cta": "Explore Europe"
       },
-      "france": {
-        "title": "France",
-        "description": "Studies and professional opportunities",
-        "programs": "Training and professional integration",
-        "cta": "Explore France"
+      "modal": {
+        "canada": {
+          "title": "Immigration Canada",
+          "subtitle": "Complete support for your project to Canada",
+          "intro": "Looking for a reliable and structured immigration firm in Cameroon for your project to Canada? ABSOLUTE SARL guides you from A to Z with method, transparency and documentary rigor.",
+          "whyTitle": "Why choose ABSOLUTE for your immigration?",
+          "whyPoints": [
+            "Personalized strategic analysis",
+            "Expertise in international procedures",
+            "Complete support through to submission",
+            "Continuous administrative follow-up",
+            "Realistic and objective advice"
+          ],
+          "whyTagline": "We don't sell dreams. We build solid files.",
+          "servicesTitle": "We support you notably for:",
+          "services": {
+            "residency": "Permanent Residency (Express Entry, provincial programs)",
+            "residencyDetail": "File optimization to increase your chances of acceptance.",
+            "study": "Study Visa",
+            "studyDetail": "Profile analysis, program selection, file preparation, follow-up through to submission."
+          },
+          "methodTitle": "Our 5-step method",
+          "methodSteps": [
+            "In-depth profile assessment",
+            "Selection of the right program",
+            "Personalized action plan",
+            "Full file preparation & verification",
+            "Follow-up through to final decision"
+          ],
+          "cta": "Request a free diagnostic",
+          "whatsapp": "Chat on WhatsApp"
+        },
+        "europe": {
+          "title": "Immigration Europe",
+          "subtitle": "Belgium · France · Luxembourg",
+          "intro": "ABSOLUTE SARL supports you for your higher education and immigration projects in Belgium, France and Luxembourg. Work visa, studies or strategic orientation: we guide you from A to Z with method and documentary rigor.",
+          "whyTitle": "Why choose ABSOLUTE for your immigration?",
+          "whyPoints": [
+            "Personalized strategic analysis",
+            "Expertise in international procedures",
+            "Complete support through to submission",
+            "Continuous administrative follow-up",
+            "Realistic and objective advice"
+          ],
+          "whyTagline": "Your immigration project deserves a solid strategy.",
+          "servicesTitle": "Immigration Europe (Belgium – France – Luxembourg)",
+          "services": {
+            "studies": "Higher Education",
+            "studiesDetail": "Profile analysis, course selection, file preparation, follow-up through to submission.",
+            "work": "Work Visa",
+            "workDetail": "Profile analysis, file preparation, follow-up through to submission.",
+            "orientation": "Strategic Orientation",
+            "orientationDetail": "Expert advice to choose the program and country best suited to your profile."
+          },
+          "methodTitle": "Our 5-step method",
+          "methodSteps": [
+            "In-depth profile assessment",
+            "Selection of the right program",
+            "Personalized action plan",
+            "Full file preparation & verification",
+            "Follow-up through to final decision"
+          ],
+          "cta": "Request a free diagnostic",
+          "whatsapp": "Chat on WhatsApp"
+        }
       }
     },
     "testimonials": {
@@ -291,7 +284,6 @@
       "privacy": "Your data is protected. No spam."
     }
   },
-
   "nav": {
     "home": "Home",
     "services": "Services",
@@ -309,7 +301,6 @@
     "sms": "Messages",
     "quotes": "Quotes"
   },
-
   "auth": {
     "verifyAccount": {
       "title": "Verify Your Account",
@@ -326,29 +317,12 @@
       "redirecting": "Redirecting...",
       "noEmail": "No email address found"
     },
-
     "validation": {
       "codeLength": "The code must contain 6 digits"
     },
     "loginError": "Login failed",
     "authCheckError": "Authentication check failed",
     "unauthorizedAccess": "Unauthorized access. Admin and employee accounts cannot access this interface.",
-    "resetPassword": {
-      "otpCode": "Verification code",
-      "didntReceive": "Didn’t receive the code?",
-      "resend": "Resend code",
-      "changeEmail": "Change email",
-      "title": "New password",
-      "subtitle": "Create a new secure password",
-      "password": "New password",
-      "confirmPassword": "Confirm password",
-      "submit": "Reset",
-      "loading": "Resetting...",
-      "successTitle": "Password reset successful",
-      "successMessage": "Your password has been successfully reset. You can now log in with your new password.",
-      "redirecting": "Redirecting to the login page..."
-    },
-
     "login": {
       "title": "Sign in",
       "subtitle": "Access your ABSOLUTE space",
@@ -389,17 +363,29 @@
       "loading": "Sending...",
       "backToLogin": "Back to login"
     },
-
+    "resetPassword": {
+      "otpCode": "Verification code",
+      "didntReceive": "Didn't receive the code?",
+      "resend": "Resend code",
+      "changeEmail": "Change email",
+      "title": "New password",
+      "subtitle": "Create a new secure password",
+      "password": "New password",
+      "confirmPassword": "Confirm password",
+      "submit": "Reset",
+      "loading": "Resetting...",
+      "successTitle": "Password reset successful",
+      "successMessage": "Your password has been successfully reset. You can now log in with your new password.",
+      "redirecting": "Redirecting to the login page..."
+    },
     "verifyEmail": {
       "title": "Verify your email",
       "subtitle": "We sent a code to",
       "code": "Verification code",
+      "backToRegister": "Back to registration",
       "submit": "Verify",
       "loading": "Verifying...",
       "resend": "Resend code",
-
-      "backToRegister": "Back to registration",
-
       "didntReceive": "Didn't receive the code?",
       "invalidLength": "The code must contain 6 digits",
       "success": "Account verified successfully!"
@@ -491,7 +477,6 @@
     "invalidData": "Invalid data",
     "roleRequired": "Role is required"
   },
-
   "appointment": {
     "title": "Book an appointment",
     "subtitle": "Choose the date and time that suits you",
@@ -689,6 +674,72 @@
         "noCommitment": "No commitment",
         "quickResponse": "Response within 24h"
       }
+    }
+  },
+  "contact": {
+    "hero": {
+      "title": "Contact Us",
+      "subtitle": "Our team is here to bring your projects to life",
+      "slogan": "Serving you, always better"
+    },
+    "info": {
+      "title": "Contact Information",
+      "description": "Feel free to contact us for any questions or information requests. We will respond as soon as possible.",
+      "address": {
+        "title": "Address",
+        "line1": "Cité des Palmiers, near Collège Dauphine",
+        "line2": "Yellow Building – 2nd Floor – Office B09",
+        "line3": "Douala – Cameroon"
+      },
+      "email": {
+        "title": "Emails"
+      },
+      "phone": {
+        "title": "Phone Numbers",
+        "primary": "Primary",
+        "secondary": "Secondary"
+      },
+      "hours": {
+        "title": "Business Hours",
+        "weekdays": "Monday - Friday",
+        "saturday": "Saturday",
+        "sunday": "Sunday",
+        "closed": "Closed"
+      }
+    },
+    "form": {
+      "title": "Send us a message",
+      "subtitle": "Fill out this form and we will contact you shortly",
+      "name": "Full name",
+      "namePlaceholder": "Your full name",
+      "email": "Email",
+      "emailPlaceholder": "your@email.com",
+      "phone": "Phone",
+      "phonePlaceholder": "+237 6XX XX XX XX",
+      "subject": "Subject of your request",
+      "subjectPlaceholder": "Select a subject",
+      "subjects": {
+        "canada": "Canada Immigration",
+        "belgium": "Belgium Immigration",
+        "france": "France Immigration",
+        "digital": "Digital Services & Graphic Design",
+        "secretariat": "E-secretariat",
+        "commerce": "General Commerce",
+        "other": "Other request"
+      },
+      "message": "Your message",
+      "messagePlaceholder": "Describe your project or request in detail...",
+      "submit": "Send message",
+      "sending": "Sending...",
+      "success": "Message sent successfully! We will respond very soon.",
+      "error": "Error sending message. Please try again or contact us directly.",
+      "privacy": "Your data is protected and will never be shared with third parties."
+    },
+    "cta": {
+      "title": "Ready to start your project?",
+      "subtitle": "Schedule an appointment with an advisor or contact us on WhatsApp",
+      "appointment": "Schedule appointment",
+      "whatsapp": "WhatsApp Business"
     }
   },
   "Footer": {
@@ -1071,96 +1122,89 @@
     },
     "readMore": "Read more",
     "noResults": "No articles found for your search",
-    "created": "Article created successfully",
-    "updated": "Article updated successfully",
-    "deleted": "Article deleted successfully",
-    "notFound": "Article not found",
-    "validation": {
-      "missingFields": "All fields (titles and content FR/EN) are required"
-    },
-    "unauthorized": {
-      "notOwner": "You are not authorized to modify this article"
+    "errorLoading": "Error loading articles"
+  },
+  "admin": {
+    "blog": {
+      "title": "Blog Management",
+      "description": "Manage blog articles and their multilingual content",
+      "totalBlogs": "Total Articles",
+      "myBlogs": "My Articles",
+      "withImages": "With Images",
+      "recent": "Recent (7d)",
+      "filters": "Filters and Search",
+      "filtersDescription": "Search and filter articles",
+      "searchPlaceholder": "Search by title, content or author...",
+      "refresh": "Refresh",
+      "refreshed": "List refreshed successfully",
+      "blogsList": "Articles List",
+      "noBlogs": "No articles found",
+      "image": "Image",
+      "titleFr": "Title (Français)",
+      "titleEn": "Title (English)",
+      "titleFrPlaceholder": "Entrez le titre en français...",
+      "titleEnPlaceholder": "Enter the title in English...",
+      "content": "Content",
+      "contentFr": "Content (Français)",
+      "contentEn": "Content (English)",
+      "contentFrPlaceholder": "Rédigez le contenu de l'article en français...",
+      "contentEnPlaceholder": "Write the article content in English...",
+      "author": "Author",
+      "metadata": "Metadata",
+      "createdAt": "Created",
+      "updatedAt": "Updated",
+      "actions": "Actions",
+      "viewDetails": "View Details",
+      "edit": "Edit",
+      "delete": "Delete",
+      "save": "Save",
+      "cancel": "Cancel",
+      "saving": "Saving...",
+      "deleting": "Deleting...",
+      "creating": "Creating...",
+      "addBlog": "Add Article",
+      "addBlogDescription": "Create a new multilingual blog article",
+      "createBlog": "Create Article",
+      "editBlog": "Edit Article",
+      "editBlogDescription": "Update the article content",
+      "deleteBlog": "Delete Article",
+      "deleteBlogDescription": "This action is irreversible",
+      "deleteWarning": "Warning: This action will permanently delete this article and its associated image.",
+      "confirmDelete": "Confirm Deletion",
+      "imageWillBeDeleted": "The image will also be deleted from Cloudinary",
+      "blogDetails": "Article Details",
+      "blogDetailsDescription": "Complete information about the article",
+      "imageUpload": {
+        "optional": "optional",
+        "clickToUpload": "Click to upload",
+        "orDragDrop": "or drag and drop",
+        "maxSize": "max 5MB",
+        "tip": "The image will be hosted on Cloudinary and automatically optimized",
+        "uploading": "Uploading...",
+        "success": "Image uploaded successfully",
+        "error": "Failed to upload image",
+        "invalidType": "Invalid file type. Use PNG, JPG or WEBP",
+        "tooLarge": "Image is too large. Maximum 5MB",
+        "remove": "Remove image",
+        "removed": "Image removed"
+      },
+      "created": "Article created successfully",
+      "updated": "Article updated successfully",
+      "deleted": "Article deleted successfully",
+      "notFound": "Article not found",
+      "accessDenied": "Access denied",
+      "unauthorized": {
+        "notOwner": "You are not authorized to modify this article"
+      },
+      "validation": {
+        "missingFields": "All fields (titles and content FR/EN) are required"
+      },
+      "fetchError": "Error fetching articles",
+      "createError": "Error creating article",
+      "updateError": "Error updating article",
+      "deleteError": "Error deleting article"
     }
   },
-  "blogs": {
-    "title": "Blog Management",
-    "description": "Manage blog articles and their multilingual content",
-    "totalBlogs": "Total Articles",
-    "myBlogs": "My Articles",
-    "withImages": "With Images",
-    "recent": "Recent (7d)",
-    "filters": "Filters and Search",
-    "filtersDescription": "Search and filter articles",
-    "searchPlaceholder": "Search by title, content or author...",
-    "refresh": "Refresh",
-    "refreshed": "List refreshed successfully",
-    "blogsList": "Articles List",
-    "noBlogs": "No articles found",
-    "image": "Image",
-    "titleFr": "Title (Français)",
-    "titleEn": "Title (English)",
-    "titleFrPlaceholder": "Entrez le titre en français...",
-    "titleEnPlaceholder": "Enter the title in English...",
-    "content": "Content",
-    "contentFr": "Content (Français)",
-    "contentEn": "Content (English)",
-    "contentFrPlaceholder": "Rédigez le contenu de l'article en français...",
-    "contentEnPlaceholder": "Write the article content in English...",
-    "author": "Author",
-    "metadata": "Metadata",
-    "createdAt": "Created",
-    "updatedAt": "Updated",
-    "actions": "Actions",
-    "viewDetails": "View Details",
-    "edit": "Edit",
-    "delete": "Delete",
-    "save": "Save",
-    "cancel": "Cancel",
-    "saving": "Saving...",
-    "deleting": "Deleting...",
-    "creating": "Creating...",
-    "addBlog": "Add Article",
-    "addBlogDescription": "Create a new multilingual blog article",
-    "createBlog": "Create Article",
-    "editBlog": "Edit Article",
-    "editBlogDescription": "Update the article content",
-    "deleteBlog": "Delete Article",
-    "deleteBlogDescription": "This action is irreversible",
-    "deleteWarning": "Warning: This action will permanently delete this article and its associated image.",
-    "confirmDelete": "Confirm Deletion",
-    "imageWillBeDeleted": "The image will also be deleted from Cloudinary",
-    "blogDetails": "Article Details",
-    "blogDetailsDescription": "Complete information about the article",
-    "imageUpload": {
-      "optional": "optional",
-      "clickToUpload": "Click to upload",
-      "orDragDrop": "or drag and drop",
-      "maxSize": "max 5MB",
-      "tip": "The image will be hosted on Cloudinary and automatically optimized",
-      "uploading": "Uploading...",
-      "success": "Image uploaded successfully",
-      "error": "Failed to upload image",
-      "invalidType": "Invalid file type. Use PNG, JPG or WEBP",
-      "tooLarge": "Image is too large. Maximum 5MB",
-      "remove": "Remove image",
-      "removed": "Image removed"
-    },
-    "created": "Article created successfully",
-    "updated": "Article updated successfully",
-    "deleted": "Article deleted successfully",
-    "notFound": "Article not found",
-    "accessDenied": "Access denied",
-    "unauthorized": {
-      "notOwner": "You are not authorized to modify this article"
-    },
-    "validation": {
-      "missingFields": "All fields (titles and content FR/EN) are required"
-    },
-    "fetchError": "Error fetching articles",
-    "createError": "Error creating article",
-    "updateError": "Error updating article",
-    "deleteError": "Error deleting article"
-  },
   "rendezvous": {
     "title": "Appointments Management",
     "description": "Manage client appointment requests",
@@ -1217,88 +1261,6 @@
     "rejectSuccess": "Appointment rejected successfully",
     "updateSuccess": "Appointment updated successfully",
     "deleteSuccess": "Appointment deleted successfully",
-    "dateRequired": "Date is required",
-    "dateMustBeFuture": "Date must be in the future",
-    "invalidId": "Invalid appointment ID",
-    "notFound": "Appointment not found",
-    "alreadyProcessed": "This appointment has already been processed",
-    "cannotModifyNonPending": "You can only modify pending appointments",
-    "cannotDeleteNonPending": "You can only delete pending appointments",
-    "invalidStatus": "Invalid status",
-    "accessDenied": "Access denied",
-    "fetchError": "Error fetching appointments",
-    "approveError": "Error approving appointment",
-    "rejectError": "Error rejecting appointment",
-    "updateError": "Error updating appointment",
-    "deleteError": "Error deleting appointment"
-  },
-  "rendezvous": {
-    "title": "Appointments Management",
-    "description": "Manage client appointment requests",
-
-    "totalRendezVous": "Total Appointments",
-    "allStatuses": "All statuses",
-    "filters": "Filters",
-    "filtersDescription": "Filter appointments by status",
-    "refresh": "Refresh",
-    "refreshed": "List refreshed successfully",
-
-    "rendezVousList": "Appointments List",
-    "noRendezVous": "No appointments found",
-
-    "client": "Client",
-    "date": "Date",
-    "dateTime": "Date and time",
-    "status": "Status",
-    "note": "Note / Reason",
-    "noNote": "No note",
-    "createdAt": "Created",
-    "updatedAt": "Updated",
-    "actions": "Actions",
-
-    "statuses": {
-      "pending": "Pending",
-      "approved": "Approved",
-      "rejected": "Rejected"
-    },
-
-    "viewDetails": "View Details",
-    "approve": "Approve",
-    "approving": "Approving...",
-    "reject": "Reject",
-    "rejecting": "Rejecting...",
-    "delete": "Delete",
-    "deleting": "Deleting...",
-    "cancel": "Cancel",
-
-    "details": "Appointment Details",
-    "detailsDescription": "Complete information about the appointment",
-
-    "deleteTitle": "Delete Appointment",
-    "deleteDescription": "This action is irreversible",
-    "deleteWarning": "Warning: This action will permanently delete this appointment.",
-    "confirmDelete": "Confirm Deletion",
-
-    "rejectTitle": "Reject Appointment",
-    "rejectDescription": "You can add a note explaining the rejection",
-    "rejectNote": "Rejection reason",
-    "rejectNotePlaceholder": "E.g.: Date not available, please choose another date...",
-    "rejectNoteHint": "This note will be visible to the client",
-    "confirmReject": "Confirm Rejection",
-    "optional": "optional",
-
-    "page": "Page",
-    "of": "of",
-    "previous": "Previous",
-    "next": "Next",
-
-    "createSuccess": "Appointment created successfully",
-    "fetchSuccess": "Appointments retrieved successfully",
-    "approveSuccess": "Appointment approved successfully",
-    "rejectSuccess": "Appointment rejected successfully",
-    "updateSuccess": "Appointment updated successfully",
-    "deleteSuccess": "Appointment deleted successfully",
-
     "dateRequired": "Date is required",
     "dateMustBeFuture": "Date must be in the future",
     "invalidId": "Invalid appointment ID",
@@ -1313,8 +1275,17 @@
     "rejectError": "Error rejecting appointment",
     "updateError": "Error updating appointment",
     "deleteError": "Error deleting appointment",
-
-    "client": {
+    "noMyRendezVous": "You have no appointments",
+    "noMyRendezVousHint": "Click 'New Appointment' to create one",
+    "cancelAppointment": "Cancel Appointment",
+    "cancelAppointmentTitle": "Cancel this appointment?",
+    "cancelAppointmentDescription": "This action is irreversible. You will need to create a new appointment if necessary.",
+    "confirmCancel": "Yes, cancel",
+    "cancelling": "Cancelling...",
+    "unauthorized": {
+      "notYourRendezVous": "You don't have access to this appointment"
+    },
+    "clientSection": {
       "myAppointments": "My Appointments",
       "myAppointmentsDescription": "Manage your appointment requests",
       "myAppointmentDetails": "My Appointment Details",
@@ -1323,42 +1294,24 @@
       "newAppointment": "New Appointment",
       "filtersDescription": "Filter your appointments by status",
       "myAppointmentsList": "My Appointments",
-
       "appointmentReason": "Appointment reason",
-
       "statusMessages": {
         "pending": "Your request is being processed. We will contact you soon.",
         "approved": "Your appointment is confirmed! We look forward to seeing you at the scheduled time.",
         "rejected": "Your request has been declined. Please see the note below for more information."
       },
-
       "approvedAlert": "✅ Appointment confirmed! We look forward to seeing you at the scheduled date and time. If you cannot make it, please let us know.",
       "rejectedAlert": "❌ Your request could not be accepted. You can create a new request with a different date if you wish.",
       "pendingAlert": "⏳ Your request is pending validation. We will respond as soon as possible."
-    },
-
-    "noMyRendezVous": "You have no appointments",
-    "noMyRendezVousHint": "Click 'New Appointment' to create one",
-
-    "cancelAppointment": "Cancel Appointment",
-    "cancelAppointmentTitle": "Cancel this appointment?",
-    "cancelAppointmentDescription": "This action is irreversible. You will need to create a new appointment if necessary.",
-    "confirmCancel": "Yes, cancel",
-    "cancelling": "Cancelling...",
-
-    "unauthorized": {
-      "notYourRendezVous": "You don't have access to this appointment"
     }
   },
   "contactMessages": {
     "title": "Contact Messages",
     "description": "Manage messages received from the contact form",
-    
     "totalMessages": "Total Messages",
     "newMessages": "New",
     "inProgress": "In Progress",
     "resolved": "Resolved",
-    
     "filters": "Filters and Search",
     "filtersDescription": "Filter and search through messages",
     "searchPlaceholder": "Search by name, email or message...",
@@ -1369,10 +1322,8 @@
     "resetFilters": "Reset",
     "refresh": "Refresh",
     "refreshed": "List refreshed successfully",
-    
     "messagesList": "Messages List",
     "noMessages": "No messages yet",
-    
     "name": "Name",
     "email": "Email",
     "phone": "Phone",
@@ -1382,17 +1333,14 @@
     "date": "Date",
     "message": "Message",
     "actions": "Actions",
-    
     "viewDetails": "View Details",
     "updateStatus": "Change Status",
     "delete": "Delete",
-    
     "statusNEW": "New",
     "statusREAD": "Read",
     "statusIN_PROGRESS": "In Progress",
     "statusRESOLVED": "Resolved",
     "statusARCHIVED": "Archived",
-    
     "subjectCANADA": "Canada Immigration",
     "subjectBELGIUM": "Belgium Immigration",
     "subjectFRANCE": "France Immigration",
@@ -1400,7 +1348,6 @@
     "subjectSECRETARIAT": "Secretariat",
     "subjectCOMMERCE": "Commerce",
     "subjectOTHER": "Other",
-    
     "messageDetails": "Message Details",
     "messageDetailsDescription": "Complete information about the received message",
     "currentStatus": "Current status",
@@ -1411,30 +1358,133 @@
     "createdAt": "Received on",
     "readAt": "Read on",
     "technicalInfo": "Technical information",
-    
     "updateStatusDescription": "Update status and add internal notes",
     "newStatus": "New status",
     "notesPlaceholder": "Add internal notes for your team...",
     "cancel": "Cancel",
     "save": "Save",
     "saving": "Saving...",
-    
     "deleteMessage": "Delete Message",
     "deleteMessageDescription": "This action is irreversible",
     "deleteWarning": "⚠️ Warning: this message will be permanently deleted",
     "confirmDelete": "Confirm deletion",
     "deleting": "Deleting...",
-    
     "fetchSuccess": "Messages retrieved successfully",
     "createSuccess": "Message sent successfully",
     "updateSuccess": "Message updated successfully",
     "deleteSuccess": "Message deleted successfully",
-    
     "notFound": "Message not found",
     "accessDenied": "Access denied",
     "fetchError": "Error retrieving messages",
     "createError": "Error sending message",
     "updateError": "Error updating message",
     "deleteError": "Error deleting message"
+  },
+  "diagnostic": {
+    "step": "Step",
+    "back": "Back",
+    "next": "Next",
+    "submit": "Send my request",
+    "submitting": "Sending...",
+    "steps": {
+      "step1": { "title": "Personal Information" },
+      "step2": { "title": "Current Education Level" },
+      "step3": { "title": "Field & Domain" },
+      "step4": { "title": "Study Project" },
+      "step5": { "title": "Situation & Needs" },
+      "step6": {
+        "title": "Contact Details",
+        "recap": "Last step! Fill in your contact details so our team can reach you quickly."
+      }
+    },
+    "fields": {
+      "lastName": "Last Name",
+      "firstName": "First Name",
+      "birthDate": "Date of Birth",
+      "residenceCountry": "Country of Residence",
+      "nationality": "Nationality",
+      "lastDiploma": "Last Degree Obtained",
+      "diplomaYear": "Year of Graduation",
+      "institution": "Institution Attended",
+      "diplomaTitle": "Degree Title",
+      "currentStatus": "Current Status",
+      "studyDomain": "Field of Study",
+      "professionalExperience": "Professional Experience",
+      "destination": "Destination",
+      "targetLevel": "Target Level",
+      "targetIntake": "Target Intake",
+      "previousAttempt": "Previous visa/admission attempt?",
+      "identifiedNeeds": "Identified Needs (optional)",
+      "frenchLevel": "French Level",
+      "englishLevel": "English Level",
+      "email": "Email Address",
+      "whatsapp": "WhatsApp Number",
+      "preferredContact": "Preferred Contact Method"
+    },
+    "placeholders": {
+      "lastName": "Your last name",
+      "firstName": "Your first name",
+      "residenceCountry": "e.g. Cameroon",
+      "nationality": "e.g. Cameroonian",
+      "select": "Select an option",
+      "institution": "e.g. University of Yaoundé I",
+      "diplomaTitle": "e.g. Bachelor's in Computer Science",
+      "studyDomain": "e.g. Computer Science, Medicine, Business...",
+      "professionalExperience": "Describe your professional experience...",
+      "identifiedNeeds": "e.g. file preparation, school selection, orientation...",
+      "langLevel": "Select your level"
+    },
+    "options": {
+      "diploma": {
+        "baccalaureat": "High School Diploma",
+        "licence": "Bachelor's Degree",
+        "master": "Master's Degree",
+        "other": "Other"
+      },
+      "status": {
+        "employed": "Employed",
+        "unemployed": "Unemployed",
+        "student": "Student",
+        "other": "Other"
+      },
+      "destination": {
+        "canada": "Canada",
+        "belgium": "Belgium",
+        "france": "France",
+        "other": "Other"
+      },
+      "level": {
+        "licence": "Bachelor's Degree",
+        "master": "Master's Degree",
+        "phd": "PhD / Doctorate",
+        "professional": "Professional Training",
+        "other": "Other"
+      },
+      "intake": {
+        "rentre": "Intake"
+      },
+      "yesNo": {
+        "yes": "Yes",
+        "no": "No"
+      },
+      "langLevel": {
+        "native": "Native Speaker"
+      },
+      "contact": {
+        "whatsapp": "WhatsApp",
+        "call": "Phone Call",
+        "email": "Email"
+      }
+    },
+    "validation": {
+      "required": "This field is required",
+      "invalidEmail": "Invalid email address",
+      "invalidYear": "Invalid year (YYYY format)"
+    },
+    "success": {
+      "title": "Request Sent!",
+      "message": "Thank you! Our team has received your diagnostic form. We will contact you shortly to discuss your project.",
+      "close": "Close"
+    }
   }
 }
