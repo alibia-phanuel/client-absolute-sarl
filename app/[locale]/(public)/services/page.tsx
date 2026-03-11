@@ -522,10 +522,7 @@ export default function ServicesPage() {
               transition={{ duration: 0.6, delay: 0.4 }}
               className="flex flex-wrap gap-4 justify-center"
             >
-              <Button size="lg" className="h-12 px-8 text-base group">
-                {t("hero.ctaPrimary")}
-                <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </Button>
+   
               <Button
                 size="lg"
                 variant="outline"
@@ -753,7 +750,7 @@ export default function ServicesPage() {
             <p className="text-lg md:text-xl text-muted-foreground mb-10 leading-relaxed">
               {t("cta.subtitle")}
             </p>
-            <div className="flex flex-wrap gap-4 justify-center">
+            {/* <div className="flex flex-wrap gap-4 justify-center">
               <Button size="lg" className="h-14 px-10 text-base group">
                 {t("cta.primary")}
                 <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
@@ -765,7 +762,7 @@ export default function ServicesPage() {
               >
                 {t("cta.secondary")}
               </Button>
-            </div>
+            </div> */}
 
             <div className="mt-12 flex flex-wrap gap-8 justify-center items-center text-sm text-muted-foreground">
               <div className="flex items-center gap-2">
