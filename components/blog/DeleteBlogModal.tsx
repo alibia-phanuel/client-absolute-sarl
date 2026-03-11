@@ -69,7 +69,7 @@ export function DeleteBlogModal({
   onSuccess,
 }: DeleteBlogModalProps) {
   const t = useTranslations();
-  const tBlogs = useTranslations("blogs");
+  const tBlogs = useTranslations("admin.blog");
   const locale = useLocale();
 
   const [isLoading, setIsLoading] = useState(false);

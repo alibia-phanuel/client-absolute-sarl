@@ -232,7 +232,7 @@ export default function NavBar() {
                           <span>{t("Appointments")}</span>
                         </Link>
                       </DropdownMenuItem>
-                      <DropdownMenuItem asChild>
+                      {/* <DropdownMenuItem asChild>
                         <Link
                           href="/sms"
                           className="flex items-center cursor-pointer"
@@ -249,7 +249,7 @@ export default function NavBar() {
                           <FileText className="mr-2 h-4 w-4" />
                           <span>{t("devis")}</span>
                         </Link>
-                      </DropdownMenuItem>
+                      </DropdownMenuItem> */}
                       <DropdownMenuSeparator />
                     </>
                   )}

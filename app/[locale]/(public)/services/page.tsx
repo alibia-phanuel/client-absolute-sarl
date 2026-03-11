@@ -414,15 +414,11 @@ export default function ServicesPage() {
 
   const stats = [
     { icon: Users, value: "1000+", label: t("stats.clients") },
-    { icon: Globe, value: "3", label: t("stats.countries") },
+    { icon: Globe, value: "4", label: t("stats.countries") },
     { icon: Award, value: "98%", label: t("stats.satisfaction") },
     { icon: TrendingUp, value: "24/7", label: t("stats.support") },
   ];
 
-  const filteredServices =
-    selectedCategory === "all"
-      ? services
-      : services.filter((s) => s.id.includes(selectedCategory));
 
   const processSteps = [
     {

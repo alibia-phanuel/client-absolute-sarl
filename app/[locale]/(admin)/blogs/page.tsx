@@ -1,16 +1,3 @@
-/**
- * 📰 Page de Gestion des Blogs
- * 
- * Page principale pour la gestion des blogs avec :
- * - Dashboard avec statistiques (total blogs, par auteur, etc.)
- * - Filtres et recherche
- * - Bouton d'ajout de blog
- * - Tableau des blogs avec actions
- * - Pagination
- * 
- * Cette page est réservée aux ADMIN et EMPLOYE (via AdminGuard)
- */
-
 "use client";
 
 import { useState, useEffect } from "react";
@@ -20,7 +7,13 @@ import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Blog } from "@/types/Blog.types";
 import { getBlogs } from "@/lib/blogs.api";
 import { BlogsTable } from "@/components/blog/BlogsTable";
@@ -32,8 +25,8 @@ import { useAuthStore } from "@/store/authStore";
 // ============================================================================
 
 export default function BlogsPage() {
-  const t = useTranslations();
-  const tBlogs = useTranslations("blogs");
+  // ✅ CORRIGÉ : "admin.blog" au lieu de "blogs"
+  const tBlogs = useTranslations("admin.blog");
 
   // Récupérer l'utilisateur connecté pour les permissions
   const { user } = useAuthStore();
@@ -54,16 +47,12 @@ export default function BlogsPage() {
   // 📡 Chargement des Blogs
   // ============================================================================
 
-  /**
-   * Charge les blogs depuis l'API
-   * Peut être appelée avec ou sans filtres
-   */
   const fetchBlogs = async (page: number = 1) => {
     setIsLoading(true);
     try {
       const result = await getBlogs({
         page,
-        limit: 10, // 10 blogs par page
+        limit: 10,
       });
 
       setBlogs(result.data);
@@ -73,15 +62,12 @@ export default function BlogsPage() {
       setTotalBlogs(result.meta.total);
     } catch (error: unknown) {
       const err = error instanceof Error ? error : new Error(String(error));
-      toast.error(t(err.message));
+      toast.error(err.message);
     } finally {
       setIsLoading(false);
     }
   };
 
-  /**
-   * Charger les blogs au montage du composant
-   */
   useEffect(() => {
     fetchBlogs();
   }, []);
@@ -90,10 +76,6 @@ export default function BlogsPage() {
   // 🔍 Recherche Locale
   // ============================================================================
 
-  /**
-   * Filtre les blogs localement par recherche
-   * (La recherche est côté client pour une réactivité instantanée)
-   */
   useEffect(() => {
     if (!searchQuery.trim()) {
       setFilteredBlogs(blogs);
@@ -107,7 +89,7 @@ export default function BlogsPage() {
         blog.title_en.toLowerCase().includes(query) ||
         blog.content_fr.toLowerCase().includes(query) ||
         blog.content_en.toLowerCase().includes(query) ||
-        blog.author?.name.toLowerCase().includes(query)
+        blog.author?.name.toLowerCase().includes(query),
     );
 
     setFilteredBlogs(filtered);
@@ -117,17 +99,11 @@ export default function BlogsPage() {
   // 🎬 Handlers
   // ============================================================================
 
-  /**
-   * Rafraîchit la liste des blogs
-   */
   const handleRefresh = () => {
     fetchBlogs(currentPage);
     toast.success(tBlogs("refreshed"));
   };
 
-  /**
-   * Change de page
-   */
   const handlePageChange = (newPage: number) => {
     fetchBlogs(newPage);
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -137,16 +113,13 @@ export default function BlogsPage() {
   // 📊 Statistiques
   // ============================================================================
 
-  /**
-   * Calcule les statistiques pour le dashboard
-   */
   const stats = {
     total: totalBlogs,
     myBlogs: user ? blogs.filter((b) => b.authorId === user.id).length : 0,
     withImages: blogs.filter((b) => b.imageUrl).length,
     recent: blogs.filter((b) => {
       const daysDiff = Math.floor(
-        (Date.now() - new Date(b.createdAt).getTime()) / (1000 * 60 * 60 * 24)
+        (Date.now() - new Date(b.createdAt).getTime()) / (1000 * 60 * 60 * 24),
       );
       return daysDiff <= 7;
     }).length,
@@ -313,7 +286,7 @@ export default function BlogsPage() {
               currentUserRole={user?.role}
             />
 
-            {/* Pagination (si plus d'une page) */}
+            {/* Pagination */}
             {totalPages > 1 && (
               <div className="flex items-center justify-center gap-2 mt-6">
                 <Button
@@ -322,10 +295,10 @@ export default function BlogsPage() {
                   onClick={() => handlePageChange(currentPage - 1)}
                   disabled={currentPage === 1 || isLoading}
                 >
-                  Précédent
+                  {tBlogs("previous")}
                 </Button>
                 <div className="text-sm text-muted-foreground">
-                  Page {currentPage} sur {totalPages}
+                  {tBlogs("page")} {currentPage} {tBlogs("of")} {totalPages}
                 </div>
                 <Button
                   variant="outline"
@@ -333,7 +306,7 @@ export default function BlogsPage() {
                   onClick={() => handlePageChange(currentPage + 1)}
                   disabled={currentPage === totalPages || isLoading}
                 >
-                  Suivant
+                  {tBlogs("next")}
                 </Button>
               </div>
             )}

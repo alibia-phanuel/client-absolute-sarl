@@ -14,7 +14,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 import { RendezVous, RendezVousStatus } from "@/types/Rendezvous.types";
 import { getMyRendezVous } from "@/lib/Rendezvous.api";
@@ -27,14 +33,19 @@ export default function MyRendezVousPage() {
 
   const [rendezvous, setRendezVous] = useState<RendezVous[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [statusFilter, setStatusFilter] = useState<RendezVousStatus | "ALL">("ALL");
+  const [statusFilter, setStatusFilter] = useState<RendezVousStatus | "ALL">(
+    "ALL",
+  );
   const [appointmentModalOpen, setAppointmentModalOpen] = useState(false);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [totalRendezVous, setTotalRendezVous] = useState(0);
 
-  const fetchMyRendezVous = async (page: number = 1, status?: RendezVousStatus) => {
+  const fetchMyRendezVous = async (
+    page: number = 1,
+    status?: RendezVousStatus,
+  ) => {
     setIsLoading(true);
     try {
       const filters: any = { page, limit: 10 };
@@ -76,9 +87,12 @@ export default function MyRendezVousPage() {
 
   const stats = {
     total: totalRendezVous,
-    pending: rendezvous.filter((r) => r.status === RendezVousStatus.PENDING).length,
-    approved: rendezvous.filter((r) => r.status === RendezVousStatus.APPROVED).length,
-    rejected: rendezvous.filter((r) => r.status === RendezVousStatus.REJECTED).length,
+    pending: rendezvous.filter((r) => r.status === RendezVousStatus.PENDING)
+      .length,
+    approved: rendezvous.filter((r) => r.status === RendezVousStatus.APPROVED)
+      .length,
+    rejected: rendezvous.filter((r) => r.status === RendezVousStatus.REJECTED)
+      .length,
   };
 
   return (
@@ -97,10 +111,10 @@ export default function MyRendezVousPage() {
             </div>
             <div>
               <h1 className="text-3xl font-bold tracking-tight">
-                {tRdv("client.myAppointments")}
+                {tRdv("title")}
               </h1>
               <p className="text-muted-foreground">
-                {tRdv("client.myAppointmentsDescription")}
+                {tRdv("clientSection.myAppointmentsDescription")}
               </p>
             </div>
           </div>
@@ -110,7 +124,7 @@ export default function MyRendezVousPage() {
             className="hidden md:flex"
           >
             <Plus className="h-5 w-5 mr-2" />
-            {tRdv("client.newAppointment")}
+            {tRdv("clientSection.newAppointment")}
           </Button>
         </div>
       </motion.div>
@@ -125,7 +139,7 @@ export default function MyRendezVousPage() {
         <Card>
           <CardHeader className="pb-3">
             <CardTitle className="text-sm font-medium text-muted-foreground">
-              {tRdv("client.totalAppointments")}
+              {tRdv("clientSection.totalAppointments")}
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -139,7 +153,9 @@ export default function MyRendezVousPage() {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-orange-600">{stats.pending}</div>
+            <div className="text-2xl font-bold text-orange-600">
+              {stats.pending}
+            </div>
           </CardContent>
         </Card>
         <Card>
@@ -149,7 +165,9 @@ export default function MyRendezVousPage() {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-green-600">{stats.approved}</div>
+            <div className="text-2xl font-bold text-green-600">
+              {stats.approved}
+            </div>
           </CardContent>
         </Card>
         <Card>
@@ -159,7 +177,9 @@ export default function MyRendezVousPage() {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-red-600">{stats.rejected}</div>
+            <div className="text-2xl font-bold text-red-600">
+              {stats.rejected}
+            </div>
           </CardContent>
         </Card>
       </motion.div>
@@ -177,13 +197,17 @@ export default function MyRendezVousPage() {
               <Filter className="h-5 w-5" />
               {tRdv("filters")}
             </CardTitle>
-            <CardDescription>{tRdv("client.filtersDescription")}</CardDescription>
+            <CardDescription>
+              {tRdv("clientSection.filtersDescription")}
+            </CardDescription>
           </CardHeader>
           <CardContent>
             <div className="flex flex-col sm:flex-row gap-4">
               <Select
                 value={statusFilter}
-                onValueChange={(value) => setStatusFilter(value as RendezVousStatus | "ALL")}
+                onValueChange={(value) =>
+                  setStatusFilter(value as RendezVousStatus | "ALL")
+                }
               >
                 <SelectTrigger className="w-full sm:w-[200px]">
                   <SelectValue />
@@ -207,7 +231,7 @@ export default function MyRendezVousPage() {
                 className="w-full sm:w-auto md:hidden"
               >
                 <Plus className="h-4 w-4 mr-2" />
-                {tRdv("client.newAppointment")}
+                {tRdv("clientSection.newAppointment")}
               </Button>
 
               <Button
@@ -235,7 +259,7 @@ export default function MyRendezVousPage() {
         <Card>
           <CardHeader>
             <CardTitle>
-              {tRdv("client.myAppointmentsList")} ({rendezvous.length})
+              {tRdv("clientSection.myAppointmentsList")} ({rendezvous.length})
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -245,7 +269,7 @@ export default function MyRendezVousPage() {
               onRefresh={() =>
                 fetchMyRendezVous(
                   currentPage,
-                  statusFilter !== "ALL" ? statusFilter : undefined
+                  statusFilter !== "ALL" ? statusFilter : undefined,
                 )
               }
             />

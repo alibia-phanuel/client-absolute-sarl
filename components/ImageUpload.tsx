@@ -7,16 +7,6 @@
  * - Suppression de l'image
  * - Validation du type de fichier
  * - Gestion d'erreurs
- * 
- * Utilisation :
- * ```tsx
- * <ImageUpload
- *   imageUrl={imageUrl}
- *   onImageUpload={(url) => setImageUrl(url)}
- *   onImageRemove={() => setImageUrl(null)}
- *   isLoading={isUploading}
- * />
- * ```
  */
 
 "use client";
@@ -35,10 +25,10 @@ import { uploadImageToCloudinary } from "@/lib/cloudinary";
 // ============================================================================
 
 interface ImageUploadProps {
-  imageUrl: string | null;           // URL de l'image actuelle (null si pas d'image)
-  onImageUpload: (url: string) => void;  // Callback quand une image est uploadée
-  onImageRemove: () => void;         // Callback quand l'image est supprimée
-  disabled?: boolean;                // Désactiver l'upload (ex: pendant la sauvegarde)
+  imageUrl: string | null;
+  onImageUpload: (url: string) => void;
+  onImageRemove: () => void;
+  disabled?: boolean;
 }
 
 // ============================================================================
@@ -51,41 +41,34 @@ export function ImageUpload({
   onImageRemove,
   disabled = false,
 }: ImageUploadProps) {
-  const t = useTranslations("blogs");
+  // ✅ CORRIGÉ : "admin.blog" au lieu de "blogs"
+  const t = useTranslations("admin.blog");
 
-  // État local pour le loading de l'upload
   const [isUploading, setIsUploading] = useState(false);
 
   // ============================================================================
   // 📤 Gestion de l'Upload
   // ============================================================================
 
-  /**
-   * Gère la sélection et l'upload d'un fichier
-   */
   const handleFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
-    // Récupération du fichier sélectionné
     const file = e.target.files?.[0];
     if (!file) return;
 
-    // Validation : Vérifier que c'est bien une image
     if (!file.type.startsWith("image/")) {
       toast.error(t("imageUpload.invalidType"));
       return;
     }
 
-    // Validation : Taille max 5MB
-    const maxSize = 5 * 1024 * 1024; // 5MB en bytes
+    const maxSize = 5 * 1024 * 1024; // 5MB
     if (file.size > maxSize) {
       toast.error(t("imageUpload.tooLarge"));
       return;
     }
 
-    // Upload vers Cloudinary
     setIsUploading(true);
     try {
       const result = await uploadImageToCloudinary(file);
-      onImageUpload(result.url); // Passer l'URL au parent
+      onImageUpload(result.url);
       toast.success(t("imageUpload.success"));
     } catch (error) {
       console.error("Erreur upload:", error);
@@ -99,10 +82,6 @@ export function ImageUpload({
   // 🗑️ Gestion de la Suppression
   // ============================================================================
 
-  /**
-   * Supprime l'image (seulement côté client, pas de Cloudinary)
-   * La suppression de Cloudinary se fait lors de la suppression du blog
-   */
   const handleRemoveImage = () => {
     onImageRemove();
     toast.success(t("imageUpload.removed"));
@@ -136,15 +115,12 @@ export function ImageUpload({
               transition={{ duration: 0.2 }}
               className="relative group"
             >
-              {/* Image */}
               <div className="relative w-full h-48 rounded-lg overflow-hidden border-2 border-border">
                 <img
                   src={imageUrl}
                   alt="Preview"
                   className="w-full h-full object-cover"
                 />
-                
-                {/* Overlay au survol */}
                 <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                   <Button
                     type="button"
@@ -160,7 +136,7 @@ export function ImageUpload({
               </div>
             </motion.div>
           ) : (
-            // ====== Zone d'upload (drag & drop style) ======
+            // ====== Zone d'upload ======
             <motion.div
               key="upload"
               initial={{ opacity: 0, scale: 0.95 }}
@@ -180,10 +156,8 @@ export function ImageUpload({
                   }
                 `}
               >
-                {/* Contenu de la zone d'upload */}
                 <div className="flex flex-col items-center justify-center pt-5 pb-6">
                   {isUploading ? (
-                    // Loading state
                     <>
                       <Loader2 className="h-10 w-10 text-primary animate-spin mb-3" />
                       <p className="text-sm text-muted-foreground">
@@ -191,7 +165,6 @@ export function ImageUpload({
                       </p>
                     </>
                   ) : (
-                    // État normal
                     <>
                       <Upload className="h-10 w-10 text-muted-foreground mb-3" />
                       <p className="mb-2 text-sm text-muted-foreground">
@@ -207,7 +180,6 @@ export function ImageUpload({
                   )}
                 </div>
 
-                {/* Input file caché */}
                 <input
                   type="file"
                   className="hidden"
@@ -220,7 +192,7 @@ export function ImageUpload({
           )}
         </AnimatePresence>
 
-        {/* Info supplémentaire */}
+        {/* Tip */}
         {!imageUrl && (
           <p className="text-xs text-muted-foreground">
             💡 {t("imageUpload.tip")}

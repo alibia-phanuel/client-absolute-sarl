@@ -61,7 +61,7 @@ export function BlogDetailsModal({
   onClose,
   blog,
 }: BlogDetailsModalProps) {
-  const tBlogs = useTranslations("blogs");
+  const tBlogs = useTranslations("admin.blog");
   const locale = useLocale();
 
   // Si pas de blog, ne rien afficher

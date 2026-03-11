@@ -1,34 +1,16 @@
 /**
  * 📝 Modal de Formulaire Blog (Ajout & Édition)
- * 
+ *
  * Modal réutilisable pour :
  * - Créer un nouveau blog
  * - Modifier un blog existant
- * 
+ *
  * Fonctionnalités :
  * - Upload d'image vers Cloudinary
  * - Validation avec Zod
  * - Support multilingue (FR/EN)
  * - Gestion d'erreurs
  * - Loading states
- * 
- * Utilisation :
- * ```tsx
- * // Mode création
- * <BlogFormModal
- *   open={isOpen}
- *   onClose={() => setIsOpen(false)}
- *   onSuccess={refreshBlogs}
- * />
- * 
- * // Mode édition
- * <BlogFormModal
- *   open={isOpen}
- *   onClose={() => setIsOpen(false)}
- *   blog={selectedBlog}
- *   onSuccess={refreshBlogs}
- * />
- * ```
  */
 
 "use client";
@@ -72,10 +54,10 @@ import { ImageUpload } from "../ImageUpload";
 // ============================================================================
 
 interface BlogFormModalProps {
-  open: boolean;              // Modal ouvert/fermé
-  onClose: () => void;        // Callback pour fermer le modal
-  blog?: Blog | null;         // Blog à éditer (null = mode création)
-  onSuccess: () => void;      // Callback après succès (pour rafraîchir la liste)
+  open: boolean;
+  onClose: () => void;
+  blog?: Blog | null;
+  onSuccess: () => void;
 }
 
 // ============================================================================
@@ -89,24 +71,19 @@ export function BlogFormModal({
   onSuccess,
 }: BlogFormModalProps) {
   const t = useTranslations();
-  const tBlogs = useTranslations("blogs");
+  // ✅ CORRIGÉ : "admin.blog" au lieu de "admin.blogs" (sans le 's')
+  const tBlogs = useTranslations("admin.blog");
   const V = useTranslations("validation");
 
-  // États
   const [isLoading, setIsLoading] = useState(false);
   const [imageUrl, setImageUrl] = useState<string | null>(null);
 
-  // Mode du formulaire (création ou édition)
   const isEditMode = !!blog;
 
   // ============================================================================
   // 📝 Validation avec Zod
   // ============================================================================
 
-  /**
-   * Schéma de validation du formulaire
-   * Tous les champs sont requis pour garantir le support i18n
-   */
   const blogSchema = z.object({
     title_fr: z
       .string()
@@ -144,12 +121,8 @@ export function BlogFormModal({
     },
   });
 
-  /**
-   * Remplir le formulaire en mode édition
-   */
   useEffect(() => {
     if (blog) {
-      // Mode édition : pré-remplir avec les données existantes
       form.reset({
         title_fr: blog.title_fr,
         title_en: blog.title_en,
@@ -158,7 +131,6 @@ export function BlogFormModal({
       });
       setImageUrl(blog.imageUrl);
     } else {
-      // Mode création : formulaire vide
       form.reset({
         title_fr: "",
         title_en: "",
@@ -173,29 +145,17 @@ export function BlogFormModal({
   // 💾 Soumission du Formulaire
   // ============================================================================
 
-  /**
-   * Gère la soumission (création ou modification)
-   */
   const onSubmit = async (data: BlogFormData) => {
     setIsLoading(true);
     try {
       if (isEditMode && blog) {
-        // ====== MODE ÉDITION ======
-        const result = await updateBlog(blog.id, {
-          ...data,
-          imageUrl,
-        });
+        const result = await updateBlog(blog.id, { ...data, imageUrl });
         toast.success(t(result.messageKey));
       } else {
-        // ====== MODE CRÉATION ======
-        const result = await createBlog({
-          ...data,
-          imageUrl,
-        });
+        const result = await createBlog({ ...data, imageUrl });
         toast.success(t(result.messageKey));
       }
 
-      // Fermer le modal et rafraîchir la liste
       onSuccess();
       handleClose();
     } catch (error: unknown) {
@@ -210,9 +170,6 @@ export function BlogFormModal({
   // 🚪 Fermeture du Modal
   // ============================================================================
 
-  /**
-   * Ferme le modal et réinitialise le formulaire
-   */
   const handleClose = () => {
     form.reset();
     setImageUrl(null);

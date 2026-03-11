@@ -1,25 +1,3 @@
-/**
- * 📊 Tableau des Blogs
- * 
- * Composant de tableau pour afficher la liste des blogs avec :
- * - Affichage des informations principales (titre, auteur, date)
- * - Actions : Voir détails, Modifier, Supprimer
- * - Gestion des permissions (ADMIN peut tout, EMPLOYE ses blogs uniquement)
- * - Animation d'apparition
- * - Responsive design
- * 
- * Utilisation :
- * ```tsx
- * <BlogsTable
- *   blogs={blogs}
- *   isLoading={isLoading}
- *   onRefresh={fetchBlogs}
- *   currentUserId={user.id}
- *   currentUserRole={user.role}
- * />
- * ```
- */
-
 "use client";
 
 import { useState } from "react";
@@ -30,7 +8,6 @@ import {
   Edit,
   Trash2,
   Calendar,
-  User,
   Image as ImageIcon,
 } from "lucide-react";
 import { useTranslations, useLocale } from "next-intl";
@@ -67,11 +44,11 @@ import { BlogDetailsModal } from "./BlogDetailsModal";
 // ============================================================================
 
 interface BlogsTableProps {
-  blogs: Blog[];                    // Liste des blogs à afficher
-  isLoading: boolean;               // État de chargement
-  onRefresh: () => void;            // Callback pour rafraîchir la liste
-  currentUserId?: string;           // ID de l'utilisateur connecté (pour permissions)
-  currentUserRole?: string;         // Rôle de l'utilisateur connecté (ADMIN, EMPLOYE, CLIENT)
+  blogs: Blog[]; // Liste des blogs à afficher
+  isLoading: boolean; // État de chargement
+  onRefresh: () => void; // Callback pour rafraîchir la liste
+  currentUserId?: string; // ID de l'utilisateur connecté (pour permissions)
+  currentUserRole?: string; // Rôle de l'utilisateur connecté (ADMIN, EMPLOYE, CLIENT)
 }
 
 // ============================================================================
@@ -85,7 +62,8 @@ export function BlogsTable({
   currentUserId,
   currentUserRole,
 }: BlogsTableProps) {
-  const tBlogs = useTranslations("blogs");
+  // ✅ CORRIGÉ : "admin.blog" au lieu de "admin.blogs" (sans le 's')
+  const tBlogs = useTranslations("admin.blog");
   const locale = useLocale();
 
   // États pour les modals
@@ -101,22 +79,13 @@ export function BlogsTable({
   // 🔐 Gestion des Permissions
   // ============================================================================
 
-  /**
-   * Vérifie si l'utilisateur peut modifier un blog
-   * - ADMIN : peut modifier tous les blogs
-   * - EMPLOYE : peut modifier uniquement ses propres blogs
-   * - CLIENT : ne peut rien modifier
-   */
   const canEditBlog = (blog: Blog): boolean => {
     if (currentUserRole === "ADMIN") return true;
-    if (currentUserRole === "EMPLOYE" && blog.authorId === currentUserId) return true;
+    if (currentUserRole === "EMPLOYE" && blog.authorId === currentUserId)
+      return true;
     return false;
   };
 
-  /**
-   * Vérifie si l'utilisateur peut supprimer un blog
-   * Mêmes règles que pour la modification
-   */
   const canDeleteBlog = (blog: Blog): boolean => {
     return canEditBlog(blog);
   };
@@ -125,33 +94,21 @@ export function BlogsTable({
   // 🎬 Handlers d'Actions
   // ============================================================================
 
-  /**
-   * Ouvre le modal de modification
-   */
   const handleEdit = (blog: Blog) => {
     setSelectedBlog(blog);
     setEditModalOpen(true);
   };
 
-  /**
-   * Ouvre le modal de suppression
-   */
   const handleDelete = (blog: Blog) => {
     setSelectedBlog(blog);
     setDeleteModalOpen(true);
   };
 
-  /**
-   * Ouvre le modal de détails
-   */
   const handleViewDetails = (blog: Blog) => {
     setSelectedBlog(blog);
     setDetailsModalOpen(true);
   };
 
-  /**
-   * Obtient les initiales de l'auteur pour l'avatar
-   */
   const getAuthorInitials = (name: string): string => {
     return name
       .split(" ")
@@ -161,9 +118,6 @@ export function BlogsTable({
       .slice(0, 2);
   };
 
-  /**
-   * Tronque le texte avec ellipsis
-   */
   const truncateText = (text: string, maxLength: number): string => {
     if (text.length <= maxLength) return text;
     return text.slice(0, maxLength) + "...";
@@ -206,7 +160,7 @@ export function BlogsTable({
           <TableHeader>
             <TableRow>
               <TableHead className="w-[80px]">{tBlogs("image")}</TableHead>
-              <TableHead>{tBlogs("title")}</TableHead>
+              <TableHead>{tBlogs("titleFr")}</TableHead>
               <TableHead>{tBlogs("author")}</TableHead>
               <TableHead>{tBlogs("createdAt")}</TableHead>
               <TableHead className="text-right">{tBlogs("actions")}</TableHead>
@@ -242,13 +196,13 @@ export function BlogsTable({
                     <p className="font-medium">
                       {truncateText(
                         locale === "fr" ? blog.title_fr : blog.title_en,
-                        50
+                        50,
                       )}
                     </p>
                     <p className="text-xs text-muted-foreground">
                       {truncateText(
                         locale === "fr" ? blog.content_fr : blog.content_en,
-                        80
+                        80,
                       )}
                     </p>
                   </div>
@@ -297,7 +251,7 @@ export function BlogsTable({
                     <DropdownMenuContent align="end">
                       <DropdownMenuLabel>{tBlogs("actions")}</DropdownMenuLabel>
                       <DropdownMenuSeparator />
-                      
+
                       {/* Voir les détails (toujours disponible) */}
                       <DropdownMenuItem onClick={() => handleViewDetails(blog)}>
                         <Eye className="mr-2 h-4 w-4" />
@@ -335,7 +289,7 @@ export function BlogsTable({
       </div>
 
       {/* ====== Modals ====== */}
-      
+
       {/* Modal de Modification */}
       <BlogFormModal
         open={editModalOpen}

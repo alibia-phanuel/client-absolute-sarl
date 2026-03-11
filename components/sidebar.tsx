@@ -22,10 +22,9 @@ import {
   Calendar,
   Shield,
   List,
-  Receipt,
-  FileUp,
   LogOut,
   Users,
+  Stethoscope,
 } from "lucide-react";
 
 const menuSections = [
@@ -36,10 +35,10 @@ const menuSections = [
       { name: "Partie Client", url: "/", icon: Users },
     ],
   },
-  {
-    label: "Assistant IA",
-    items: [{ name: "Documents PDF", url: "/ia-pdf-document", icon: FileUp }],
-  },
+  // {
+  //   label: "Assistant IA",
+  //   items: [{ name: "Documents PDF", url: "/ia-pdf-document", icon: FileUp }],
+  // },
   {
     label: "Blogs",
     items: [{ name: "Tous les articles", url: "/blogs", icon: List }],
@@ -48,8 +47,9 @@ const menuSections = [
     label: "Contenus Clients",
     items: [
       { name: "Messages", url: "/messages", icon: FileText },
-      { name: "Les devis", url: "/devis", icon: Receipt },
+      // { name: "Les devis", url: "/devis", icon: Receipt },
       { name: "Les Rendez-vous", url: "/rendez-vous", icon: Calendar },
+      { name: "diagnostics", url: "/diagnostic", icon: Stethoscope }
     ],
   },
   {

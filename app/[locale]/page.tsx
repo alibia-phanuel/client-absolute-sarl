@@ -50,7 +50,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Link } from "@/i18n/routing";
 import AppointmentModal from "@/components/AppointmentModal";
-import DiagnosticModal from "@/components/DiagnosticModal";
+import DiagnosticModal from "@/components/diagnostic/DiagnosticModal";
 
 // ========================================
 // TYPES

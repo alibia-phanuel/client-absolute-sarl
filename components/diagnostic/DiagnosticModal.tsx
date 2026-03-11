@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import {
   X,
   ChevronRight,
@@ -18,6 +18,7 @@ import {
   Mail,
   Send,
   Loader2,
+  AlertCircle,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -32,9 +33,14 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
 
-// ─────────────────────────────────────────────
+// ─── Import de la fonction API ────────────────────────────────────────────────
+// submitDiagnostic() envoie POST /api/diagnostics via axiosInstance
+// axiosInstance injecte automatiquement le token JWT si l'utilisateur est connecté
+import { submitDiagnostic } from "@/lib/diagnostic.api";
+
+// ─────────────────────────────────────────────────────────────────────────────
 // TYPES
-// ─────────────────────────────────────────────
+// ─────────────────────────────────────────────────────────────────────────────
 interface DiagnosticFormData {
   lastName: string;
   firstName: string;
@@ -61,9 +67,9 @@ interface DiagnosticFormData {
 }
 type FieldErrors = Record<string, string>;
 
-// ─────────────────────────────────────────────
+// ─────────────────────────────────────────────────────────────────────────────
 // CONSTANTES — HORS composant (stables entre renders)
-// ─────────────────────────────────────────────
+// ─────────────────────────────────────────────────────────────────────────────
 const STEPS = [1, 2, 3, 4, 5, 6];
 const STEP_ICONS = [
   User,
@@ -112,10 +118,11 @@ const INITIAL_FORM: DiagnosticFormData = {
   preferredContact: "",
 };
 
-// ─────────────────────────────────────────────
-// ⚠️  SOUS-COMPOSANTS STABLES — obligatoirement HORS du composant principal
-//     Si définis DANS DiagnosticModal → recréés à chaque render → perte de focus
-// ─────────────────────────────────────────────
+// ─────────────────────────────────────────────────────────────────────────────
+// SOUS-COMPOSANTS STABLES — HORS du composant principal
+// ⚠️ Ne jamais définir ces composants à l'intérieur de DiagnosticModal
+//    sinon ils sont recréés à chaque render → perte de focus sur les inputs
+// ─────────────────────────────────────────────────────────────────────────────
 function ErrorMsg({ error }: { error?: string }) {
   if (!error) return null;
   return <p className="text-xs text-red-500 mt-1">{error}</p>;
@@ -144,9 +151,10 @@ function FieldWrapper({
   );
 }
 
-// ─────────────────────────────────────────────
-// VALIDATION — HORS composant
-// ─────────────────────────────────────────────
+// ─────────────────────────────────────────────────────────────────────────────
+// VALIDATION PAR ÉTAPE — HORS composant
+// Miroir exact de la validation côté backend (diagnostic.validator.ts)
+// ─────────────────────────────────────────────────────────────────────────────
 function validateStep(
   step: number,
   data: DiagnosticFormData,
@@ -203,9 +211,9 @@ function validateStep(
   return e;
 }
 
-// ─────────────────────────────────────────────
+// ─────────────────────────────────────────────────────────────────────────────
 // COMPOSANT PRINCIPAL
-// ─────────────────────────────────────────────
+// ─────────────────────────────────────────────────────────────────────────────
 interface DiagnosticModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -217,12 +225,17 @@ export default function DiagnosticModal({
 }: DiagnosticModalProps) {
   const t = useTranslations("diagnostic");
 
+  // ── Récupère la locale active pour les messages d'erreur traduits ─────────
+  // useLocale() retourne "fr" | "en" | "es" selon la langue choisie
+  const locale = useLocale();
+
   const [currentStep, setCurrentStep] = useState(1);
   const [errors, setErrors] = useState<FieldErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [formData, setFormData] = useState<DiagnosticFormData>(INITIAL_FORM);
 
+  // ── Mise à jour d'un champ + effacement de son erreur en temps réel ───────
   const updateField = (field: keyof DiagnosticFormData, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
     setErrors((prev) => {
@@ -239,6 +252,7 @@ export default function DiagnosticModal({
     invalidYear: t("validation.invalidYear"),
   };
 
+  // ── Navigation vers l'étape suivante avec validation ──────────────────────
   const handleNext = () => {
     const errs = validateStep(currentStep, formData, validationMsgs);
     if (Object.keys(errs).length) {
@@ -249,27 +263,67 @@ export default function DiagnosticModal({
     setCurrentStep((p) => Math.min(p + 1, 6));
   };
 
+  // ── Navigation vers l'étape précédente ───────────────────────────────────
   const handleBack = () => {
     setErrors({});
     setCurrentStep((p) => Math.max(p - 1, 1));
   };
 
+  // ─────────────────────────────────────────────────────────────────────────
+  // SOUMISSION DU FORMULAIRE — Consommation API
+  //
+  // Remplace l'ancien console.log() par un vrai appel POST /api/diagnostics
+  // via submitDiagnostic() défini dans lib/diagnostic.api.ts
+  //
+  // FLUX :
+  //   1. Validation de l'étape 6
+  //   2. setIsSubmitting(true) → affiche le spinner
+  //   3. Appel API via submitDiagnostic(formData, locale)
+  //      → axiosInstance envoie POST /api/diagnostics
+  //      → token JWT injecté automatiquement si l'utilisateur est connecté
+  //   4a. Succès → setIsSuccess(true) → affiche l'écran de confirmation
+  //   4b. Erreur → setErrors({ submit: message }) → affiche l'erreur en bas
+  //   5. setIsSubmitting(false) dans tous les cas (finally)
+  // ─────────────────────────────────────────────────────────────────────────
   const handleSubmit = async () => {
+    // ── Validation finale avant envoi ─────────────────────────────────────
     const errs = validateStep(6, formData, validationMsgs);
     if (Object.keys(errs).length) {
       setErrors(errs);
       return;
     }
+
     setIsSubmitting(true);
-    console.log("📋 DIAGNOSTIC FORM DATA:", JSON.stringify(formData, null, 2));
-    // TODO: await api.sendDiagnostic(formData)
-    await new Promise((r) => setTimeout(r, 1500));
-    setIsSubmitting(false);
-    setIsSuccess(true);
+    // Effacer toute erreur globale précédente
+    setErrors({});
+
+    try {
+      // ── Appel à l'API backend ────────────────────────────────────────────
+      // submitDiagnostic envoie toutes les données du formulaire au serveur.
+      // La locale est passée pour obtenir des messages d'erreur traduits
+      // en cas d'échec côté API.
+      await submitDiagnostic(formData, locale);
+
+      // ── Succès : afficher l'écran de confirmation ────────────────────────
+      setIsSuccess(true);
+    } catch (error) {
+      // ── Erreur API : afficher le message traduit sous les boutons ─────────
+      // L'erreur est stockée dans errors.submit (clé spéciale)
+      // Elle s'affiche dans le footer du modal, visible par l'utilisateur
+      setErrors({
+        submit:
+          error instanceof Error ? error.message : t("validation.required"),
+      });
+    } finally {
+      // ── Toujours désactiver le spinner, succès ou erreur ─────────────────
+      setIsSubmitting(false);
+    }
   };
 
+  // ── Reset complet du formulaire à la fermeture du modal ──────────────────
   const handleClose = () => {
     onClose();
+    // Délai pour laisser l'animation de fermeture se terminer
     setTimeout(() => {
       setCurrentStep(1);
       setErrors({});
@@ -305,7 +359,7 @@ export default function DiagnosticModal({
             className="relative w-full max-w-2xl max-h-[92vh] bg-background rounded-2xl shadow-2xl overflow-hidden flex flex-col"
             onClick={(e) => e.stopPropagation()}
           >
-            {/* ── SUCCESS ── */}
+            {/* ── ÉCRAN DE SUCCÈS ── */}
             {isSuccess ? (
               <div className="flex flex-col items-center justify-center p-10 text-center gap-4 min-h-[400px]">
                 <motion.div
@@ -346,6 +400,7 @@ export default function DiagnosticModal({
                       </h2>
                     </div>
                   </div>
+                  {/* Barre de progression par étapes */}
                   <div className="flex gap-1.5">
                     {STEPS.map((s) => (
                       <div
@@ -359,7 +414,7 @@ export default function DiagnosticModal({
                   </div>
                 </div>
 
-                {/* ── CONTACT BAND ── */}
+                {/* ── BANDE DE CONTACT ── */}
                 <div className="bg-muted/50 border-b border-border px-5 py-2.5 flex flex-wrap gap-x-5 gap-y-1 text-xs text-muted-foreground flex-shrink-0">
                   <span className="flex items-center gap-1.5">
                     <Phone className="w-3 h-3 text-primary" />
@@ -371,11 +426,12 @@ export default function DiagnosticModal({
                   </span>
                   <span className="flex items-center gap-1.5">
                     <MapPin className="w-3 h-3 text-primary" />
-                    Cité des Palmiers, Immeuble Jaune B09, Douala
+                    Cité des Palmiers, Yellow Building - 2nd Floor - Office B09,
+                    Douala, Cameroon
                   </span>
                 </div>
 
-                {/* ── BODY ── */}
+                {/* ── CORPS DU FORMULAIRE ── */}
                 <div className="overflow-y-auto flex-1 p-5 sm:p-6">
                   <AnimatePresence mode="wait">
                     <motion.div
@@ -386,7 +442,7 @@ export default function DiagnosticModal({
                       transition={{ duration: 0.22 }}
                       className="space-y-4"
                     >
-                      {/* ── ÉTAPE 1 ── */}
+                      {/* ── ÉTAPE 1 : Informations personnelles ── */}
                       {currentStep === 1 && (
                         <>
                           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -481,7 +537,7 @@ export default function DiagnosticModal({
                         </>
                       )}
 
-                      {/* ── ÉTAPE 2 ── */}
+                      {/* ── ÉTAPE 2 : Niveau d'études ── */}
                       {currentStep === 2 && (
                         <>
                           <FieldWrapper
@@ -567,7 +623,7 @@ export default function DiagnosticModal({
                         </>
                       )}
 
-                      {/* ── ÉTAPE 3 ── */}
+                      {/* ── ÉTAPE 3 : Filière & domaine ── */}
                       {currentStep === 3 && (
                         <>
                           <FieldWrapper
@@ -600,6 +656,7 @@ export default function DiagnosticModal({
                             </Select>
                           </FieldWrapper>
 
+                          {/* Affiché conditionnellement selon le statut — miroir du backend */}
                           {["student", "other"].includes(
                             formData.currentStatus,
                           ) && (
@@ -653,7 +710,7 @@ export default function DiagnosticModal({
                         </>
                       )}
 
-                      {/* ── ÉTAPE 4 ── */}
+                      {/* ── ÉTAPE 4 : Projet d'études ── */}
                       {currentStep === 4 && (
                         <>
                           <FieldWrapper
@@ -741,7 +798,7 @@ export default function DiagnosticModal({
                         </>
                       )}
 
-                      {/* ── ÉTAPE 5 ── */}
+                      {/* ── ÉTAPE 5 : Situation & besoins ── */}
                       {currentStep === 5 && (
                         <>
                           <FieldWrapper
@@ -850,7 +907,7 @@ export default function DiagnosticModal({
                         </>
                       )}
 
-                      {/* ── ÉTAPE 6 ── */}
+                      {/* ── ÉTAPE 6 : Coordonnées de contact ── */}
                       {currentStep === 6 && (
                         <>
                           <div className="bg-primary/5 border border-primary/20 rounded-xl p-3 flex items-start gap-2 text-sm">
@@ -921,48 +978,76 @@ export default function DiagnosticModal({
                   </AnimatePresence>
                 </div>
 
-                {/* ── FOOTER ── */}
-                <div className="border-t border-border p-4 flex items-center justify-between gap-3 flex-shrink-0 bg-background">
-                  <div>
-                    {currentStep > 1 && (
-                      <Button
-                        variant="ghost"
-                        onClick={handleBack}
-                        className="gap-1.5"
+                {/* ── FOOTER : Navigation + Erreur globale API ── */}
+                <div className="border-t border-border flex-shrink-0 bg-background">
+                  {/* ── Bannière d'erreur API globale ────────────────────────────────
+                      Affichée uniquement si l'API retourne une erreur lors du submit.
+                      errors.submit est renseigné dans le catch de handleSubmit().
+                      Elle disparaît automatiquement dès que l'utilisateur retape. ── */}
+                  <AnimatePresence>
+                    {errors.submit && (
+                      <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: "auto" }}
+                        exit={{ opacity: 0, height: 0 }}
+                        transition={{ duration: 0.2 }}
+                        className="px-4 pt-3"
                       >
-                        <ChevronLeft className="w-4 h-4" />
-                        {t("back")}
-                      </Button>
+                        <div className="flex items-start gap-2 text-sm text-red-600 bg-red-50 border border-red-200 rounded-lg px-3 py-2.5">
+                          <AlertCircle className="w-4 h-4 mt-0.5 flex-shrink-0" />
+                          <p>{errors.submit}</p>
+                        </div>
+                      </motion.div>
                     )}
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="text-xs text-muted-foreground hidden sm:block">
-                      {t("step")} {currentStep}/6
-                    </span>
-                    {currentStep < 6 ? (
-                      <Button onClick={handleNext} className="gap-1.5">
-                        {t("next")}
-                        <ChevronRight className="w-4 h-4" />
-                      </Button>
-                    ) : (
-                      <Button
-                        onClick={handleSubmit}
-                        disabled={isSubmitting}
-                        className="gap-2 min-w-[140px]"
-                      >
-                        {isSubmitting ? (
-                          <>
-                            <Loader2 className="w-4 h-4 animate-spin" />
-                            {t("submitting")}
-                          </>
-                        ) : (
-                          <>
-                            <Send className="w-4 h-4" />
-                            {t("submit")}
-                          </>
-                        )}
-                      </Button>
-                    )}
+                  </AnimatePresence>
+
+                  {/* ── Boutons de navigation ─────────────────────────────────────── */}
+                  <div className="p-4 flex items-center justify-between gap-3">
+                    <div>
+                      {currentStep > 1 && (
+                        <Button
+                          variant="ghost"
+                          onClick={handleBack}
+                          disabled={isSubmitting}
+                          className="gap-1.5"
+                        >
+                          <ChevronLeft className="w-4 h-4" />
+                          {t("back")}
+                        </Button>
+                      )}
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs text-muted-foreground hidden sm:block">
+                        {t("step")} {currentStep}/6
+                      </span>
+                      {currentStep < 6 ? (
+                        <Button onClick={handleNext} className="gap-1.5">
+                          {t("next")}
+                          <ChevronRight className="w-4 h-4" />
+                        </Button>
+                      ) : (
+                        // ── Bouton de soumission final ────────────────────────────
+                        // Désactivé pendant l'envoi (isSubmitting)
+                        // Affiche un spinner Loader2 + texte "Envoi en cours..."
+                        <Button
+                          onClick={handleSubmit}
+                          disabled={isSubmitting}
+                          className="gap-2 min-w-[140px]"
+                        >
+                          {isSubmitting ? (
+                            <>
+                              <Loader2 className="w-4 h-4 animate-spin" />
+                              {t("submitting")}
+                            </>
+                          ) : (
+                            <>
+                              <Send className="w-4 h-4" />
+                              {t("submit")}
+                            </>
+                          )}
+                        </Button>
+                      )}
+                    </div>
                   </div>
                 </div>
               </>
