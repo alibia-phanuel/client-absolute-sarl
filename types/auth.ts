@@ -2,7 +2,7 @@
 // 📌 TYPES
 // ===========================
 
-export type UserRole = "CLIENT" | "ADMIN" | "EMPLOYE";
+export type UserRole = "CLIENT" | "ADMIN" | "EMPLOYE" | "PROSPECT";
 
 export interface RegisterRequest {
   name: string;

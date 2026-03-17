@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/store/authStore";
 import { Loader2 } from "lucide-react";
 
-type UserRole = "CLIENT" | "ADMIN" | "EMPLOYE";
+type UserRole = "CLIENT" | "ADMIN" | "EMPLOYE" | "PROSPECT";
 
 interface RoleGuardProps {
   children: ReactNode;

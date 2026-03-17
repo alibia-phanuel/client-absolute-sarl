@@ -65,6 +65,8 @@ export function UsersTable({ users, isLoading, onRefresh }: UsersTableProps) {
         return "default";
       case "CLIENT":
         return "secondary";
+      case "PROSPECT":
+        return "outline";
       default:
         return "outline";
     }

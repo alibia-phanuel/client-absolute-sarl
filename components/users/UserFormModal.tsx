@@ -66,7 +66,7 @@ export function UserFormModal({
       .min(1, V("nameRequired"))
       .min(2, V("nameMin"))
       .max(50, V("nameMax")),
-    role: z.enum(["CLIENT", "ADMIN", "EMPLOYE"], {
+    role: z.enum(["CLIENT", "ADMIN", "EMPLOYE", "PROSPECT"], {
       // Zod v4 → utiliser 'error' (message unique pour simplicité)
       error: V("roleRequired") || "Le rôle est obligatoire",
 
@@ -82,7 +82,7 @@ export function UserFormModal({
     resolver: zodResolver(userSchema),
     defaultValues: {
       name: "",
-      role: "CLIENT",
+      role: "PROSPECT",
     },
   });
 
@@ -96,7 +96,7 @@ export function UserFormModal({
     } else {
       form.reset({
         name: "",
-        role: "CLIENT",
+        role: "PROSPECT",
       });
     }
   }, [user, form]);
@@ -217,6 +217,9 @@ export function UserFormModal({
                         </SelectItem>
                         <SelectItem value="ADMIN">
                           {tUsers("roles.admin")}
+                        </SelectItem>
+                        <SelectItem value="PROSPECT">
+                          {tUsers("roles.prospect")}
                         </SelectItem>
                       </SelectContent>
                     </Select>

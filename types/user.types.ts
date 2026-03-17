@@ -1,6 +1,6 @@
 // Types pour la gestion des utilisateurs
 
-export type UserRole = "CLIENT" | "ADMIN" | "EMPLOYE";
+export type UserRole = "CLIENT" | "ADMIN" | "EMPLOYE" | "PROSPECT";
 
 export interface User {
   id: string;

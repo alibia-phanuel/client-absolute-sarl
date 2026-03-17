@@ -203,6 +203,9 @@ export default function UsersPage() {
                   <SelectItem value="EMPLOYE">
                     {tUsers("roles.employe")}
                   </SelectItem>
+                  <SelectItem value="PROSPECT">
+                    {tUsers("roles.prospect")}
+                  </SelectItem>
                   <SelectItem value="ADMIN">{tUsers("roles.admin")}</SelectItem>
                 </SelectContent>
               </Select>

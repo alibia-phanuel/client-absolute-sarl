@@ -29,8 +29,20 @@ export interface Diagnostic {
   targetIntake: string;
   previousAttempt: boolean;
   identifiedNeeds?: string;
-  frenchLevel: string;
-  englishLevel: string;
+  // ── Étape 5 : Langue & Compétences ────────────────────────────────────────
+  frenchTest?: string; // TEF | TCF_CANADA | TCF_QUEBEC | OTHER_FR | NO
+  frenchTestOther?: string; // précision si OTHER_FR
+  frenchOral?: string; // scores si test passé
+  frenchWritten?: string;
+  frenchSpoken?: string;
+  frenchExpression?: string;
+  englishTest?: string; // IELTS | TOEIC | TOEFL | CAMBRIDGE | OTHER_EN | NO
+  englishTestOther?: string; // précision si OTHER_EN
+  englishOral?: string;
+  englishWritten?: string;
+  englishSpoken?: string;
+  englishExpression?: string;
+  // ──────────────────────────────────────────────────────────────────────────
   email: string;
   whatsapp: string;
   preferredContact: string;

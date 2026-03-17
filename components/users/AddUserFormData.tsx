@@ -70,11 +70,11 @@ export function AddUserModal({ open, onClose, onSuccess }: AddUserModalProps) {
       .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/, {
         message: V("passwordStrong"),
       }),
-    role: z.enum(["CLIENT", "ADMIN", "EMPLOYE"], {
+    role: z.enum(["CLIENT", "ADMIN", "EMPLOYE", "PROSPECT"], {
       // Solution la plus fiable : message unique pour éviter les problèmes TS
       error:
         V("roleRequired") ||
-        "Le rôle est obligatoire (CLIENT, ADMIN ou EMPLOYE)",
+        "Le rôle est obligatoire (CLIENT,PROSPECT, ADMIN ou EMPLOYE)",
       // Alternative si tu es sur Zod < v3.23 :
       // required_error: V("roleRequired"),
       // invalid_type_error: V("roleInvalid") || "Rôle invalide",
@@ -82,7 +82,6 @@ export function AddUserModal({ open, onClose, onSuccess }: AddUserModalProps) {
   });
 
   type AddUserFormData = z.infer<typeof addUserSchema>;
-
   const form = useForm<AddUserFormData>({
     resolver: zodResolver(addUserSchema),
     defaultValues: {
@@ -268,6 +267,9 @@ export function AddUserModal({ open, onClose, onSuccess }: AddUserModalProps) {
                         </SelectItem>
                         <SelectItem value="ADMIN">
                           {tUsers("roles.admin")}
+                        </SelectItem>
+                        <SelectItem value="PROSPECT">
+                          {tUsers("roles.prospect")}
                         </SelectItem>
                       </SelectContent>
                     </Select>

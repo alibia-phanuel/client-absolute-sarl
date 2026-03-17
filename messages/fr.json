@@ -1058,7 +1058,8 @@
     "roles": {
       "admin": "Administrateur",
       "employe": "Employé",
-      "client": "Client"
+      "client": "Client",
+      "prospect": "Prospect"
     },
     "filters": "Filtres et Recherche",
     "filtersDescription": "Filtrez et recherchez des utilisateurs",
@@ -1126,6 +1127,10 @@
   },
   "admin": {
     "blog": {
+      "previous": "Précédent",
+      "next": "Suivant",
+      "page": "Page",
+      "of": "sur",
       "title": "Gestion des Blogs",
       "description": "Gérez les articles de blog et leur contenu multilingue",
       "totalBlogs": "Total Articles",
@@ -1380,6 +1385,20 @@
     "deleteError": "Erreur lors de la suppression du message"
   },
   "diagnostic": {
+    "sectionLanguage": "Langue & Compétences",
+"fieldFrenchTest": "Test de français",
+"fieldEnglishTest": "Test d'anglais",
+"fieldFrenchOral": "Compréhension orale",
+"fieldFrenchWritten": "Compréhension écrite",
+"fieldFrenchSpoken": "Expression orale",
+"fieldFrenchExpression": "Expression écrite",
+"fieldEnglishOral": "Compréhension orale",
+"fieldEnglishWritten": "Compréhension écrite",
+"fieldEnglishSpoken": "Expression orale",
+"fieldEnglishExpression": "Expression écrite",
+"noTestPassed": "Aucun test officiel passé",
+"exportPDF": "Télécharger PDF",
+"exporting": "Génération...",
     "step": "Étape",
     "back": "Retour",
     "next": "Suivant",
@@ -1418,7 +1437,21 @@
       "englishLevel": "Niveau d'anglais",
       "email": "Adresse email",
       "whatsapp": "Numéro WhatsApp",
-      "preferredContact": "Mode de contact préféré"
+      "preferredContact": "Mode de contact préféré",
+      "frenchTest": "Avez-vous passé un test de français officiel ?",
+      "frenchTestOther": "Précisez le test",
+      "frenchScores": "Votre niveau en Français",
+      "frenchOral": "Compréhension orale",
+      "frenchWritten": "Compréhension écrite",
+      "frenchSpoken": "Expression orale",
+      "frenchExpression": "Expression écrite",
+      "englishTest": "Avez-vous passé un test d'anglais officiel ?",
+      "englishTestOther": "Précisez le test",
+      "englishScores": "Votre niveau en Anglais",
+      "englishOral": "Compréhension orale",
+      "englishWritten": "Compréhension écrite",
+      "englishSpoken": "Expression orale",
+      "englishExpression": "Expression écrite"
     },
     "placeholders": {
       "lastName": "Votre nom de famille",
@@ -1431,7 +1464,9 @@
       "studyDomain": "Ex: Informatique, Médecine, Commerce...",
       "professionalExperience": "Décrivez votre expérience professionnelle...",
       "identifiedNeeds": "Ex: aide constitution dossier, orientation, choix école...",
-      "langLevel": "Sélectionnez votre niveau"
+      "langLevel": "Sélectionnez votre niveau",
+      "frenchTestOther": "Nom du test de français...",
+      "englishTestOther": "Nom du test d'anglais..."
     },
     "options": {
       "diploma": {
@@ -1487,15 +1522,27 @@
     }
   },
   "diagnostics": {
-    "title": "Gestion des diagnostics",
-    "description": "Consultez et traitez les demandes de diagnostic d'orientation soumises.",
-
+"title": "Gestion des diagnostics",
+"description": "Consultez et traitez les demandes de diagnostic d'orientation soumises.",
+"sectionLanguage": "Langue & Compétences",
+"fieldFrenchTest": "Test de français",
+"fieldFrenchOral": "Compréhension orale",
+"fieldFrenchWritten": "Compréhension écrite",
+"fieldFrenchSpoken": "Expression orale",
+"fieldFrenchExpression": "Expression écrite",
+"fieldEnglishTest": "Test d'anglais",
+"fieldEnglishOral": "Compréhension orale",
+"fieldEnglishWritten": "Compréhension écrite",
+"fieldEnglishSpoken": "Expression orale",
+"fieldEnglishExpression": "Expression écrite",
+"noTestPassed": "Aucun test officiel passé",
+"exportPDF": "Télécharger PDF",
+"exporting": "Génération...",
     "totalDiagnostics": "Total diagnostics",
     "newToday": "Nouveaux aujourd'hui",
     "thisWeek": "Cette semaine",
     "inProgress": "En traitement",
     "resolved": "Résolus",
-
     "filters": "Filtres",
     "filtersDescription": "Affinez la liste par statut, destination ou recherche libre.",
     "searchPlaceholder": "Rechercher par nom, email, pays...",
@@ -1506,7 +1553,6 @@
     "resetFilters": "Réinitialiser",
     "refresh": "Actualiser",
     "refreshed": "Liste actualisée",
-
     "diagnosticsList": "Liste des diagnostics",
     "noDiagnostics": "Aucun diagnostic trouvé.",
     "fetchError": "Erreur lors du chargement des diagnostics.",

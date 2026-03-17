@@ -1,8 +1,8 @@
 import axios from "axios";
 import { useAuthStore } from "@/store/authStore";
 
-const API_URL = "https://server-absolute-sarl.onrender.com";
-// const API_URL = "http://localhost:5000";
+// const API_URL = "https://server-absolute-sarl.onrender.com";
+const API_URL = "http://localhost:5000";
 
 const axiosInstance = axios.create({
   baseURL: API_URL,

@@ -59,8 +59,20 @@ interface DiagnosticFormData {
   targetIntake: string;
   previousAttempt: string;
   identifiedNeeds: string;
-  frenchLevel: string;
-  englishLevel: string;
+  // ── Étape 5 : Langue & Compétences ────────────────────────────────────────
+  frenchTest: string;        // Q16 : TEF | TCF_CANADA | TCF_QUEBEC | OTHER_FR | NO
+  frenchTestOther: string;   // Q16 : précision si OTHER_FR
+  frenchOral: string;        // Q17 : compréhension orale
+  frenchWritten: string;     // Q17 : compréhension écrite
+  frenchSpoken: string;      // Q17 : expression orale
+  frenchExpression: string;  // Q17 : expression écrite
+  englishTest: string;       // Q18 : IELTS | TOEIC | TOEFL | CAMBRIDGE | OTHER_EN | NO
+  englishTestOther: string;  // Q18 : précision si OTHER_EN
+  englishOral: string;       // Q19 : compréhension orale
+  englishWritten: string;    // Q19 : compréhension écrite
+  englishSpoken: string;     // Q19 : expression orale
+  englishExpression: string; // Q19 : expression écrite
+  // ──────────────────────────────────────────────────────────────────────────
   email: string;
   whatsapp: string;
   preferredContact: string;
@@ -84,8 +96,26 @@ const LEVELS = ["licence", "master", "phd", "professional", "other"];
 const INTAKES = ["2025", "2026", "2027"];
 const DIPLOMAS = ["baccalaureat", "licence", "master", "other"];
 const STATUSES = ["employed", "unemployed", "student", "other"];
-const LANG_LEVELS = ["A1", "A2", "B1", "B2", "C1", "C2", "native"];
 const CONTACT_TYPES = ["whatsapp", "call", "email"];
+
+// Tests de français (Q16)
+const FRENCH_TESTS = [
+  { value: "TEF",        label: "Oui — TEF" },
+  { value: "TCF_CANADA", label: "Oui — TCF CANADA" },
+  { value: "TCF_QUEBEC", label: "Oui — TCF QUÉBEC" },
+  { value: "OTHER_FR",   label: "Oui — Autre" },
+  { value: "NO",         label: "Non" },
+];
+
+// Tests d'anglais (Q18)
+const ENGLISH_TESTS = [
+  { value: "IELTS",     label: "Oui — IELTS" },
+  { value: "TOEIC",     label: "Oui — TOEIC" },
+  { value: "TOEFL",     label: "Oui — TOEFL" },
+  { value: "CAMBRIDGE", label: "Oui — Cambridge English Qualification" },
+  { value: "OTHER_EN",  label: "Oui — Autre" },
+  { value: "NO",        label: "Non" },
+];
 const DEST_FLAGS: Record<string, string> = {
   canada: "🇨🇦",
   belgium: "🇧🇪",
@@ -111,8 +141,18 @@ const INITIAL_FORM: DiagnosticFormData = {
   targetIntake: "",
   previousAttempt: "",
   identifiedNeeds: "",
-  frenchLevel: "",
-  englishLevel: "",
+  frenchTest: "",
+  frenchTestOther: "",
+  frenchOral: "",
+  frenchWritten: "",
+  frenchSpoken: "",
+  frenchExpression: "",
+  englishTest: "",
+  englishTestOther: "",
+  englishOral: "",
+  englishWritten: "",
+  englishSpoken: "",
+  englishExpression: "",
   email: "",
   whatsapp: "",
   preferredContact: "",
@@ -195,11 +235,33 @@ function validateStep(
     if (!data.destination) e.destination = req;
     if (!data.targetLevel) e.targetLevel = req;
     if (!data.targetIntake) e.targetIntake = req;
+    if (!data.previousAttempt) e.previousAttempt = req;
   }
   if (step === 5) {
-    if (!data.previousAttempt) e.previousAttempt = req;
-    if (!data.frenchLevel) e.frenchLevel = req;
-    if (!data.englishLevel) e.englishLevel = req;
+    // Q16 : test de français obligatoire
+    if (!data.frenchTest) e.frenchTest = req;
+    // Q16 : si "Autre" → précision obligatoire
+    if (data.frenchTest === "OTHER_FR" && !data.frenchTestOther.trim())
+      e.frenchTestOther = req;
+    // Q18 : test d'anglais obligatoire
+    if (!data.englishTest) e.englishTest = req;
+    // Q18 : si "Autre" → précision obligatoire
+    if (data.englishTest === "OTHER_EN" && !data.englishTestOther.trim())
+      e.englishTestOther = req;
+    // Q17 : scores français obligatoires si test passé
+    if (data.frenchTest && data.frenchTest !== "NO") {
+      if (!data.frenchOral.trim())      e.frenchOral = req;
+      if (!data.frenchWritten.trim())   e.frenchWritten = req;
+      if (!data.frenchSpoken.trim())    e.frenchSpoken = req;
+      if (!data.frenchExpression.trim()) e.frenchExpression = req;
+    }
+    // Q19 : scores anglais obligatoires si test passé
+    if (data.englishTest && data.englishTest !== "NO") {
+      if (!data.englishOral.trim())      e.englishOral = req;
+      if (!data.englishWritten.trim())   e.englishWritten = req;
+      if (!data.englishSpoken.trim())    e.englishSpoken = req;
+      if (!data.englishExpression.trim()) e.englishExpression = req;
+    }
   }
   if (step === 6) {
     if (!data.email.trim()) e.email = req;
@@ -298,6 +360,8 @@ export default function DiagnosticModal({
     setErrors({});
 
     try {
+
+      console.log(formData);
       // ── Appel à l'API backend ────────────────────────────────────────────
       // submitDiagnostic envoie toutes les données du formulaire au serveur.
       // La locale est passée pour obtenir des messages d'erreur traduits
@@ -306,14 +370,18 @@ export default function DiagnosticModal({
 
       // ── Succès : afficher l'écran de confirmation ────────────────────────
       setIsSuccess(true);
+
     } catch (error) {
       // ── Erreur API : afficher le message traduit sous les boutons ─────────
       // L'erreur est stockée dans errors.submit (clé spéciale)
       // Elle s'affiche dans le footer du modal, visible par l'utilisateur
       setErrors({
         submit:
-          error instanceof Error ? error.message : t("validation.required"),
+          error instanceof Error
+            ? error.message
+            : t("validation.required"),
       });
+
     } finally {
       // ── Toujours désactiver le spinner, succès ou erreur ─────────────────
       setIsSubmitting(false);
@@ -426,8 +494,7 @@ export default function DiagnosticModal({
                   </span>
                   <span className="flex items-center gap-1.5">
                     <MapPin className="w-3 h-3 text-primary" />
-                    Cité des Palmiers, Yellow Building - 2nd Floor - Office B09,
-                    Douala, Cameroon
+                    Cité des Palmiers, Yellow Building - 2nd Floor - Office B09, Douala, Cameroon
                   </span>
                 </div>
 
@@ -457,9 +524,7 @@ export default function DiagnosticModal({
                                 onChange={(e) =>
                                   updateField("lastName", e.target.value)
                                 }
-                                className={
-                                  errors.lastName ? "border-red-500" : ""
-                                }
+                                className={errors.lastName ? "border-red-500" : ""}
                               />
                             </FieldWrapper>
                             <FieldWrapper
@@ -473,9 +538,7 @@ export default function DiagnosticModal({
                                 onChange={(e) =>
                                   updateField("firstName", e.target.value)
                                 }
-                                className={
-                                  errors.firstName ? "border-red-500" : ""
-                                }
+                                className={errors.firstName ? "border-red-500" : ""}
                               />
                             </FieldWrapper>
                           </div>
@@ -490,9 +553,7 @@ export default function DiagnosticModal({
                               onChange={(e) =>
                                 updateField("birthDate", e.target.value)
                               }
-                              className={
-                                errors.birthDate ? "border-red-500" : ""
-                              }
+                              className={errors.birthDate ? "border-red-500" : ""}
                             />
                           </FieldWrapper>
                           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -505,16 +566,9 @@ export default function DiagnosticModal({
                                 placeholder={t("placeholders.residenceCountry")}
                                 value={formData.residenceCountry}
                                 onChange={(e) =>
-                                  updateField(
-                                    "residenceCountry",
-                                    e.target.value,
-                                  )
+                                  updateField("residenceCountry", e.target.value)
                                 }
-                                className={
-                                  errors.residenceCountry
-                                    ? "border-red-500"
-                                    : ""
-                                }
+                                className={errors.residenceCountry ? "border-red-500" : ""}
                               />
                             </FieldWrapper>
                             <FieldWrapper
@@ -528,9 +582,7 @@ export default function DiagnosticModal({
                                 onChange={(e) =>
                                   updateField("nationality", e.target.value)
                                 }
-                                className={
-                                  errors.nationality ? "border-red-500" : ""
-                                }
+                                className={errors.nationality ? "border-red-500" : ""}
                               />
                             </FieldWrapper>
                           </div>
@@ -547,18 +599,12 @@ export default function DiagnosticModal({
                           >
                             <Select
                               value={formData.lastDiploma}
-                              onValueChange={(v) =>
-                                updateField("lastDiploma", v)
-                              }
+                              onValueChange={(v) => updateField("lastDiploma", v)}
                             >
                               <SelectTrigger
-                                className={
-                                  errors.lastDiploma ? "border-red-500" : ""
-                                }
+                                className={errors.lastDiploma ? "border-red-500" : ""}
                               >
-                                <SelectValue
-                                  placeholder={t("placeholders.select")}
-                                />
+                                <SelectValue placeholder={t("placeholders.select")} />
                               </SelectTrigger>
                               <SelectContent>
                                 {DIPLOMAS.map((d) => (
@@ -582,9 +628,7 @@ export default function DiagnosticModal({
                                 onChange={(e) =>
                                   updateField("diplomaYear", e.target.value)
                                 }
-                                className={
-                                  errors.diplomaYear ? "border-red-500" : ""
-                                }
+                                className={errors.diplomaYear ? "border-red-500" : ""}
                               />
                             </FieldWrapper>
                             <FieldWrapper
@@ -598,9 +642,7 @@ export default function DiagnosticModal({
                                 onChange={(e) =>
                                   updateField("institution", e.target.value)
                                 }
-                                className={
-                                  errors.institution ? "border-red-500" : ""
-                                }
+                                className={errors.institution ? "border-red-500" : ""}
                               />
                             </FieldWrapper>
                           </div>
@@ -615,9 +657,7 @@ export default function DiagnosticModal({
                               onChange={(e) =>
                                 updateField("diplomaTitle", e.target.value)
                               }
-                              className={
-                                errors.diplomaTitle ? "border-red-500" : ""
-                              }
+                              className={errors.diplomaTitle ? "border-red-500" : ""}
                             />
                           </FieldWrapper>
                         </>
@@ -633,18 +673,12 @@ export default function DiagnosticModal({
                           >
                             <Select
                               value={formData.currentStatus}
-                              onValueChange={(v) =>
-                                updateField("currentStatus", v)
-                              }
+                              onValueChange={(v) => updateField("currentStatus", v)}
                             >
                               <SelectTrigger
-                                className={
-                                  errors.currentStatus ? "border-red-500" : ""
-                                }
+                                className={errors.currentStatus ? "border-red-500" : ""}
                               >
-                                <SelectValue
-                                  placeholder={t("placeholders.select")}
-                                />
+                                <SelectValue placeholder={t("placeholders.select")} />
                               </SelectTrigger>
                               <SelectContent>
                                 {STATUSES.map((s) => (
@@ -657,9 +691,7 @@ export default function DiagnosticModal({
                           </FieldWrapper>
 
                           {/* Affiché conditionnellement selon le statut — miroir du backend */}
-                          {["student", "other"].includes(
-                            formData.currentStatus,
-                          ) && (
+                          {["student", "other"].includes(formData.currentStatus) && (
                             <FieldWrapper
                               label={t("fields.studyDomain")}
                               required
@@ -671,37 +703,26 @@ export default function DiagnosticModal({
                                 onChange={(e) =>
                                   updateField("studyDomain", e.target.value)
                                 }
-                                className={
-                                  errors.studyDomain ? "border-red-500" : ""
-                                }
+                                className={errors.studyDomain ? "border-red-500" : ""}
                               />
                             </FieldWrapper>
                           )}
 
-                          {["employed", "unemployed"].includes(
-                            formData.currentStatus,
-                          ) && (
+                          {["employed", "unemployed"].includes(formData.currentStatus) && (
                             <FieldWrapper
                               label={t("fields.professionalExperience")}
                               required
                               error={errors.professionalExperience}
                             >
                               <Textarea
-                                placeholder={t(
-                                  "placeholders.professionalExperience",
-                                )}
+                                placeholder={t("placeholders.professionalExperience")}
                                 value={formData.professionalExperience}
                                 onChange={(e) =>
-                                  updateField(
-                                    "professionalExperience",
-                                    e.target.value,
-                                  )
+                                  updateField("professionalExperience", e.target.value)
                                 }
                                 className={cn(
                                   "resize-none",
-                                  errors.professionalExperience
-                                    ? "border-red-500"
-                                    : "",
+                                  errors.professionalExperience ? "border-red-500" : "",
                                 )}
                                 rows={4}
                               />
@@ -723,9 +744,7 @@ export default function DiagnosticModal({
                                 <button
                                   key={dest}
                                   type="button"
-                                  onClick={() =>
-                                    updateField("destination", dest)
-                                  }
+                                  onClick={() => updateField("destination", dest)}
                                   className={cn(
                                     "flex items-center gap-2 p-3 rounded-xl border-2 text-sm font-medium transition-all",
                                     formData.destination === dest
@@ -733,9 +752,7 @@ export default function DiagnosticModal({
                                       : "border-border hover:border-primary/50",
                                   )}
                                 >
-                                  <span className="text-lg">
-                                    {DEST_FLAGS[dest]}
-                                  </span>
+                                  <span className="text-lg">{DEST_FLAGS[dest]}</span>
                                   {t(`options.destination.${dest}`)}
                                 </button>
                               ))}
@@ -748,18 +765,12 @@ export default function DiagnosticModal({
                           >
                             <Select
                               value={formData.targetLevel}
-                              onValueChange={(v) =>
-                                updateField("targetLevel", v)
-                              }
+                              onValueChange={(v) => updateField("targetLevel", v)}
                             >
                               <SelectTrigger
-                                className={
-                                  errors.targetLevel ? "border-red-500" : ""
-                                }
+                                className={errors.targetLevel ? "border-red-500" : ""}
                               >
-                                <SelectValue
-                                  placeholder={t("placeholders.select")}
-                                />
+                                <SelectValue placeholder={t("placeholders.select")} />
                               </SelectTrigger>
                               <SelectContent>
                                 {LEVELS.map((l) => (
@@ -780,9 +791,7 @@ export default function DiagnosticModal({
                                 <button
                                   key={intake}
                                   type="button"
-                                  onClick={() =>
-                                    updateField("targetIntake", intake)
-                                  }
+                                  onClick={() => updateField("targetIntake", intake)}
                                   className={cn(
                                     "px-4 py-2 rounded-lg border-2 text-sm font-medium transition-all",
                                     formData.targetIntake === intake
@@ -795,12 +804,8 @@ export default function DiagnosticModal({
                               ))}
                             </div>
                           </FieldWrapper>
-                        </>
-                      )}
 
-                      {/* ── ÉTAPE 5 : Situation & besoins ── */}
-                      {currentStep === 5 && (
-                        <>
+                          {/* ── Tentative précédente ── */}
                           <FieldWrapper
                             label={t("fields.previousAttempt")}
                             required
@@ -811,9 +816,7 @@ export default function DiagnosticModal({
                                 <button
                                   key={v}
                                   type="button"
-                                  onClick={() =>
-                                    updateField("previousAttempt", v)
-                                  }
+                                  onClick={() => updateField("previousAttempt", v)}
                                   className={cn(
                                     "flex-1 py-2.5 rounded-xl border-2 text-sm font-medium transition-all",
                                     formData.previousAttempt === v
@@ -826,84 +829,242 @@ export default function DiagnosticModal({
                               ))}
                             </div>
                           </FieldWrapper>
+                        </>
+                      )}
+
+                      {/* ── ÉTAPE 5 : Langue & Compétences ── */}
+                      {currentStep === 5 && (
+                        <>
+                          {/* ── Q16 : Test de français ── */}
                           <FieldWrapper
-                            label={t("fields.identifiedNeeds")}
-                            error={errors.identifiedNeeds}
+                            label={t("fields.frenchTest")}
+                            required
+                            error={errors.frenchTest}
                           >
-                            <Textarea
-                              placeholder={t("placeholders.identifiedNeeds")}
-                              value={formData.identifiedNeeds}
-                              onChange={(e) =>
-                                updateField("identifiedNeeds", e.target.value)
-                              }
-                              className="resize-none"
-                              rows={3}
-                            />
+                            <Select
+                              value={formData.frenchTest}
+                              onValueChange={(v) => {
+                                updateField("frenchTest", v);
+                                // Reset scores si on passe à "Non"
+                                if (v === "NO") {
+                                  updateField("frenchOral", "");
+                                  updateField("frenchWritten", "");
+                                  updateField("frenchSpoken", "");
+                                  updateField("frenchExpression", "");
+                                  updateField("frenchTestOther", "");
+                                }
+                              }}
+                            >
+                              <SelectTrigger className={errors.frenchTest ? "border-red-500" : ""}>
+                                <SelectValue placeholder={t("placeholders.select")} />
+                              </SelectTrigger>
+                              <SelectContent>
+                                {FRENCH_TESTS.map((opt) => (
+                                  <SelectItem key={opt.value} value={opt.value}>
+                                    {opt.label}
+                                  </SelectItem>
+                                ))}
+                              </SelectContent>
+                            </Select>
                           </FieldWrapper>
-                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+
+                          {/* Q16 — Précision si "Oui – Autre" */}
+                          {formData.frenchTest === "OTHER_FR" && (
                             <FieldWrapper
-                              label={t("fields.frenchLevel")}
+                              label={t("fields.frenchTestOther")}
                               required
-                              error={errors.frenchLevel}
+                              error={errors.frenchTestOther}
                             >
-                              <Select
-                                value={formData.frenchLevel}
-                                onValueChange={(v) =>
-                                  updateField("frenchLevel", v)
-                                }
-                              >
-                                <SelectTrigger
-                                  className={
-                                    errors.frenchLevel ? "border-red-500" : ""
-                                  }
-                                >
-                                  <SelectValue
-                                    placeholder={t("placeholders.langLevel")}
-                                  />
-                                </SelectTrigger>
-                                <SelectContent>
-                                  {LANG_LEVELS.map((l) => (
-                                    <SelectItem key={l} value={l}>
-                                      {l === "native"
-                                        ? t("options.langLevel.native")
-                                        : l}
-                                    </SelectItem>
-                                  ))}
-                                </SelectContent>
-                              </Select>
+                              <Input
+                                placeholder={t("placeholders.frenchTestOther")}
+                                value={formData.frenchTestOther}
+                                onChange={(e) => updateField("frenchTestOther", e.target.value)}
+                                className={errors.frenchTestOther ? "border-red-500" : ""}
+                              />
                             </FieldWrapper>
+                          )}
+
+                          {/* Q17 — Scores français (conditionnel si test passé) */}
+                          {formData.frenchTest && formData.frenchTest !== "NO" && (
+                            <div className="rounded-xl border border-border bg-muted/30 p-4 space-y-3">
+                              <p className="text-sm font-medium flex items-center gap-2">
+                                🇫🇷 {t("fields.frenchScores")}
+                              </p>
+                              <div className="grid grid-cols-2 gap-3">
+                                <FieldWrapper
+                                  label={t("fields.frenchOral")}
+                                  required
+                                  error={errors.frenchOral}
+                                >
+                                  <Input
+                                    type="number"
+                                    min="0"
+                                    placeholder="ex: 14"
+                                    value={formData.frenchOral}
+                                    onChange={(e) => updateField("frenchOral", e.target.value)}
+                                    className={errors.frenchOral ? "border-red-500" : ""}
+                                  />
+                                </FieldWrapper>
+                                <FieldWrapper
+                                  label={t("fields.frenchWritten")}
+                                  required
+                                  error={errors.frenchWritten}
+                                >
+                                  <Input
+                                    type="number"
+                                    min="0"
+                                    placeholder="ex: 16"
+                                    value={formData.frenchWritten}
+                                    onChange={(e) => updateField("frenchWritten", e.target.value)}
+                                    className={errors.frenchWritten ? "border-red-500" : ""}
+                                  />
+                                </FieldWrapper>
+                                <FieldWrapper
+                                  label={t("fields.frenchSpoken")}
+                                  required
+                                  error={errors.frenchSpoken}
+                                >
+                                  <Input
+                                    type="number"
+                                    min="0"
+                                    placeholder="ex: 12"
+                                    value={formData.frenchSpoken}
+                                    onChange={(e) => updateField("frenchSpoken", e.target.value)}
+                                    className={errors.frenchSpoken ? "border-red-500" : ""}
+                                  />
+                                </FieldWrapper>
+                                <FieldWrapper
+                                  label={t("fields.frenchExpression")}
+                                  required
+                                  error={errors.frenchExpression}
+                                >
+                                  <Input
+                                    type="number"
+                                    min="0"
+                                    placeholder="ex: 15"
+                                    value={formData.frenchExpression}
+                                    onChange={(e) => updateField("frenchExpression", e.target.value)}
+                                    className={errors.frenchExpression ? "border-red-500" : ""}
+                                  />
+                                </FieldWrapper>
+                              </div>
+                            </div>
+                          )}
+
+                          {/* ── Q18 : Test d'anglais ── */}
+                          <FieldWrapper
+                            label={t("fields.englishTest")}
+                            required
+                            error={errors.englishTest}
+                          >
+                            <Select
+                              value={formData.englishTest}
+                              onValueChange={(v) => {
+                                updateField("englishTest", v);
+                                if (v === "NO") {
+                                  updateField("englishOral", "");
+                                  updateField("englishWritten", "");
+                                  updateField("englishSpoken", "");
+                                  updateField("englishExpression", "");
+                                  updateField("englishTestOther", "");
+                                }
+                              }}
+                            >
+                              <SelectTrigger className={errors.englishTest ? "border-red-500" : ""}>
+                                <SelectValue placeholder={t("placeholders.select")} />
+                              </SelectTrigger>
+                              <SelectContent>
+                                {ENGLISH_TESTS.map((opt) => (
+                                  <SelectItem key={opt.value} value={opt.value}>
+                                    {opt.label}
+                                  </SelectItem>
+                                ))}
+                              </SelectContent>
+                            </Select>
+                          </FieldWrapper>
+
+                          {/* Q18 — Précision si "Oui – Autre" */}
+                          {formData.englishTest === "OTHER_EN" && (
                             <FieldWrapper
-                              label={t("fields.englishLevel")}
+                              label={t("fields.englishTestOther")}
                               required
-                              error={errors.englishLevel}
+                              error={errors.englishTestOther}
                             >
-                              <Select
-                                value={formData.englishLevel}
-                                onValueChange={(v) =>
-                                  updateField("englishLevel", v)
-                                }
-                              >
-                                <SelectTrigger
-                                  className={
-                                    errors.englishLevel ? "border-red-500" : ""
-                                  }
-                                >
-                                  <SelectValue
-                                    placeholder={t("placeholders.langLevel")}
-                                  />
-                                </SelectTrigger>
-                                <SelectContent>
-                                  {LANG_LEVELS.map((l) => (
-                                    <SelectItem key={l} value={l}>
-                                      {l === "native"
-                                        ? t("options.langLevel.native")
-                                        : l}
-                                    </SelectItem>
-                                  ))}
-                                </SelectContent>
-                              </Select>
+                              <Input
+                                placeholder={t("placeholders.englishTestOther")}
+                                value={formData.englishTestOther}
+                                onChange={(e) => updateField("englishTestOther", e.target.value)}
+                                className={errors.englishTestOther ? "border-red-500" : ""}
+                              />
                             </FieldWrapper>
-                          </div>
+                          )}
+
+                          {/* Q19 — Scores anglais (conditionnel si test passé) */}
+                          {formData.englishTest && formData.englishTest !== "NO" && (
+                            <div className="rounded-xl border border-border bg-muted/30 p-4 space-y-3">
+                              <p className="text-sm font-medium flex items-center gap-2">
+                                🇬🇧 {t("fields.englishScores")}
+                              </p>
+                              <div className="grid grid-cols-2 gap-3">
+                                <FieldWrapper
+                                  label={t("fields.englishOral")}
+                                  required
+                                  error={errors.englishOral}
+                                >
+                                  <Input
+                                    type="number"
+                                    min="0"
+                                    placeholder="ex: 7.5"
+                                    value={formData.englishOral}
+                                    onChange={(e) => updateField("englishOral", e.target.value)}
+                                    className={errors.englishOral ? "border-red-500" : ""}
+                                  />
+                                </FieldWrapper>
+                                <FieldWrapper
+                                  label={t("fields.englishWritten")}
+                                  required
+                                  error={errors.englishWritten}
+                                >
+                                  <Input
+                                    type="number"
+                                    min="0"
+                                    placeholder="ex: 8"
+                                    value={formData.englishWritten}
+                                    onChange={(e) => updateField("englishWritten", e.target.value)}
+                                    className={errors.englishWritten ? "border-red-500" : ""}
+                                  />
+                                </FieldWrapper>
+                                <FieldWrapper
+                                  label={t("fields.englishSpoken")}
+                                  required
+                                  error={errors.englishSpoken}
+                                >
+                                  <Input
+                                    type="number"
+                                    min="0"
+                                    placeholder="ex: 6.5"
+                                    value={formData.englishSpoken}
+                                    onChange={(e) => updateField("englishSpoken", e.target.value)}
+                                    className={errors.englishSpoken ? "border-red-500" : ""}
+                                  />
+                                </FieldWrapper>
+                                <FieldWrapper
+                                  label={t("fields.englishExpression")}
+                                  required
+                                  error={errors.englishExpression}
+                                >
+                                  <Input
+                                    type="number"
+                                    min="0"
+                                    placeholder="ex: 7"
+                                    value={formData.englishExpression}
+                                    onChange={(e) => updateField("englishExpression", e.target.value)}
+                                    className={errors.englishExpression ? "border-red-500" : ""}
+                                  />
+                                </FieldWrapper>
+                              </div>
+                            </div>
+                          )}
                         </>
                       )}
 
@@ -925,9 +1086,7 @@ export default function DiagnosticModal({
                               type="email"
                               placeholder="votre@email.com"
                               value={formData.email}
-                              onChange={(e) =>
-                                updateField("email", e.target.value)
-                              }
+                              onChange={(e) => updateField("email", e.target.value)}
                               className={errors.email ? "border-red-500" : ""}
                             />
                           </FieldWrapper>
@@ -939,12 +1098,8 @@ export default function DiagnosticModal({
                             <Input
                               placeholder="+237 6XX XX XX XX"
                               value={formData.whatsapp}
-                              onChange={(e) =>
-                                updateField("whatsapp", e.target.value)
-                              }
-                              className={
-                                errors.whatsapp ? "border-red-500" : ""
-                              }
+                              onChange={(e) => updateField("whatsapp", e.target.value)}
+                              className={errors.whatsapp ? "border-red-500" : ""}
                             />
                           </FieldWrapper>
                           <FieldWrapper
@@ -957,9 +1112,7 @@ export default function DiagnosticModal({
                                 <button
                                   key={c}
                                   type="button"
-                                  onClick={() =>
-                                    updateField("preferredContact", c)
-                                  }
+                                  onClick={() => updateField("preferredContact", c)}
                                   className={cn(
                                     "px-4 py-2 rounded-lg border-2 text-sm font-medium transition-all flex-1",
                                     formData.preferredContact === c
@@ -977,7 +1130,6 @@ export default function DiagnosticModal({
                     </motion.div>
                   </AnimatePresence>
                 </div>
-
                 {/* ── FOOTER : Navigation + Erreur globale API ── */}
                 <div className="border-t border-border flex-shrink-0 bg-background">
                   {/* ── Bannière d'erreur API globale ────────────────────────────────

@@ -5,7 +5,7 @@
 import axiosInstance from "./axiosInstance";
 import axios, { AxiosError } from "axios";
 
-export type UserRole = "CLIENT" | "ADMIN" | "EMPLOYE";
+export type UserRole = "CLIENT" | "ADMIN" | "EMPLOYE" | "PROSPECT";
 interface ApiErrorResponse {
   messageKey?: string;
   message?: string;

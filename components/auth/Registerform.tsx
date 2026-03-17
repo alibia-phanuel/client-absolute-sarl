@@ -78,7 +78,7 @@ export default function RegisterForm() {
         name: data.name,
         email: data.email,
         password: data.password,
-        role: "CLIENT",
+        role: "PROSPECT",
       });
 
       // Stocker les informations d'authentification

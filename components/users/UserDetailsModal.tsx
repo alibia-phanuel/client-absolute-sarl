@@ -45,6 +45,8 @@ export function UserDetailsModal({
         return "default";
       case "CLIENT":
         return "secondary";
+      case "PROSPECT":
+        return "outline";
       default:
         return "outline";
     }
