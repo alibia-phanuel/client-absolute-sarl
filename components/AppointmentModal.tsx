@@ -9,7 +9,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { motion } from "framer-motion";
-import { Calendar, Clock, Loader2, X } from "lucide-react";
+import { Calendar, Clock, Loader2, Phone, X } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -62,34 +62,37 @@ export default function AppointmentModal({
     date: z
       .string()
       .min(1, V("dateRequired"))
-      .refine((date) => new Date(date) > new Date(), {
-        message: V("dateFuture"),
-      }),
+      .refine(
+        (date) => new Date(date) > new Date(),
+        { message: V("dateFuture") }
+      ),
     time: z
       .string()
       .min(1, V("timeRequired"))
       .regex(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/, V("timeInvalid")),
     note: z.string().min(1, V("noteRequired")),
+    phone: z
+      .string()
+      .min(1, V("phoneRequired"))
+      .min(7, V("phoneMin")),
   });
 
   type AppointmentFormData = z.infer<typeof appointmentSchema>;
 
   const form = useForm<AppointmentFormData>({
     resolver: zodResolver(appointmentSchema),
-    defaultValues: { date: "", time: "", note: "" },
+    defaultValues: { date: "", time: "", note: "", phone: "" },
   });
 
   const onSubmit = async (data: AppointmentFormData) => {
     setIsLoading(true);
     try {
-      const dateTimeISO = new Date(
-        `${data.date}T${data.time}:00`,
-      ).toISOString();
+      const dateTimeISO = new Date(`${data.date}T${data.time}:00`).toISOString();
       const result = await createRendezVous({
         date: dateTimeISO,
-        note: data.note.trim(),
+        note: `[${data.phone.trim()}] ${data.note.trim()}`,
       });
-      toast.success(t(result.messageKey));
+      toast.success(t("rendezvous.createSuccess"));
       form.reset();
       onClose();
       onSuccess?.();
@@ -139,10 +142,8 @@ export default function AppointmentModal({
           {/* ── Corps ── */}
           <div className="px-4 py-5 sm:px-6">
             <Form {...form}>
-              <form
-                onSubmit={form.handleSubmit(onSubmit)}
-                className="space-y-4"
-              >
+              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+
                 {/* Date + Heure — côte à côte sur mobile aussi */}
                 <div className="grid grid-cols-2 gap-3">
                   {/* Date */}
@@ -208,9 +209,7 @@ export default function AppointmentModal({
                       >
                         <FormControl>
                           <SelectTrigger className="h-11 w-full text-sm border-2 border-border/50 focus:border-primary transition-colors">
-                            <SelectValue
-                              placeholder={t("appointment.notePlaceholder")}
-                            />
+                            <SelectValue placeholder={t("appointment.notePlaceholder")} />
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
@@ -242,6 +241,32 @@ export default function AppointmentModal({
                   )}
                 />
 
+
+                {/* Téléphone */}
+                <FormField
+                  control={form.control}
+                  name="phone"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-sm font-semibold">
+                        Numéro de téléphone
+                      </FormLabel>
+                      <FormControl>
+                        <div className="relative">
+                          <Phone className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                          <Input
+                            {...field}
+                            type="tel"
+                            placeholder="+237 6XX XX XX XX"
+                            className="pl-9 h-11 w-full text-sm border-2 border-border/50 focus:border-primary transition-colors"
+                            disabled={isLoading}
+                          />
+                        </div>
+                      </FormControl>
+                      <FormMessage className="text-xs" />
+                    </FormItem>
+                  )}
+                />
                 {/* Horaires disponibles */}
                 <div className="p-3 bg-muted/50 rounded-lg border border-border">
                   <p className="text-xs font-semibold mb-1.5 flex items-center gap-1.5">
@@ -286,6 +311,7 @@ export default function AppointmentModal({
                     )}
                   </Button>
                 </div>
+
               </form>
             </Form>
           </div>
