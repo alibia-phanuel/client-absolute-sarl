@@ -2,7 +2,7 @@
 
 /**
  * 📅 Modal de Prise de Rendez-vous (Espace Client)
- * Version mobile-first corrigée
+ * Version mobile-first — v2
  */
 
 import { useState } from "react";
@@ -62,19 +62,15 @@ export default function AppointmentModal({
     date: z
       .string()
       .min(1, V("dateRequired"))
-      .refine(
-        (date) => new Date(date) > new Date(),
-        { message: V("dateFuture") }
-      ),
+      .refine((date) => new Date(date) > new Date(), {
+        message: V("dateFuture"),
+      }),
     time: z
       .string()
       .min(1, V("timeRequired"))
       .regex(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/, V("timeInvalid")),
     note: z.string().min(1, V("noteRequired")),
-    phone: z
-      .string()
-      .min(1, V("phoneRequired"))
-      .min(7, V("phoneMin")),
+    phone: z.string().min(1, V("phoneRequired")).min(7, V("phoneMin")),
   });
 
   type AppointmentFormData = z.infer<typeof appointmentSchema>;
@@ -87,8 +83,10 @@ export default function AppointmentModal({
   const onSubmit = async (data: AppointmentFormData) => {
     setIsLoading(true);
     try {
-      const dateTimeISO = new Date(`${data.date}T${data.time}:00`).toISOString();
-      const result = await createRendezVous({
+      const dateTimeISO = new Date(
+        `${data.date}T${data.time}:00`,
+      ).toISOString();
+      await createRendezVous({
         date: dateTimeISO,
         note: `[${data.phone.trim()}] ${data.note.trim()}`,
       });
@@ -111,42 +109,47 @@ export default function AppointmentModal({
 
   return (
     <Dialog open={isOpen} onOpenChange={handleClose}>
-      {/* ── max-w-full sur mobile, 500px sur sm+ ── */}
-      <DialogContent className="w-[calc(100vw-24px)] max-w-[500px] p-0 overflow-hidden rounded-2xl">
+      <DialogContent
+        showCloseButton={false}
+        className="w-[calc(100vw-24px)] max-w-[480px] p-0 overflow-hidden rounded-2xl max-h-[90vh] flex flex-col"
+      >
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.95 }}
           transition={{ duration: 0.2 }}
+          className="flex flex-col min-h-0"
         >
-          {/* ── Header ── */}
-          <div className="relative bg-gradient-to-r from-primary to-primary/80 px-5 py-5 text-primary-foreground">
+          {/* ── Header (fixe) ── */}
+          <div className="relative shrink-0 bg-gradient-to-r from-primary to-primary/80 px-4 sm:px-6 py-4 sm:py-5 text-primary-foreground">
             <button
               onClick={handleClose}
-              className="absolute top-4 right-4 p-1 rounded-full hover:bg-white/20 transition-colors"
+              className="absolute top-3 right-3 sm:top-4 sm:right-4 p-1.5 rounded-full hover:bg-white/20 transition-colors"
               disabled={isLoading}
+              aria-label={t("appointment.cancel")}
             >
-              <X className="h-5 w-5" />
+              <X className="h-4 w-4 sm:h-5 sm:w-5" />
             </button>
             <DialogHeader>
-              <DialogTitle className="text-xl sm:text-2xl font-bold flex items-center gap-2 pr-8">
+              <DialogTitle className="text-lg sm:text-2xl font-bold flex items-center gap-2 pr-8">
                 <Calendar className="h-5 w-5 sm:h-6 sm:w-6 flex-shrink-0" />
-                {t("appointment.title")}
+                <span className="leading-tight">{t("appointment.title")}</span>
               </DialogTitle>
-              <DialogDescription className="text-primary-foreground/90 mt-1 text-sm">
+              <DialogDescription className="text-primary-foreground/90 mt-1 text-xs sm:text-sm">
                 {t("appointment.subtitle")}
               </DialogDescription>
             </DialogHeader>
           </div>
 
-          {/* ── Corps ── */}
-          <div className="px-4 py-5 sm:px-6">
+          {/* ── Corps (scrollable si besoin) ── */}
+          <div className="px-4 py-4 sm:px-6 sm:py-5 overflow-y-auto min-h-0">
             <Form {...form}>
-              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-
-                {/* Date + Heure — côte à côte sur mobile aussi */}
-                <div className="grid grid-cols-2 gap-3">
-                  {/* Date */}
+              <form
+                onSubmit={form.handleSubmit(onSubmit)}
+                className="space-y-4"
+              >
+                {/* Date + Heure — empilés sur mobile, côte à côte à partir de sm */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <FormField
                     control={form.control}
                     name="date"
@@ -156,7 +159,6 @@ export default function AppointmentModal({
                           {t("appointment.date")}
                         </FormLabel>
                         <FormControl>
-                          {/* ── Pas d'icône en padding sur mobile ── */}
                           <Input
                             {...field}
                             type="date"
@@ -170,7 +172,6 @@ export default function AppointmentModal({
                     )}
                   />
 
-                  {/* Heure */}
                   <FormField
                     control={form.control}
                     name="time"
@@ -209,7 +210,9 @@ export default function AppointmentModal({
                       >
                         <FormControl>
                           <SelectTrigger className="h-11 w-full text-sm border-2 border-border/50 focus:border-primary transition-colors">
-                            <SelectValue placeholder={t("appointment.notePlaceholder")} />
+                            <SelectValue
+                              placeholder={t("appointment.notePlaceholder")}
+                            />
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
@@ -241,7 +244,6 @@ export default function AppointmentModal({
                   )}
                 />
 
-
                 {/* Téléphone */}
                 <FormField
                   control={form.control}
@@ -249,11 +251,11 @@ export default function AppointmentModal({
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel className="text-sm font-semibold">
-                        Numéro de téléphone
+                        {t("appointment.phone") ?? "Numéro de téléphone"}
                       </FormLabel>
                       <FormControl>
                         <div className="relative">
-                          <Phone className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                          <Phone className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
                           <Input
                             {...field}
                             type="tel"
@@ -267,10 +269,11 @@ export default function AppointmentModal({
                     </FormItem>
                   )}
                 />
+
                 {/* Horaires disponibles */}
                 <div className="p-3 bg-muted/50 rounded-lg border border-border">
                   <p className="text-xs font-semibold mb-1.5 flex items-center gap-1.5">
-                    <Clock className="h-3.5 w-3.5 text-primary" />
+                    <Clock className="h-3.5 w-3.5 text-primary shrink-0" />
                     {t("appointment.availableHours")}
                   </p>
                   <div className="space-y-0.5 text-xs text-muted-foreground">
@@ -282,7 +285,7 @@ export default function AppointmentModal({
                   </div>
                 </div>
 
-                {/* Boutons — pleine largeur sur mobile */}
+                {/* Boutons — pleine largeur sur mobile, côte à côte à partir de sm */}
                 <div className="flex flex-col sm:flex-row gap-2 pt-1">
                   <Button
                     type="button"
@@ -311,7 +314,6 @@ export default function AppointmentModal({
                     )}
                   </Button>
                 </div>
-
               </form>
             </Form>
           </div>
